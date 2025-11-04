@@ -1,0 +1,42 @@
+@mixin resetButton {
+  margin: 0;
+  appearance: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+@mixin buttonStyle {
+  padding: 8px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ft-color-bg);
+  background-color: var(--ft-color-text);
+  border-radius: 8px;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+@mixin srOnly {
+  position: absolute;
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-width: 0;
+  clip: rect(0, 0, 0, 0);
+}

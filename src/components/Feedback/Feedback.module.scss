@@ -1,0 +1,111 @@
+.root {
+  padding: 0 24px;
+}
+
+.choices {
+  margin: 0 0 12px;
+}
+
+.choice {
+  display: flex;
+
+  & + .choice {
+    margin-top: 12px;
+  }
+}
+
+.label {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sr {
+  @include srOnly;
+}
+
+.checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.check {
+  height: 20px;
+  min-width: 20px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+
+  .label:hover & {
+    border-color: var(--ft-color-text);
+  }
+}
+
+.checkbox:checked + .check {
+  position: relative;
+  background-color: var(--ft-color-text);
+  border-color: var(--ft-color-text);
+
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 7px;
+    content: '';
+    border: 2px solid;
+    border-color: transparent transparent var(--ft-color-bg) var(--ft-color-bg);
+    transform: translate(-45%, -75%) rotate(-45deg);
+    pointer-events: none;
+  }
+}
+
+.input {
+  margin-top: 8px;
+  height: 32px;
+}
+
+.textarea {
+  height: 192px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: var(--ft-color-bg);
+  border: 1px solid #D0D5DD;
+  border-radius: 8px;
+  outline: 0 solid rgba(#98A2B3, 0.14);
+  resize: none;
+  transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;
+
+  &:focus {
+    outline: 4px solid rgba(#98A2B3, 0.14);
+  }
+}
+
+.submit {
+  @include resetButton;
+  @include buttonStyle;
+
+  margin-top: 16px;
+  width: 100%;
+}
+
+.success {
+  padding: 16px 0 32px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+}
+

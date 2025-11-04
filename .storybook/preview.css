@@ -1,0 +1,20 @@
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap';
+
+body {
+  font-family: Inter, sans-serif;
+}
+
+.light-theme body {
+  color: #131313;
+  background-color: #fff;
+}
+
+.dark-theme body {
+  color: #fff;
+  background-color: #131313;
+}
+
+.sb-main-centered {
+  display: grid;
+  place-items: center;
+}

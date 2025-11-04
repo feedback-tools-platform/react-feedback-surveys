@@ -1,0 +1,63 @@
+{
+  "name": "react-feedback-surveys",
+  "description": "CSAT, CES, and NPS survey widgets for React",
+  "private": false,
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feedback-tools-platform/react-feedback-surveys.git"
+  },
+  "author": "FENWIK",
+  "type": "module",
+  "files": ["dist"],
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./index.css": "./dist/index.css"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "stylelint": "stylelint --fix '**/*.scss'"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@storybook/addon-a11y": "^10.0.3",
+    "@storybook/addon-docs": "^10.0.3",
+    "@storybook/react-vite": "^10.0.0",
+    "@stylistic/stylelint-plugin": "^4.0.0",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react-swc": "^4.1.0",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "eslint-plugin-storybook": "^10.0.0",
+    "globals": "^16.4.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sass": "^1.93.2",
+    "storybook": "^10.0.0",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-order": "^7.0.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.7",
+    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-svgr": "^4.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  }
+}

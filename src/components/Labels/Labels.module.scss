@@ -1,0 +1,21 @@
+.root {
+  margin: 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  flex: 0 0 50%;
+  max-width: 50%;
+  font-size: 14px;
+  line-height: 1.4286;
+  color: #475467;
+
+  &:first-child {
+    text-align: left;
+  }
+
+  &:last-child {
+    text-align: right;
+  }
+}
