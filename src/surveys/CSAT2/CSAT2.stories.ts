@@ -19,10 +19,10 @@ export default meta;
 export const EmojisMood = {
   args: {
     scaleVisualizationType: 'csat_2_emojis_mood',
-    mainQuestion: 'How would you rate your satisfaction with our product?',
-    mainLabelLeft: 'Very dissatisfied',
-    mainLabelRight: 'Very satisfied',
-    feedbackQuestion: 'How satisfied are you with our onboarding process?',
+    mainQuestion: 'Are you satisfied with the result?',
+    mainLabelLeft: undefined,
+    mainLabelRight: undefined,
+    feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
     feedbackButtonText: 'Submit',
     feedbackType: 'text',
     feedbackChoices: null,
@@ -33,10 +33,10 @@ export const EmojisMood = {
 export const EmojisThumbs = {
   args: {
     scaleVisualizationType: 'csat_2_emojis_thumbs',
-    mainQuestion: 'How would you rate your satisfaction with our product?',
-    mainLabelLeft: 'Very dissatisfied',
-    mainLabelRight: 'Very satisfied',
-    feedbackQuestion: 'How satisfied are you with our onboarding process?',
+    mainQuestion: 'Are you satisfied with the result?',
+    mainLabelLeft: undefined,
+    mainLabelRight: undefined,
+    feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
     feedbackButtonText: 'Submit',
     feedbackType: 'choices',
     feedbackChoices: ['Very easy', 'Very difficult'],

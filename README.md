@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/npm/l/react-feedback-surveys.svg?style=flat-square)](https://github.com/your-org/feedback-tools/blob/main/LICENSE)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/react-feedback-surveys?style=flat-square)](https://bundlephobia.com/package/react-feedback-surveys)
 
-> Lightweight, customizable **CSAT, CES, and NPS survey widgets** for React.  
+> Lightweight, customizable **CSAT, CES, and NPS survey widgets** for React.
  
 ---
 
@@ -14,7 +14,7 @@ Supports **emojis, stars, numbers, and thumbs** visualizations.
 
 ## Features
 
-- **Ready-to-use survey widgets** – CSAT (2 or 5 points), CES (7 points), NPS (0–10).
+- **Ready-to-use survey widgets** – CSAT (2 or 5 points), CES (7 points), NPS (1–10).
 - **Multiple visualizations** – emojis, stars, numbers, thumbs.
 - **Zero dependencies** – small and tree-shakeable.
 
@@ -34,76 +34,164 @@ npm i react-feedback-surveys
 yarn add react-feedback-surveys
 ```
 
-### 2) Import and basic usage
+### 2) Styles
 
 ```tsx
-import React from 'react';
+import 'react-feedback-surveys/index.css';
+```
+
+## Widget-by-Widget Overview
+
+Below is a quick overview of each widget, when to use it, and example usage. All examples use the existing API and
+shared props.
+
+### CSAT2 (2-point Customer Satisfaction)
+
+Use when you need a very quick binary satisfaction signal at high-traffic points.
+
+[<img src="docs/assets/csat2.png" width="392">](docs/assets/csat2.png)
+
+```tsx
+import { CSAT2 } from 'react-feedback-surveys';
+import 'react-feedback-surveys/index.css';
+
+<CSAT2
+  scaleVisualizationType="csat_2_emojis_thumbs"
+  mainQuestion="Are you satisfied with the result?"
+  feedbackType="text"
+  feedbackQuestion="We’d love to hear your thoughts — what can we improve?"
+  feedbackButtonText="Send"
+  successText="Thank you for your feedback!"
+  onSubmit={({ value, comment }) => {/* ... */}}
+/>
+```
+
+`scaleVisualizationType`: `csat_2_emojis_mood` | `csat_2_emojis_thumbs`.
+
+### CSAT5 (5-point Customer Satisfaction)
+
+Balanced satisfaction measurement with more nuance than CSAT2; great for post-interaction surveys.
+
+[<img src="docs/assets/csat5.png" width="392">](docs/assets/csat5.png)
+
+```tsx
 import { CSAT5 } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
-export default function App() {
-  return (
-    <CSAT5
-      scaleVisualizationType="csat_5_emojis"
-      mainQuestion="How would you rate your satisfaction with our product?"
-      mainLabelLeft="Very dissatisfied"
-      mainLabelRight="Very satisfied"
-      feedbackQuestion="Anything else you'd like to share?"
-      feedbackButtonText="Send"
-      successText="Thanks for your feedback!"
-      onSubmit={({ value, comment }) => {
-        // send to your API
-      }}
-    />
-  );
-}
+<CSAT5
+  scaleVisualizationType="csat_5_emojis"
+  mainQuestion="How would you rate your satisfaction with our product?"
+  mainLabelLeft="Very unsatisfied"
+  mainLabelRight="Very satisfied"
+  feedbackType="text"
+  feedbackQuestion="We’d love to hear your thoughts — what can we improve?"
+  feedbackButtonText="Send"
+  successText="Thanks for your feedback!"
+  onSubmit={({ value, comment }) => {/* ... */}}
+/>
 ```
 
-### 3) Importing other widgets
+`scaleVisualizationType`: `csat_5_emojis` | `csat_5_numbers` | `csat_5_stars`.
+
+### CES7 (7-point Customer Effort Score)
+
+Measures how easy or difficult an experience was. Best after a task flow (checkout, onboarding, support resolution).
+
+[<img src="docs/assets/ces7.png" width="412">](docs/assets/ces7.png)
 
 ```tsx
-import { CSAT2, CES7, NPS10 } from 'react-feedback-surveys';
+import { CES7 } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
-// CES7
 <CES7
+  scaleVisualizationType="ces_7_numbers"
   mainQuestion="How easy was it to complete your task?"
-  mainLabelLeft="Very hard"
+  mainLabelLeft="Very difficult"
   mainLabelRight="Very easy"
-  successText="Thanks!"
-  onSubmit={({ value }) => {/* ... */}}
-/>;
-
-// NPS10
-<NPS10
-  mainQuestion="How likely are you to recommend us to a friend?"
-  mainLabelLeft="Not likely"
-  mainLabelRight="Very likely"
-  successText="Thanks!"
-  onSubmit={({ value }) => {/* ... */}}
-/>;
+  feedbackType="text"
+  feedbackQuestion="We’d love to hear your thoughts — what can we improve?"
+  feedbackButtonText="Send"
+  successText="Thank you for your feedback!"
+  onSubmit={({ value, comment }) => {/* ... */}}
+/>
 ```
 
-### 4) Styles
+`scaleVisualizationType`: `ces_7_numbers`.
+
+### NPS10 (Net Promoter Score)
+
+Standard 1–10 recommendation likelihood question. Ideal for periodic satisfaction tracking and product sentiment.
+
+[<img src="docs/assets/nps10.png" width="552">](docs/assets/nps10.png)
 
 ```tsx
+import { NPS10 } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
+
+<NPS10
+  scaleVisualizationType="nps_10_numbers"
+  mainQuestion="How likely are you to recommend our product/service to a friend or colleague?"
+  mainLabelLeft="Very unlikely"
+  mainLabelRight="Very likely"
+  feedbackType="text"
+  feedbackQuestion="We’d love to hear your thoughts — what can we improve?"
+  feedbackButtonText="Send"
+  successText="Thank you for your feedback!"
+  onSubmit={({ value, comment }) => {/* ... */}}
+/>
 ```
 
-### CSAT5 props (selected)
+`scaleVisualizationType`: `nps_10_numbers`.
 
-| Prop                 | Type                                                                                                                                                          | Required | Description                               |
-| -------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------| ----------------------------------------- |
-| `scaleVisualizationType` | `'csat_5_emojis'` \| `'csat_5_numbers'` \| `'csat_5_stars'` | Yes | Visual style of the 5-point scale. |
-| `mainQuestion`       | `string` | - | Main survey question. |
-| `mainLabelLeft`      | `string` | - | Left label (e.g., "Not satisfied"). |
-| `mainLabelRight`     | `string` | - | Right label (e.g., "Very satisfied"). |
-| `feedbackQuestion`   | `string` | - | Follow-up question on screen 2. |
-| `feedbackButtonText` | `string` | - | Submit button label for feedback. |
-| `successText`        | `string` | - | Text shown after successful submission. |
-| `footerContent`      | `React.ReactNode` | - | Optional footer (e.g., "Powered by"). |
-| `onClose`            | `() => void` | - | Called when widget is closed. |
-| `onSubmit`           | `({ value?: number, comment?: string }) => void | Promise<void>` | - | Called when score or feedback is submitted. |
+## Props
+
+Most props are shared across all survey widgets. Each widget differs only in its `scaleVisualizationType` values.
+
+### Shared props
+
+| Prop                 | Type                                                                                                                                                                                                    | Required | Description                                                  |
+|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|--------------------------------------------------------------|
+| `animated`           | `boolean`                                                                                                                                                                                               | -        | Enables a show-up animation for the widget.                  |
+| `classNames`         | `{ base?: { root?: string; head?: string; title?: string; body?: string; close?: string }; scale?: { root?: string; list?: string; button?: string; icon?: string; score?: string; labels?: string } }` | -        | Optional class names to target internal parts.               |
+| `mainQuestion`       | `string`                                                                                                                                                                                                | -        | Main survey question displayed on the first screen.          |
+| `mainLabelLeft`      | `string`                                                                                                                                                                                                | -        | Left label for the scale.                                    |
+| `mainLabelRight`     | `string`                                                                                                                                                                                                | -        | Right label for the scale.                                   |
+| `feedbackType`       | `'none' \| 'text' \| 'choices'`                                                                                                                                                                         | -        | Enables optional follow-up feedback.                         |
+| `feedbackQuestion`   | `string`                                                                                                                                                                                                | -        | Follow-up question displayed when `feedbackType !== 'none'`. |
+| `feedbackButtonText` | `string`                                                                                                                                                                                                | -        | Submit label for the feedback screen.                        |
+| `feedbackChoices`    | `string[] \| null`                                                                                                                                                                                      | -        | Predefined choices (when `feedbackType === 'choices'`).      |
+| `successText`        | `string`                                                                                                                                                                                                | -        | Message shown after submission.                              |
+| `footerContent`      | `React.ReactNode`                                                                                                                                                                                       | -        | Optional footer content (branding, links, etc.).             |
+| `onClose`            | `() => void`                                                                                                                                                                                            | -        | Called when the widget is closed.                            |
+| `onSubmit`           | `({ value?: number; comment?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Called when the score and/or feedback are submitted.         |
+
+### Widget-specific `scaleVisualizationType`
+
+#### CSAT2
+
+| Prop                     | Type                                               | Required | Description                                                                       |
+|--------------------------|----------------------------------------------------|----------|-----------------------------------------------------------------------------------|
+| `scaleVisualizationType` | `'csat_2_emojis_mood'` \| `'csat_2_emojis_thumbs'` | requred  | Emoji mood visualization (happy/sad faces) or thumbs up/down emoji visualization. |
+
+#### CSAT5
+
+| Prop                     | Type                                                        | Required | Description                                                                                                          |
+|--------------------------|-------------------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------|
+| `scaleVisualizationType` | `'csat_5_emojis'` \| `'csat_5_numbers'` \| `'csat_5_stars'` | requred  | Emoji visualization (5 emotion levels), numeric scale visualization (1–5), or star rating visualization (1–5 stars). |
+
+#### CES7
+
+| Prop                     | Type              | Required | Description                        |
+|--------------------------|-------------------|----------|------------------------------------|
+| `scaleVisualizationType` | `'ces_7_numbers'` | requred  | Numeric scale visualization (1–7). |
+
+#### NPS10
+
+| Prop                     | Type               | Required | Description                         |
+|--------------------------|--------------------|----------|-------------------------------------|
+| `scaleVisualizationType` | `'nps_10_numbers'` | requred  | Numeric scale visualization (1–10). |
+
+Note: The numeric ranges are defined by the widget (e.g., CSAT5 uses a 1–5 scale, NPS10 uses 1–10).
 
 ### Styling
 
@@ -130,27 +218,64 @@ Or wrap the survey in your own class and target the generated markup.
 
 For deeper customization strategies, see the section below.
 
-### Passing classNames for customization
+### Styling via classNames (simple and flexible)
 
-All widgets accept a `classNames` object with two optional keys: `base` (outer shell) and `scale` (inner visualization). Each key allows targeting specific parts without relying on internal class names.
+All widgets accept a `classNames` prop with two optional groups: `base` (outer shell) and `scale` (the interactive
+rating UI). Pass your own class names to override styles without relying on internal selectors.
+
+When is this useful?
+
+- Apply your design system spacing, typography or colors
+- Adjust layout (e.g., make the scale full-width, change gaps)
+- Restyle scale items (buttons, icons, numbers) consistently
+
+Reference: available keys
+
+| Key            | Applies to                                                   |
+|----------------|--------------------------------------------------------------|
+| `base.root`    | The outer widget container                                   |
+| `base.head`    | Header row containing title and close button                 |
+| `base.title`   | The heading that shows main/feedback/success text            |
+| `base.body`    | Main content region (rating scale, feedback form or success) |
+| `base.close`   | Close button                                                 |
+| `scale.root`   | Container around the scale visualization                     |
+| `scale.list`   | Wrapper for the interactive items (emojis/stars/numbers)     |
+| `scale.button` | Each clickable item in the scale                             |
+| `scale.icon`   | Icon inside a scale button (emojis, stars)                   |
+| `scale.score`  | Number inside a scale button (for numeric variants)          |
+| `scale.labels` | Left/Right labels displayed under the scale                  |
+
+Example: customizing a CSAT5 widget
 
 ```tsx
+import { CSAT5 } from 'react-feedback-surveys';
+import 'react-feedback-surveys/index.css';
+
 <CSAT5
   scaleVisualizationType="csat_5_numbers"
-  mainQuestion="How satisfied are you?"
+  mainQuestion="How would you rate your satisfaction with our product?"
+  mainLabelLeft="Very unsatisfied"
+  mainLabelRight="Very satisfied"
   classNames={{
-    base: { root: 'ft-widget', body: 'ft-body' },
-    scale: { list: 'ft-scale', button: 'ft-scale-btn', labels: 'ft-scale-labels' }
+    base: {
+      root: 'my-widget',
+      body: 'my-widget-body',
+    },
+    scale: {
+      list: 'my-scale',
+      button: 'my-scale-button',
+      score: 'my-scale-score',
+      labels: 'my-scale-labels',
+    }
   }}
   onSubmit={({ value }) => {/* ... */}}
 />
 ```
 
-## Minimum React version
-
-- React 18+ is recommended. The library is tested with React 18 and 19 and declares peer dependencies `react: ^18 || ^19` and `react-dom: ^18 || ^19`. React 18 ensures stable hooks behavior and broad ecosystem compatibility. React 19 works as well.
+You can then style these classes in your app stylesheet.
 
 ## Demo
+
 - Live Storybook: start locally with `npm run storybook`.
 
 ## Contributing
@@ -179,5 +304,6 @@ npm run build
 ```
 
 ## License
+
 MIT © feedback.tools
 

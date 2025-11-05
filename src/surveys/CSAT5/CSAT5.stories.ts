@@ -24,7 +24,7 @@ export const Emojis = {
   args: {
     scaleVisualizationType: 'csat_5_emojis',
     mainQuestion: 'How would you rate your satisfaction with our product?',
-    mainLabelLeft: 'Very dissatisfied',
+    mainLabelLeft: 'Very unsatisfied',
     mainLabelRight: 'Very satisfied',
     feedbackType: 'none',
     feedbackChoices: [],
@@ -36,9 +36,9 @@ export const Numbers = {
   args: {
     scaleVisualizationType: 'csat_5_numbers',
     mainQuestion: 'How would you rate your satisfaction with our product?',
-    mainLabelLeft: 'Very dissatisfied',
+    mainLabelLeft: 'Very unsatisfied',
     mainLabelRight: 'Very satisfied',
-    feedbackQuestion: 'How satisfied are you with our onboarding process?',
+    feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
     feedbackButtonText: 'Submit',
     feedbackType: 'text',
     feedbackChoices: null,
@@ -50,9 +50,9 @@ export const Stars = {
   args: {
     scaleVisualizationType: 'csat_5_stars',
     mainQuestion: 'How would you rate your satisfaction with our product?',
-    mainLabelLeft: 'Very dissatisfied',
+    mainLabelLeft: 'Very unsatisfied',
     mainLabelRight: 'Very satisfied',
-    feedbackQuestion: 'How satisfied are you with our onboarding process?',
+    feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
     feedbackButtonText: 'Submit',
     feedbackType: 'choices',
     feedbackChoices: ['Very easy', 'Very difficult'],

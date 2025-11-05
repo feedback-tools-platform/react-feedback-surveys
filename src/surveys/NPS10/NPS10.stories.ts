@@ -22,7 +22,7 @@ export const Numbers = {
     mainQuestion: 'How likely are you to recommend our product/service to a friend or colleague?',
     mainLabelLeft: 'Very unlikely',
     mainLabelRight: 'Very likely',
-    feedbackQuestion: 'How satisfied are you with our onboarding process?',
+    feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
     feedbackButtonText: 'Submit',
     feedbackType: 'text',
     feedbackChoices: null,

@@ -19,10 +19,10 @@ export default meta;
 export const Numbers = {
   args: {
     scaleVisualizationType: 'ces_7_numbers',
-    mainQuestion: 'How likely are you to recommend our product/service to a friend or colleague?',
-    mainLabelLeft: 'Very unlikely',
-    mainLabelRight: 'Very likely',
-    feedbackQuestion: 'How satisfied are you with our onboarding process?',
+    mainQuestion: 'How easy was it to complete your task?',
+    mainLabelLeft: 'Very difficult',
+    mainLabelRight: 'Very easy',
+    feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
     feedbackButtonText: 'Submit',
     feedbackType: 'text',
     feedbackChoices: null,
