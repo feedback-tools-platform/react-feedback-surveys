@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useId, useState } from 'react';
 
 import { type SharedSurveyProps } from '../../types';
 
 import styles from './Feedback.module.scss';
 
-interface FeedbackProps {
+export interface FeedbackProps {
   /** Submit button text */
   buttonText?: React.ReactNode;
   /** Type of feedback collection */
@@ -15,12 +15,14 @@ interface FeedbackProps {
   onSubmit?: (comment: string | string[]) => void;
 }
 
-const Feedback: React.FC<FeedbackProps> = ({
-  buttonText,
+export const Feedback: React.FC<FeedbackProps> = ({
+  buttonText = 'Submit',
   feedbackType,
   feedbackChoices,
   onSubmit
 }) => {
+  const formId = useId();
+
   const [comment, setComment] = useState<string>('');
   const [selected, setSelected] = useState<string[]>([]);
 
@@ -66,13 +68,13 @@ const Feedback: React.FC<FeedbackProps> = ({
     return null;
   }
 
-  const textareaId = 'feedback-textarea';
-  const inputId = 'feedback-input';
-  const choicesId = 'feedback-choices';
+  const textareaId = `${formId}-feedback-textarea`;
+  const inputId = `${formId}-feedback-input`;
+  const choicesId = `${formId}-feedback-choices`;
 
   return (
     <form
-      className={styles.root}
+      className={styles.base}
       noValidate
       onSubmit={onFormSubmit}
       aria-label="Feedback form"
@@ -158,12 +160,9 @@ const Feedback: React.FC<FeedbackProps> = ({
       <button
         className={styles.submit}
         type="submit"
-        aria-label={buttonText ? `Submit ${buttonText}` : 'Submit feedback'}
       >
         {buttonText}
       </button>
     </form>
   );
 };
-
-export default Feedback;

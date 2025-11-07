@@ -1,24 +1,47 @@
-export interface BaseClassNames {
-  root?: string;
+/**
+ * Class names for the root popup layout elements
+ */
+export interface RootClassNames {
+  /** Wrapper container */
+  base?: string;
+  /** Survey head wrapper (title + close) */
   head?: string;
+  /** Survey main title text */
   title?: string;
+  /** Survey content wrapper (scale or feedback screen) */
   body?: string;
+  /** Close button element */
   close?: string;
 }
 
+/**
+ * Class names for rating scale components
+ */
 export interface ScaleClassNames {
-  root?: string;
+  /** Rating scale wrapper */
+  base?: string;
+  /** List wrapper for rating buttons */
   list?: string;
+  /** Single rating button */
   button?: string;
+  /** Optional icon used inside button */
   icon?: string;
+  /** Score text or number indicator */
   score?: string;
+  /** Labels below scale (left/right limits) */
   labels?: string;
 }
 
 /**
- * Widget type identifier
+ * Available screens in survey flow
  */
-export type WidgetType = 'nps_10' | 'ces_7' | 'csat_5' | 'csat_2';
+export type SurveyScreen =
+/** Rating screen (first screen) */
+  | 'main'
+  /** Final "thanks" message screen */
+  | 'success'
+  /** Feedback input screen */
+  | 'feedback';
 
 /**
  * Payload sent when submitting survey data
@@ -41,11 +64,9 @@ export type SurveyCallback = (payload: SurveySubmitPayload) => void | Promise<vo
  * Shared props for all survey components
  */
 export interface SharedSurveyProps {
-  /** Show up animation **/
-  animated?: boolean;
   /** Optional classNames to customize internal parts */
   classNames?: {
-    base?: BaseClassNames;
+    base?: RootClassNames;
     scale?: ScaleClassNames;
   };
   /** Main survey question (screen 1) */
@@ -65,9 +86,9 @@ export interface SharedSurveyProps {
   /** Success message text */
   successText?: string;
   /** Footer content placeholder (e.g., logo, brand info, or additional elements) **/
-  footerContent?: React.ReactNode;
-  /** Callback when survey is closed */
-  onClose?: () => void;
+  footerComponent?: React.ReactNode;
+  /** Callback when score data is submitted */
+  onScoreSubmit?: SurveyCallback;
   /** Callback when survey data is submitted */
-  onSubmit?: SurveyCallback;
+  onFeedbackSubmit?: SurveyCallback;
 }

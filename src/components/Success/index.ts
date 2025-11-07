@@ -1,1 +1,1 @@
-export { default } from './Success';
+export { Success } from './Success';

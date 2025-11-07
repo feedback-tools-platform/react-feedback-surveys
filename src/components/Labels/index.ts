@@ -1,1 +1,1 @@
-export { default as Labels } from './Labels';
+export { Labels, type LabelsProps } from './Labels';

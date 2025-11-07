@@ -2,8 +2,8 @@ import Popper from '../../icons/popper.svg';
 
 import styles from './Success.module.scss';
 
-const Success: React.FC = () => (
-  <div className={styles.root}>
+export const Success: React.FC = () => (
+  <div className={styles.base}>
     <Popper
       aria-hidden="true"
       className={styles.icon}
@@ -12,5 +12,3 @@ const Success: React.FC = () => (
     />
   </div>
 );
-
-export default Success;

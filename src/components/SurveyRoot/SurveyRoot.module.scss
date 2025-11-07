@@ -1,0 +1,21 @@
+.base {
+  padding: 0;
+  overflow: auto;
+  font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
+  color: var(--ft-color-text);
+}
+
+.head {
+  display: flex;
+  gap: 8px;
+  padding: 0 32px 20px 0;
+}
+
+.title {
+  flex: 1 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.4;
+}

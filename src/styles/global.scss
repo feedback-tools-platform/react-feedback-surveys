@@ -6,3 +6,17 @@
   --ft-control-bg: #F2F4F7;
   --ft-shadow-color: rgb(0 0 0 / 20%);
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

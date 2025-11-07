@@ -1,17 +1,17 @@
 import styles from './Labels.module.scss';
 
-interface LabelsProps {
+export interface LabelsProps {
   className?: string;
   labelLeft?: React.ReactNode;
   labelRight?: React.ReactNode;
 }
 
-const Labels: React.FC<LabelsProps> = ({
+export const Labels: React.FC<LabelsProps> = ({
   className = '',
   labelLeft,
   labelRight
 }) => (
-  <div className={`${styles.root} ${className}`}>
+  <div className={`${styles.base} ${className}`}>
     <div className={styles.label}>
       {labelLeft}
     </div>
@@ -21,5 +21,3 @@ const Labels: React.FC<LabelsProps> = ({
     </div>
   </div>
 );
-
-export default Labels;

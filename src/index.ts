@@ -1,6 +1,8 @@
 import './styles/global.scss';
 
-export * from './surveys/CSAT2';
-export * from './surveys/CSAT5';
-export * from './surveys/CES7';
-export * from './surveys/NPS10';
+export * from './types';
+export * from './components/Popup';
+export * from './surveys/CSAT2Survey';
+export * from './surveys/CSAT5Survey';
+export * from './surveys/CES7Survey';
+export * from './surveys/NPS10Survey';
