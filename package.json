@@ -10,7 +10,9 @@
   },
   "author": "FENWIK",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -30,9 +32,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@storybook/addon-a11y": "^10.0.3",
-    "@storybook/addon-docs": "^10.0.3",
-    "@storybook/react-vite": "^10.0.0",
+    "@storybook/addon-a11y": "^10.0.5",
+    "@storybook/addon-docs": "^10.0.5",
+    "@storybook/react-vite": "^10.0.5",
     "@stylistic/stylelint-plugin": "^4.0.0",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
@@ -41,12 +43,12 @@
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
-    "eslint-plugin-storybook": "^10.0.0",
+    "eslint-plugin-storybook": "^10.0.5",
     "globals": "^16.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "sass": "^1.93.2",
-    "storybook": "^10.0.0",
+    "storybook": "^10.0.5",
     "stylelint": "^16.25.0",
     "stylelint-config-standard-scss": "^16.0.0",
     "stylelint-order": "^7.0.0",

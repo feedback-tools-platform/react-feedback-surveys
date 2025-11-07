@@ -16,10 +16,10 @@ const preview: Preview = {
   parameters: {
     layout: 'centered',
     backgrounds: {
-      values: [
-        { name: 'light', value: '#FFF' },
-        { name: 'dark', value: '#333' }
-      ]
+      options: {
+        light: { name: 'light', value: '#FFF' },
+        dark: { name: 'dark', value: '#333' }
+      }
     },
     controls: {
       matchers: {
@@ -28,7 +28,7 @@ const preview: Preview = {
       }
     },
     viewport: {
-      viewports: MY_VIEWPORTS
+      options: MY_VIEWPORTS
     },
   }
 };
