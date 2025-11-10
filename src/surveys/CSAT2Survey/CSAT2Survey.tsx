@@ -25,7 +25,6 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
-  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -50,7 +49,6 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
-      footer={footer}
       onFeedback={onFeedbackChange}
     >
       {(scaleStyle === 'emoji') && (

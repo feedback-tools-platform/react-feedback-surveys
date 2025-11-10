@@ -24,7 +24,6 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
-  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -49,7 +48,6 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
-      footer={footer}
       onFeedback={onFeedbackChange}
     >
       {(scaleStyle === 'numbers') && (

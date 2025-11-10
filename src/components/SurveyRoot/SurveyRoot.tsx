@@ -33,8 +33,6 @@ export interface SurveyRootProps {
   thankYouMessage?: SharedSurveyProps['thankYouMessage'];
   /** Current screen */
   screen: SurveyScreen;
-  /** Survey bottom content */
-  footer?: SharedSurveyProps['footer'];
   /** Callback when feedback is submitted */
   onFeedback?: (comment: string | string[]) => void;
 }
@@ -50,7 +48,6 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   choiceOptions,
   thankYouMessage,
   screen,
-  footer,
   onFeedback
 }) => {
   const titleId = useId();
@@ -110,8 +107,6 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           <Success />
         </div>
       )}
-
-      {footer}
     </div>
   );
 };

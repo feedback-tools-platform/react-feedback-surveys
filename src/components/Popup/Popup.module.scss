@@ -1,13 +1,14 @@
 .base {
   position: fixed;
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
   max-height: calc(100vh - 48px);
+  padding: 0;
+  overflow: auto;
+  background-color: var(--ft-color-bg);
   border-radius: 8px;
   box-shadow: 0 0 10px var(--ft-shadow-color);
   transform-origin: 50% 100%;
-  background-color: var(--ft-color-bg);
 }
 
 .animated {
@@ -43,13 +44,13 @@
 
 .right {
   top: 50%;
-  transform: translateY(-50%);
   right: 24px;
+  transform: translateY(-50%);
 }
 
 .bottomRight {
-  bottom: 24px;
   right: 24px;
+  bottom: 24px;
 }
 
 .bottom {
@@ -73,9 +74,9 @@
 .close {
   @include resetButton;
 
+  position: absolute;
   top: 24px;
   right: 24px;
-  position: absolute;
   width: 24px;
   height: 24px;
   color: #98A2B3;

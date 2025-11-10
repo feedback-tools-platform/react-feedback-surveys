@@ -58,6 +58,7 @@ export const EmojiPopup: Story = {
   decorators: [
     minHeightDecorator(240)
   ],
+  name: 'Emoji (popup)',
   render: (args) => (
     <Popup>
       <CSAT2Survey {...args} />
@@ -87,6 +88,7 @@ export const ThumbsPopup: Story = {
   decorators: [
     minHeightDecorator(240)
   ],
+  name: 'Thumbs (popup)',
   render: (args) => (
     <Popup>
       <CSAT2Survey {...args} />

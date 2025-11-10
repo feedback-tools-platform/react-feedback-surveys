@@ -26,7 +26,6 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
-  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -51,7 +50,6 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
-      footer={footer}
       onFeedback={onFeedbackChange}
     >
       {(scaleStyle === 'emoji') && (

@@ -52,6 +52,7 @@ export const NumbersPopup: Story = {
   decorators: [
     minHeightDecorator(240)
   ],
+  name: 'Numbers (popup)',
   render: (args) => (
     <Popup>
       <NPS10Survey {...args} />

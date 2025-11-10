@@ -53,6 +53,7 @@ export const NumbersPopup: Story = {
     responseType: 'choices',
     choiceOptions: null,
   },
+  name: 'Numbers (popup)',
   decorators: [
     minHeightDecorator(240)
   ],

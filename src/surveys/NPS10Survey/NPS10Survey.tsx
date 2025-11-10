@@ -24,7 +24,6 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
-  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -49,7 +48,6 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
-      footer={footer}
       onFeedback={onFeedbackChange}
     >
       {(scaleStyle === 'numbers') && (

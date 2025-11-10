@@ -85,8 +85,6 @@ export interface SharedSurveyProps {
   choiceOptions?: string[] | null;
   /** Success message text */
   thankYouMessage: string;
-  /** Footer content placeholder (e.g., logo, brand info, or additional elements) **/
-  footer?: React.ReactNode;
   /** Callback when score data is submitted */
   onScoreSubmit?: SurveyCallback;
   /** Callback when survey data is submitted */

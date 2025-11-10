@@ -62,6 +62,7 @@ export const EmojiPopup: Story = {
   decorators: [
     minHeightDecorator(240)
   ],
+  name: 'Emoji (popup)',
   render: (args) => (
     <Popup>
       <CSAT5Survey {...args} />
@@ -91,6 +92,7 @@ export const NumbersPopup: Story = {
   decorators: [
     minHeightDecorator(240)
   ],
+  name: 'Numbers (popup)',
   render: (args) => (
     <Popup>
       <CSAT5Survey {...args} />
@@ -120,6 +122,7 @@ export const StarsPopup: Story = {
   decorators: [
     minHeightDecorator(240)
   ],
+  name: 'Stars (popup)',
   render: (args) => (
     <Popup>
       <CSAT5Survey {...args} />
