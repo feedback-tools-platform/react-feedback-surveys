@@ -13,6 +13,10 @@ const meta = {
     scaleStyle: {
       control: 'radio',
       options: ['numbers']
+    },
+    responseType: {
+      control: 'radio',
+      options: [null, 'choices', 'text']
     }
   }
 } satisfies Meta<typeof CES7Survey>;

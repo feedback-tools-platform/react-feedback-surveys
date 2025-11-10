@@ -13,6 +13,10 @@ const meta = {
     scaleStyle: {
       control: 'radio',
       options: ['numbers']
+    },
+    responseType: {
+      control: 'radio',
+      options: [null, 'choices', 'text']
     }
   }
 } satisfies Meta<typeof NPS10Survey>;
@@ -25,9 +29,9 @@ const commonProps: NPS10SurveyProps = {
   question: 'How likely are you to recommend our product/service to a friend or colleague?',
   minLabel: 'Very unlikely',
   maxLabel: 'Very likely',
+  responseType: 'text',
   textQuestion: 'We’d love to hear your thoughts — what can we improve?',
   textButtonLabel: 'Submit',
-  responseType: 'text',
   choiceOptions: null,
   thankYouMessage: 'Thank you for your feedback'
 };

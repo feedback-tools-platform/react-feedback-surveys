@@ -13,6 +13,10 @@ const meta = {
     scaleStyle: {
       control: 'radio',
       options: ['emoji', 'thumbs']
+    },
+    responseType: {
+      control: 'radio',
+      options: [null, 'choices', 'text']
     }
   }
 } satisfies Meta<typeof CSAT2Survey>;
@@ -25,9 +29,9 @@ const commonProps: Omit<CSAT2SurveyProps, 'scaleStyle'> = {
   question: 'Are you satisfied with the result?',
   minLabel: undefined,
   maxLabel: undefined,
+  responseType: null,
   textQuestion: 'We’d love to hear your thoughts — what can we improve?',
   textButtonLabel: 'Submit',
-  responseType: null,
   choiceOptions: null,
   thankYouMessage: 'Thank you for your feedback'
 }

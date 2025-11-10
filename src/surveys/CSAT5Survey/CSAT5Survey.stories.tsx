@@ -17,6 +17,10 @@ const meta = {
         'numbers',
         'stars'
       ]
+    },
+    responseType: {
+      control: 'radio',
+      options: [null, 'choices', 'text']
     }
   }
 } satisfies Meta<typeof CSAT5Survey>;
@@ -28,9 +32,9 @@ const commonProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
   question: 'How would you rate your satisfaction with our product?',
   minLabel: 'Very unsatisfied',
   maxLabel: 'Very satisfied',
+  responseType: null,
   textQuestion: 'We’d love to hear your thoughts — what can we improve?',
   textButtonLabel: 'Submit',
-  responseType: null,
   choiceOptions: null,
   thankYouMessage: 'Thank you for your feedback'
 }
