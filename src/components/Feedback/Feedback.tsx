@@ -5,20 +5,20 @@ import { type SharedSurveyProps } from '../../types';
 import styles from './Feedback.module.scss';
 
 export interface FeedbackProps {
-  /** Submit button text */
-  buttonText?: React.ReactNode;
+  /** Submit button label */
+  buttonLabel?: React.ReactNode;
   /** Type of feedback collection */
-  feedbackType?: SharedSurveyProps['feedbackType'];
+  responseType?: SharedSurveyProps['responseType'];
   /** Optional predefined feedback choices */
-  feedbackChoices?: SharedSurveyProps['feedbackChoices'];
+  choiceOptions?: SharedSurveyProps['choiceOptions'];
   /** Callback when feedback is submitted */
   onSubmit?: (comment: string | string[]) => void;
 }
 
 export const Feedback: React.FC<FeedbackProps> = ({
-  buttonText = 'Submit',
-  feedbackType,
-  feedbackChoices,
+  buttonLabel = 'Submit',
+  responseType,
+  choiceOptions,
   onSubmit
 }) => {
   const formId = useId();
@@ -51,7 +51,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
     const commentValue = comment.trim();
 
-    if (feedbackType === 'choices') {
+    if (responseType === 'choices') {
       onSubmit?.([...selected, commentValue].filter(Boolean));
       return;
     }
@@ -59,12 +59,12 @@ export const Feedback: React.FC<FeedbackProps> = ({
     onSubmit?.(comment.trim());
   }, [
     comment,
-    feedbackType,
+    responseType,
     selected,
     onSubmit
   ]);
 
-  if (!feedbackType) {
+  if (!responseType) {
     return null;
   }
 
@@ -79,12 +79,12 @@ export const Feedback: React.FC<FeedbackProps> = ({
       onSubmit={onFormSubmit}
       aria-label="Feedback form"
     >
-      {(feedbackType === 'choices') && (
+      {(responseType === 'choices') && (
         <div
           id={choicesId}
           className={styles.choices}
         >
-          {feedbackChoices?.map((choice) => (
+          {choiceOptions?.map((choice) => (
             <div
               key={choice}
               className={styles.choice}
@@ -110,7 +110,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
         </div>
       )}
 
-      {(feedbackType === 'choices') && (
+      {(responseType === 'choices') && (
         <>
           <label
             htmlFor={inputId}
@@ -133,7 +133,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
         </>
       )}
 
-      {(feedbackType === 'text') && (
+      {(responseType === 'text') && (
         <>
           <label
             htmlFor={textareaId}
@@ -161,7 +161,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
         className={styles.submit}
         type="submit"
       >
-        {buttonText}
+        {buttonLabel}
       </button>
     </form>
   );

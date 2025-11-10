@@ -11,21 +11,21 @@ import styles from './CSAT2Survey.module.scss';
 
 export interface CSAT2SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
-  scaleVisualizationType: 'emoji' | 'thumbs';
+  scaleStyle: 'emoji' | 'thumbs';
 }
 
 export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
   classNames,
-  scaleVisualizationType,
-  mainQuestion,
-  mainLabelLeft,
-  mainLabelRight,
-  feedbackQuestion,
-  feedbackButtonText,
-  feedbackType = 'none',
-  feedbackChoices,
-  successText,
-  footerComponent,
+  scaleStyle,
+  question,
+  minLabel,
+  maxLabel,
+  textQuestion,
+  textButtonLabel,
+  responseType,
+  choiceOptions,
+  thankYouMessage,
+  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -34,7 +34,7 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
     onScoreChange,
     onFeedbackChange
   } = useSurveyState({
-    feedbackType,
+    responseType,
     onScoreSubmit,
     onFeedbackSubmit
   })
@@ -43,31 +43,30 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
-      name="csat2"
       screen={screen}
-      mainQuestion={mainQuestion}
-      feedbackQuestion={feedbackQuestion}
-      feedbackButtonText={feedbackButtonText}
-      feedbackType={feedbackType}
-      feedbackChoices={feedbackChoices}
-      successText={successText}
-      footerComponent={footerComponent}
+      question={question}
+      textQuestion={textQuestion}
+      textButtonLabel={textButtonLabel}
+      responseType={responseType}
+      choiceOptions={choiceOptions}
+      thankYouMessage={thankYouMessage}
+      footer={footer}
       onFeedback={onFeedbackChange}
     >
-      {(scaleVisualizationType === 'emoji') && (
+      {(scaleStyle === 'emoji') && (
         <CSAT2SurveyEmoji
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}
 
-      {(scaleVisualizationType === 'thumbs') && (
+      {(scaleStyle === 'thumbs') && (
         <CSAT2SurveyThumbs
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}

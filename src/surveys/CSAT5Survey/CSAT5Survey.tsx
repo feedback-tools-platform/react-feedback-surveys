@@ -12,21 +12,21 @@ import styles from './CSAT5Survey.module.scss';
 
 export interface CSAT5SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
-  scaleVisualizationType: 'emoji' | 'numbers' | 'stars';
+  scaleStyle: 'emoji' | 'numbers' | 'stars';
 }
 
 export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
   classNames,
-  scaleVisualizationType,
-  mainQuestion,
-  mainLabelLeft,
-  mainLabelRight,
-  feedbackQuestion,
-  feedbackButtonText,
-  feedbackType = 'none',
-  feedbackChoices,
-  successText,
-  footerComponent,
+  scaleStyle,
+  question,
+  minLabel,
+  maxLabel,
+  textQuestion,
+  textButtonLabel,
+  responseType,
+  choiceOptions,
+  thankYouMessage,
+  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -35,7 +35,7 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
     onScoreChange,
     onFeedbackChange
   } = useSurveyState({
-    feedbackType,
+    responseType,
     onScoreSubmit,
     onFeedbackSubmit
   })
@@ -44,40 +44,39 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
-      name="csat5"
       screen={screen}
-      mainQuestion={mainQuestion}
-      feedbackQuestion={feedbackQuestion}
-      feedbackButtonText={feedbackButtonText}
-      feedbackType={feedbackType}
-      feedbackChoices={feedbackChoices}
-      successText={successText}
-      footerComponent={footerComponent}
+      question={question}
+      textQuestion={textQuestion}
+      textButtonLabel={textButtonLabel}
+      responseType={responseType}
+      choiceOptions={choiceOptions}
+      thankYouMessage={thankYouMessage}
+      footer={footer}
       onFeedback={onFeedbackChange}
     >
-      {(scaleVisualizationType === 'emoji') && (
+      {(scaleStyle === 'emoji') && (
         <CSAT5SurveyEmoji
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}
 
-      {(scaleVisualizationType === 'numbers') && (
+      {(scaleStyle === 'numbers') && (
         <CSAT5SurveyNumbers
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}
 
-      {(scaleVisualizationType === 'stars') && (
+      {(scaleStyle === 'stars') && (
         <CSAT5SurveyStars
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}

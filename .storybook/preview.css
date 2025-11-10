@@ -3,3 +3,7 @@
 body {
   font-family: Inter, sans-serif;
 }
+
+.sb-show-main.sb-main-centered #storybook-root {
+  padding: 1.5rem;
+}

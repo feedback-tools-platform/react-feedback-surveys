@@ -10,21 +10,21 @@ import styles from './CES7Survey.module.scss';
 
 export interface CES7SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
-  scaleVisualizationType: 'numbers'
+  scaleStyle: 'numbers'
 }
 
 export const CES7Survey: React.FC<CES7SurveyProps> = ({
   classNames,
-  scaleVisualizationType,
-  mainQuestion,
-  mainLabelLeft,
-  mainLabelRight,
-  feedbackQuestion,
-  feedbackButtonText,
-  feedbackType = 'none',
-  feedbackChoices,
-  successText,
-  footerComponent,
+  scaleStyle,
+  question,
+  minLabel,
+  maxLabel,
+  textQuestion,
+  textButtonLabel,
+  responseType,
+  choiceOptions,
+  thankYouMessage,
+  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -33,7 +33,7 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
     onScoreChange,
     onFeedbackChange
   } = useSurveyState({
-    feedbackType,
+    responseType,
     onScoreSubmit,
     onFeedbackSubmit
   })
@@ -42,22 +42,21 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
-      name="ces7"
       screen={screen}
-      mainQuestion={mainQuestion}
-      feedbackQuestion={feedbackQuestion}
-      feedbackButtonText={feedbackButtonText}
-      feedbackType={feedbackType}
-      feedbackChoices={feedbackChoices}
-      successText={successText}
-      footerComponent={footerComponent}
+      question={question}
+      textQuestion={textQuestion}
+      textButtonLabel={textButtonLabel}
+      responseType={responseType}
+      choiceOptions={choiceOptions}
+      thankYouMessage={thankYouMessage}
+      footer={footer}
       onFeedback={onFeedbackChange}
     >
-      {(scaleVisualizationType === 'numbers') && (
+      {(scaleStyle === 'numbers') && (
         <CES7SurveyNumbers
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}

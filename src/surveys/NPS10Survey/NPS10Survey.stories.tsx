@@ -10,7 +10,7 @@ const meta = {
   component: NPS10Survey,
   tags: ['autodocs'],
   argTypes: {
-    scaleVisualizationType: {
+    scaleStyle: {
       control: 'radio',
       options: ['numbers']
     }
@@ -20,20 +20,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: Partial<NPS10SurveyProps> = {
-  mainQuestion: 'How likely are you to recommend our product/service to a friend or colleague?',
-  mainLabelLeft: 'Very unlikely',
-  mainLabelRight: 'Very likely',
-  feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
-  feedbackButtonText: 'Submit',
-  feedbackType: 'text',
-  feedbackChoices: null,
-  successText: 'Thank you for your feedback'
+const commonProps: NPS10SurveyProps = {
+  scaleStyle: 'numbers',
+  question: 'How likely are you to recommend our product/service to a friend or colleague?',
+  minLabel: 'Very unlikely',
+  maxLabel: 'Very likely',
+  textQuestion: 'We’d love to hear your thoughts — what can we improve?',
+  textButtonLabel: 'Submit',
+  responseType: 'text',
+  choiceOptions: null,
+  thankYouMessage: 'Thank you for your feedback'
 };
 
 export const Numbers: Story = {
   args: {
-    scaleVisualizationType: 'numbers',
     ...commonProps
   },
   parameters: {
@@ -43,7 +43,6 @@ export const Numbers: Story = {
 
 export const NumbersPopup: Story = {
   args: {
-    scaleVisualizationType: 'numbers',
     ...commonProps
   },
   decorators: [

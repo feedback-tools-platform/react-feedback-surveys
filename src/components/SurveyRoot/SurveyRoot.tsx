@@ -19,41 +19,39 @@ export interface SurveyRootProps {
   className?: string;
   /** Optional classNames to customize internal parts */
   classNames?: RootClassNames;
-  /** Survey component name for CSS classes */
-  name: string;
   /** Main survey question */
-  mainQuestion?: SharedSurveyProps['mainQuestion'];
+  question?: SharedSurveyProps['question'];
   /** Follow-up feedback question */
-  feedbackQuestion?: SharedSurveyProps['feedbackQuestion'];
+  textQuestion?: SharedSurveyProps['textQuestion'];
   /** Submit button text */
-  feedbackButtonText?: SharedSurveyProps['feedbackButtonText'];
+  textButtonLabel?: SharedSurveyProps['textButtonLabel'];
   /** Type of feedback collection */
-  feedbackType?: SharedSurveyProps['feedbackType']
+  responseType?: SharedSurveyProps['responseType']
   /** Optional predefined choices for feedback */
-  feedbackChoices?: SharedSurveyProps['feedbackChoices'];
+  choiceOptions?: SharedSurveyProps['choiceOptions'];
   /** Success message text */
-  successText?: SharedSurveyProps['successText'];
+  thankYouMessage?: SharedSurveyProps['thankYouMessage'];
   /** Current screen */
   screen: SurveyScreen;
   /** Survey bottom content */
-  footerComponent?: SharedSurveyProps['footerComponent'];
+  footer?: SharedSurveyProps['footer'];
   /** Callback when feedback is submitted */
   onFeedback?: (comment: string | string[]) => void;
 }
 
 export const SurveyRoot: React.FC<SurveyRootProps> = ({
   children,
-  className = '',
-  mainQuestion,
-  feedbackQuestion,
-  feedbackButtonText,
-  feedbackType,
-  feedbackChoices,
-  successText,
+  className,
+  classNames,
+  question,
+  textQuestion,
+  textButtonLabel,
+  responseType,
+  choiceOptions,
+  thankYouMessage,
   screen,
-  footerComponent,
-  onFeedback,
-  classNames
+  footer,
+  onFeedback
 }) => {
   const titleId = useId();
 
@@ -66,9 +64,9 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           className={cn(styles.title, classNames?.title)}
           role="heading"
         >
-          {(screen === 'main') && mainQuestion}
-          {(screen === 'feedback') && feedbackQuestion}
-          {(screen === 'success') && successText}
+          {(screen === 'main') && question}
+          {(screen === 'feedback') && textQuestion}
+          {(screen === 'success') && thankYouMessage}
         </div>
       </div>
 
@@ -91,9 +89,9 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           role="region"
         >
           <Feedback
-            buttonText={feedbackButtonText}
-            feedbackChoices={feedbackChoices}
-            feedbackType={feedbackType}
+            buttonLabel={textButtonLabel}
+            choiceOptions={choiceOptions}
+            responseType={responseType}
             onSubmit={onFeedback}
           />
         </div>
@@ -103,7 +101,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         <div
           aria-atomic="true"
           aria-live="polite"
-          aria-label={successText}
+          aria-label={thankYouMessage}
           aria-labelledby={titleId}
           className={cn(styles.body, classNames?.body)}
           tabIndex={-1}
@@ -113,7 +111,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         </div>
       )}
 
-      {footerComponent}
+      {footer}
     </div>
   );
 };

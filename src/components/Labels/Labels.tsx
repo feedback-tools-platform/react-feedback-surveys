@@ -1,3 +1,5 @@
+import { cn } from '../../utils';
+
 import styles from './Labels.module.scss';
 
 export interface LabelsProps {
@@ -7,11 +9,11 @@ export interface LabelsProps {
 }
 
 export const Labels: React.FC<LabelsProps> = ({
-  className = '',
+  className,
   labelLeft,
   labelRight
 }) => (
-  <div className={`${styles.base} ${className}`}>
+  <div className={cn(styles.base, className)}>
     <div className={styles.label}>
       {labelLeft}
     </div>

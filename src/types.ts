@@ -70,23 +70,23 @@ export interface SharedSurveyProps {
     scale?: ScaleClassNames;
   };
   /** Main survey question (screen 1) */
-  mainQuestion?: string;
+  question: string;
   /** Left label for the rating scale */
-  mainLabelLeft?: string;
+  minLabel?: string;
   /** Right label for the rating scale */
-  mainLabelRight?: string;
-  /** Follow-up feedback question (screen 2) */
-  feedbackQuestion?: string;
-  /** Submit button text */
-  feedbackButtonText?: string;
+  maxLabel?: string;
   /** Type of feedback collection */
-  feedbackType?: 'none' | 'text' | 'choices';
+  responseType?: null | 'text' | 'choices';
+  /** Follow-up feedback question (screen 2) */
+  textQuestion?: string;
+  /** Submit button text */
+  textButtonLabel?: string;
   /** Optional predefined choices for feedback */
-  feedbackChoices?: string[] | null;
+  choiceOptions?: string[] | null;
   /** Success message text */
-  successText?: string;
+  thankYouMessage: string;
   /** Footer content placeholder (e.g., logo, brand info, or additional elements) **/
-  footerComponent?: React.ReactNode;
+  footer?: React.ReactNode;
   /** Callback when score data is submitted */
   onScoreSubmit?: SurveyCallback;
   /** Callback when survey data is submitted */

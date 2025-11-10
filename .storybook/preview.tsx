@@ -1,7 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
 
-import { minHeightDecorator } from '../src/utils/storybook';
-
 import '../src/styles/global.scss';
 import './preview.css';
 

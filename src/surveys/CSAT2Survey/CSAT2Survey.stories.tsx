@@ -10,7 +10,7 @@ const meta = {
   component: CSAT2Survey,
   tags: ['autodocs'],
   argTypes: {
-    scaleVisualizationType: {
+    scaleStyle: {
       control: 'radio',
       options: ['emoji', 'thumbs']
     }
@@ -20,24 +20,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: Partial<CSAT2SurveyProps> = {
+const commonProps: Omit<CSAT2SurveyProps, 'scaleStyle'> = {
   classNames: undefined,
-  mainQuestion: 'Are you satisfied with the result?',
-  mainLabelLeft: undefined,
-  mainLabelRight: undefined,
-  feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
-  feedbackButtonText: 'Submit',
-  feedbackType: 'none',
-  feedbackChoices: null,
-  successText: 'Thank you for your feedback'
+  question: 'Are you satisfied with the result?',
+  minLabel: undefined,
+  maxLabel: undefined,
+  textQuestion: 'We’d love to hear your thoughts — what can we improve?',
+  textButtonLabel: 'Submit',
+  responseType: null,
+  choiceOptions: null,
+  thankYouMessage: 'Thank you for your feedback'
 }
 
 export const Emoji: Story = {
   args: {
     ...commonProps,
-    scaleVisualizationType: 'emoji',
-    feedbackType: 'text',
-    feedbackChoices: []
+    scaleStyle: 'emoji',
+    responseType: 'text',
+    choiceOptions: []
   },
   parameters: {
     layout: 'centered',
@@ -46,10 +46,10 @@ export const Emoji: Story = {
 
 export const EmojiPopup: Story = {
   args: {
-    scaleVisualizationType: 'emoji',
+    scaleStyle: 'emoji',
     ...commonProps,
-    feedbackType: 'choices',
-    feedbackChoices: ['Very easy', 'Very difficult']
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
   },
   decorators: [
     minHeightDecorator(240)
@@ -63,10 +63,10 @@ export const EmojiPopup: Story = {
 
 export const Thumbs: Story = {
   args: {
-    scaleVisualizationType: 'emoji',
+    scaleStyle: 'thumbs',
     ...commonProps,
-    feedbackType: 'choices',
-    feedbackChoices: ['Very easy', 'Very difficult']
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
   },
   parameters: {
     layout: 'centered',
@@ -75,10 +75,10 @@ export const Thumbs: Story = {
 
 export const ThumbsPopup: Story = {
   args: {
-    scaleVisualizationType: 'emoji',
+    scaleStyle: 'thumbs',
     ...commonProps,
-    feedbackType: 'choices',
-    feedbackChoices: ['Very easy', 'Very difficult']
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
   },
   decorators: [
     minHeightDecorator(240)

@@ -7,13 +7,13 @@ import type {
 } from '../types';
 
 interface UseSurveyStateProps {
-  feedbackType?: SharedSurveyProps['feedbackType'];
+  responseType?: SharedSurveyProps['responseType'];
   onScoreSubmit?: SurveyCallback;
   onFeedbackSubmit?: SurveyCallback;
 }
 
 const useSurveyState = ({
-  feedbackType,
+  responseType,
   onScoreSubmit,
   onFeedbackSubmit
 }: UseSurveyStateProps) => {
@@ -47,16 +47,16 @@ const useSurveyState = ({
       setIsLoading(true);
       try {
         await onScoreSubmit({ value: newValue });
-        setIsSuccess(feedbackType === 'none');
+        setIsSuccess(!responseType);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to submit'));
       } finally {
         setIsLoading(false);
       }
     } else {
-      setIsSuccess(feedbackType === 'none');
+      setIsSuccess(!responseType);
     }
-  }, [feedbackType, onScoreSubmit]);
+  }, [responseType, onScoreSubmit]);
 
   const onFeedbackChange = useCallback(async(comment: string | string[]) => {
     if (!comment?.length) {

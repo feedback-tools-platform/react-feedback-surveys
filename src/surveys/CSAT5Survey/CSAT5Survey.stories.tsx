@@ -10,7 +10,7 @@ const meta = {
   component: CSAT5Survey,
   tags: ['autodocs'],
   argTypes: {
-    scaleVisualizationType: {
+    scaleStyle: {
       control: 'radio',
       options: [
         'emoji',
@@ -24,23 +24,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: Partial<CSAT5SurveyProps> = {
-  mainQuestion: 'How would you rate your satisfaction with our product?',
-  mainLabelLeft: 'Very unsatisfied',
-  mainLabelRight: 'Very satisfied',
-  feedbackQuestion: 'We’d love to hear your thoughts — what can we improve?',
-  feedbackButtonText: 'Submit',
-  feedbackType: 'none',
-  feedbackChoices: null,
-  successText: 'Thank you for your feedback'
+const commonProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
+  question: 'How would you rate your satisfaction with our product?',
+  minLabel: 'Very unsatisfied',
+  maxLabel: 'Very satisfied',
+  textQuestion: 'We’d love to hear your thoughts — what can we improve?',
+  textButtonLabel: 'Submit',
+  responseType: null,
+  choiceOptions: null,
+  thankYouMessage: 'Thank you for your feedback'
 }
 
 export const Emoji: Story = {
   args: {
-    scaleVisualizationType: 'emoji',
+    scaleStyle: 'emoji',
     ...commonProps,
-    feedbackQuestion: '',
-    feedbackButtonText: ''
+    textQuestion: '',
+    textButtonLabel: ''
   },
   parameters: {
     title: 'teest',
@@ -50,10 +50,10 @@ export const Emoji: Story = {
 
 export const EmojiPopup: Story = {
   args: {
-    scaleVisualizationType: 'emoji',
+    scaleStyle: 'emoji',
     ...commonProps,
-    feedbackQuestion: '',
-    feedbackButtonText: ''
+    textQuestion: '',
+    textButtonLabel: ''
   },
   decorators: [
     minHeightDecorator(240)
@@ -67,10 +67,10 @@ export const EmojiPopup: Story = {
 
 export const Numbers: Story = {
   args: {
-    scaleVisualizationType: 'numbers',
+    scaleStyle: 'numbers',
     ...commonProps,
-    feedbackType: 'text',
-    feedbackChoices: []
+    responseType: 'text',
+    choiceOptions: []
   },
   parameters: {
     layout: 'centered',
@@ -79,10 +79,10 @@ export const Numbers: Story = {
 
 export const NumbersPopup: Story = {
   args: {
-    scaleVisualizationType: 'numbers',
+    scaleStyle: 'numbers',
     ...commonProps,
-    feedbackType: 'text',
-    feedbackChoices: []
+    responseType: 'text',
+    choiceOptions: []
   },
   decorators: [
     minHeightDecorator(240)
@@ -96,10 +96,10 @@ export const NumbersPopup: Story = {
 
 export const Stars: Story = {
   args: {
-    scaleVisualizationType: 'stars',
+    scaleStyle: 'stars',
     ...commonProps,
-    feedbackType: 'choices',
-    feedbackChoices: ['Very easy', 'Very difficult']
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
   },
   parameters: {
     layout: 'centered',
@@ -108,10 +108,10 @@ export const Stars: Story = {
 
 export const StarsPopup: Story = {
   args: {
-    scaleVisualizationType: 'stars',
+    scaleStyle: 'stars',
     ...commonProps,
-    feedbackType: 'choices',
-    feedbackChoices: ['Very easy', 'Very difficult']
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
   },
   decorators: [
     minHeightDecorator(240)

@@ -10,21 +10,21 @@ import styles from './NPS10Survey.module.scss';
 
 export interface NPS10SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
-  scaleVisualizationType: 'numbers'
+  scaleStyle: 'numbers'
 }
 
 export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
   classNames,
-  scaleVisualizationType,
-  mainQuestion,
-  mainLabelLeft,
-  mainLabelRight,
-  feedbackQuestion,
-  feedbackButtonText,
-  feedbackType = 'none',
-  feedbackChoices,
-  successText,
-  footerComponent,
+  scaleStyle,
+  question,
+  minLabel,
+  maxLabel,
+  textQuestion,
+  textButtonLabel,
+  responseType,
+  choiceOptions,
+  thankYouMessage,
+  footer,
   onScoreSubmit,
   onFeedbackSubmit
 }) => {
@@ -33,7 +33,7 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
     onScoreChange,
     onFeedbackChange
   } = useSurveyState({
-    feedbackType,
+    responseType,
     onScoreSubmit,
     onFeedbackSubmit
   })
@@ -42,22 +42,21 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
-      name="nps10"
       screen={screen}
-      mainQuestion={mainQuestion}
-      feedbackQuestion={feedbackQuestion}
-      feedbackButtonText={feedbackButtonText}
-      feedbackType={feedbackType}
-      feedbackChoices={feedbackChoices}
-      successText={successText}
-      footerComponent={footerComponent}
+      question={question}
+      textQuestion={textQuestion}
+      textButtonLabel={textButtonLabel}
+      responseType={responseType}
+      choiceOptions={choiceOptions}
+      thankYouMessage={thankYouMessage}
+      footer={footer}
       onFeedback={onFeedbackChange}
     >
-      {(scaleVisualizationType === 'numbers') && (
+      {(scaleStyle === 'numbers') && (
         <NPS10SurveyNumbers
           classNames={classNames?.scale}
-          labelLeft={mainLabelLeft}
-          labelRight={mainLabelRight}
+          labelLeft={minLabel}
+          labelRight={maxLabel}
           onChange={onScoreChange}
         />
       )}
