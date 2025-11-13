@@ -84,7 +84,9 @@ Surveys to ask users about their overall satisfaction.
 - "How would you rate your overall experience?"
 - "How satisfied are you with our customer support?"
 
-[<img src="docs/assets/csat5.png" width="392">](docs/assets/csat5.png)
+<div style="display: inline-block; background-color: var(--bgColor-muted, #f6f8fa); padding: 16px 24px;">
+<img alt="csat5" src="docs/assets/csat5.png" width="368" />
+</div>
 
 ```tsx
 import { CSAT5Survey } from 'react-feedback-surveys';
@@ -115,7 +117,9 @@ Surveys to ask users about specific features or flows.
 - "Did you find what you were looking for?"
 - "Are you satisfied with the checkout process?"
 
-[<img src="docs/assets/csat2.png" width="392">](docs/assets/csat2.png)
+<div style="display: inline-block; background-color: var(--bgColor-muted, #f6f8fa); padding: 16px 24px;">
+<img alt="csat2" src="docs/assets/csat2.png" width="358" />
+</div>
 
 ```tsx
 import { CSAT2Survey } from 'react-feedback-surveys';
@@ -144,7 +148,9 @@ Surveys to ask users if they'd recommend your product.
 - "On a scale of 0-10, would you recommend our service?"
 - "How likely are you to recommend this product to others?"
 
-[<img src="docs/assets/nps10.png" width="552">](docs/assets/nps10.png)
+<div style="display: inline-block; background-color: var(--bgColor-muted, #f6f8fa); padding: 1rem; line-height: 0">
+<img alt="nps10" src="docs/assets/nps10.png" width="568" />
+</div>
 
 ```tsx
 import { NPS10Survey } from 'react-feedback-surveys';
@@ -175,7 +181,9 @@ Surveys to ask users how easy it is to use your product.
 - "How much effort did it take to resolve your issue?"
 - "How easy was it to sign up for an account?"
 
-[<img src="docs/assets/ces7.png" width="412">](docs/assets/ces7.png)
+<div style="display: inline-block; background-color: var(--bgColor-muted, #f6f8fa); padding: 16px 24px;">
+<img alt="ces7" src="docs/assets/ces7.png" width="388" />
+</div>
 
 ```tsx
 import { CES7Survey } from 'react-feedback-surveys';
@@ -252,13 +260,48 @@ Most props are shared across all survey widgets. Each widget differs only in its
 | `question`         | `string`                                                                                                                                                                                                | required | Main survey question displayed on the first screen.                          |
 | `minLabel`         | `string`                                                                                                                                                                                                | -        | Left label for the scale.                                                    |
 | `maxLabel`         | `string`                                                                                                                                                                                                | -        | Right label for the scale.                                                   |
-| `responseType`     | `'none' \| 'text' \| 'choices'`                                                                                                                                                                         | -        | Enables optional follow-up feedback.                                         |
+| `responseType`     | `null \| 'text' \| 'choices'`                                                                                                                                                                           | -        | Enables optional follow-up feedback.                                         |
 | `textQuestion`     | `string`                                                                                                                                                                                                | -        | Follow-up question displayed when `responseType` is defined.                 |
 | `textButtonLabel`  | `string`                                                                                                                                                                                                | -        | Submit label for the feedback screen.                                        |
 | `choiceOptions`    | `string[] \| null`                                                                                                                                                                                      | -        | Predefined choices (when `responseType === 'choices'`).                      |
 | `thankYouMessage`  | `string`                                                                                                                                                                                                | required | Message shown after submission.                                              |
-| `onScoreSubmit`    | `({ value: number }) => void \| Promise<void>`                                                                                                                                                          | -        | Called when a score is selected (before feedback screen if enabled).         |
-| `onFeedbackSubmit` | `({ value?: number; comment?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Called when feedback is submitted (includes the selected score and comment). |
+
+### Shared Events
+
+| Prop               | Type                                                                                                                                                                                                   | Required | Description                                                                                                 |
+|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------|
+| `onScoreSubmit`    | `({ value: number }) => void \| Promise<void>`                                                                                                                                                         | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
+| `onFeedbackSubmit` | `({ value: number; comment?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Fires when feedback is submitted. Includes the selected score and the user’s comment(s).                    |
+
+> **Event behavior**
+
+#### `onScoreSubmit`
+
+Invoked immediately when the user selects a score on the rating scale — this callback runs *before* any optional follow-up screen is shown.  
+Use it to persist the rating instantly.  
+The actual `value` returned depends on the survey type:
+
+- **CSAT2:** `1–2`
+- **CSAT5:** `1–5`
+- **CES7:** `1–7`
+- **NPS10:** `0–10`
+
+#### `onFeedbackSubmit`
+
+Invoked when the user completes the follow-up step and submits their feedback (only applies when `responseType` is `text` or `choices`).  
+This callback provides both the original score and the user's input.
+
+**Arguments:**
+- `value: number` — the same score previously passed to `onScoreSubmit`
+- `comment: string | string[]` — depends on `responseType`:
+    - `text`: a single text comment
+    - `choices`: an array of selected options (may include a free-text comment if enabled)
+
+> **Important**  
+You should listen to **both** `onScoreSubmit` and `onFeedbackSubmit`.  
+A user may select a score but abandon the follow-up screen (close the widget, navigate away, refresh, etc.).  
+Handling both events ensures you capture at least the rating even when additional feedback is not provided — and still receive extended data when it is.
+
 
 ### Scale Style Options
 

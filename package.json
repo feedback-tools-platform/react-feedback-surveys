@@ -8,6 +8,17 @@
     "type": "git",
     "url": "https://github.com/feedback-tools-platform/react-feedback-surveys.git"
   },
+  "keywords": [
+    "react",
+    "survey",
+    "feedback",
+    "rating",
+    "CES",
+    "CSAT",
+    "NPS",
+    "survey-widget",
+    "rating-widget"
+  ],
   "author": "FENWIK",
   "type": "module",
   "files": [
