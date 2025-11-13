@@ -5,27 +5,25 @@
 [![license](https://img.shields.io/npm/l/react-feedback-surveys.svg?style=flat-square)](https://github.com/your-org/feedback-tools/blob/main/LICENSE)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/react-feedback-surveys?style=flat-square)](https://bundlephobia.com/package/react-feedback-surveys)
 
-> Lightweight, customizable **CSAT, CES, and NPS survey widgets** for React.
-
----
+> Lightweight, customizable survey widgets to collect user feedback in React apps.
 
 ## Table of Contents
 
 - [Features](#features)
-- [Survey types](#survey-types)
+- [Survey Types](#survey-types)
 - [Installation](#installation)
     * [1. Install](#1-install)
     * [2. Styles](#2-styles)
 - [Survey Components](#survey-components)
-    * [CSAT5Survey](#csat5-5-point-customer-satisfaction)
-    * [CSAT2Survey](#csat2-2-point-customer-satisfaction)
-    * [NPS10Survey](#nps10-net-promoter-score)
-    * [CES7Survey](#ces7-7-point-customer-effort-score)
+    * [CSAT5 (Customer Satisfaction Score, 5-Point Scale)](#csat5-customer-satisfaction-score-5-point-scale)
+    * [CSAT2 (Customer Satisfaction Score, 2-Point Scale)](#csat2-customer-satisfaction-score-2-point-scale)
+    * [NPS10 (Net Promoter Score, 0–10 Scale)](#nps10-net-promoter-score-010-scale)
+    * [CES7 (Customer Effort Score, 7-Point Scale)](#ces7-customer-effort-score-7-point-scale)
 - [Layout Components](#layout-components)
     * [Popup](#popup)
-- [Props](#props-1)
-    * [Shared props](#shared-props)
-    * [Widget-specific](#widget-specific-scalestyle)
+- [Props](#props)
+    * [Shared Props](#shared-props)
+    * [Scale Style Options](#scale-style-options)
         + [CSAT2Survey](#csat2survey)
         + [CSAT5Survey](#csat5survey)
         + [CES7Survey](#ces7survey)
@@ -39,24 +37,25 @@
     * [Library build (watch mode)](#library-build-watch-mode)
     * [Production build](#production-build)
 - [Roadmap](#roadmap)
+- [Changelog](#changelog)
 - [License](#license)
 
----
-
-A minimal, flexible library for embedding customer feedback widgets (CSAT, CES, NPS) into your React apps.  
-Supports **emoji, stars, numbers, and thumbs** visualizations.
 
 ## Features
 
-- **Ready-to-use survey widgets** – CSAT (2 or 5 points), CES (7 points), NPS (0–10).
-- **Multiple visualizations** – emoji, stars, numbers, thumbs.
-- **Zero dependencies** – small and tree-shakeable.
+- **Ready-to-use survey widgets** – CSAT (2 or 5 points), CES (7 points), NPS (0–10)
+- **Multiple scale styles** – emoji, stars, numbers, thumbs
+- **Flexible placement** – embed inline or display as popup overlay
+- **Follow-up feedback** – optional text input or multiple choice responses
+- **Fully customizable** – CSS variables and custom class names
+- **Zero dependencies**
+- **TypeScript support**
 
-## Survey types
+## Survey Types
 
-- **CSAT (Customer Satisfaction):** `csat2`, `csat5` – 2-point or 5-point scales.
-- **NPS (Net Promoter Score):** `nps10` – 0–10 numeric scale.
-- **CES (Customer Effort Score):** `ces7` – 7-point numeric scale.
+- **CSAT (Customer Satisfaction Score):** 2-point (`csat2`) or 5-point (`csat5`) scales
+- **NPS (Net Promoter Score):** 0–10 numeric scale (`nps10`)
+- **CES (Customer Effort Score):** 7-point numeric scale (`ces7`)
 
 ## Installation
 
@@ -76,12 +75,14 @@ import 'react-feedback-surveys/index.css';
 
 ## Survey Components
 
-Below is a quick overview of each widget, when to use it, and example usage. All examples use the existing API and
-shared props.
+### CSAT5 (Customer Satisfaction Score, 5-Point Scale)
 
-### CSAT5 (5-point Customer Satisfaction)
+Surveys to ask users about their overall satisfaction.
 
-Balanced satisfaction measurement with more nuance than CSAT2; great for post-interaction surveys.
+**Example questions:**
+- "How satisfied are you with our product?"
+- "How would you rate your overall experience?"
+- "How satisfied are you with our customer support?"
 
 [<img src="docs/assets/csat5.png" width="392">](docs/assets/csat5.png)
 
@@ -105,9 +106,14 @@ import 'react-feedback-surveys/index.css';
 
 `scaleStyle`: `emoji` | `numbers` | `stars`.
 
-### CSAT2 (2-point Customer Satisfaction)
+### CSAT2 (Customer Satisfaction Score, 2-Point Scale)
 
-Use when you need a very quick binary satisfaction signal at high-traffic points.
+Surveys to ask users about specific features or flows.
+
+**Example questions:**
+- "Was this search helpful?"
+- "Did you find what you were looking for?"
+- "Are you satisfied with the checkout process?"
 
 [<img src="docs/assets/csat2.png" width="392">](docs/assets/csat2.png)
 
@@ -129,9 +135,14 @@ import 'react-feedback-surveys/index.css';
 
 `scaleStyle`: `emoji` | `thumbs`.
 
-### NPS10 (Net Promoter Score)
+### NPS10 (Net Promoter Score, 0–10 Scale)
 
-Standard 0–10 recommendation likelihood question. Ideal for periodic satisfaction tracking and product sentiment.
+Surveys to ask users if they'd recommend your product.
+
+**Example questions:**
+- "How likely are you to recommend us to a friend or colleague?"
+- "On a scale of 0-10, would you recommend our service?"
+- "How likely are you to recommend this product to others?"
 
 [<img src="docs/assets/nps10.png" width="552">](docs/assets/nps10.png)
 
@@ -155,9 +166,14 @@ import 'react-feedback-surveys/index.css';
 
 `scaleStyle`: `numbers`.
 
-### CES7 (7-point Customer Effort Score)
+### CES7 (Customer Effort Score, 7-Point Scale)
 
-Measures how easy or difficult an experience was. Best after a task flow (checkout, onboarding, support resolution).
+Surveys to ask users how easy it is to use your product.
+
+**Example questions:**
+- "How easy was it to complete your task?"
+- "How much effort did it take to resolve your issue?"
+- "How easy was it to sign up for an account?"
 
 [<img src="docs/assets/ces7.png" width="412">](docs/assets/ces7.png)
 
@@ -185,8 +201,7 @@ import 'react-feedback-surveys/index.css';
 
 ### Popup
 
-The `<Popup>` component is a wrapper for displaying survey widgets in a fixed-position modal container anchored to one
-of the screen edges. It provides a modal-like overlay with positioning, animations, and a close button.
+The `<Popup>` component wraps survey widgets in a fixed overlay that slides in from the screen edge. It includes positioning, animations, and a close button for easy dismissal.
 
 #### Usage
 
@@ -223,13 +238,13 @@ import 'react-feedback-surveys/index.css';
 | `children`   | `React.ReactNode`                                          | -        | -               | Content to render inside the popup (typically a survey component). |
 | `onClose`    | `() => void`                                               | -        | -               | Callback fired when the close button is clicked.                   |
 
-For more examples, see the Storybook stories (e.g., `CSAT5Survey.stories.tsx`, `CSAT2Survey.stories.tsx`).
+For more examples, check out the Storybook stories (e.g., `CSAT5Survey.stories.tsx`, `CSAT2Survey.stories.tsx`).
 
 ## Props
 
 Most props are shared across all survey widgets. Each widget differs only in its `scaleStyle` values.
 
-### Shared props
+### Shared Props
 
 | Prop               | Type                                                                                                                                                                                                    | Required | Description                                                                  |
 |--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|------------------------------------------------------------------------------|
@@ -245,31 +260,33 @@ Most props are shared across all survey widgets. Each widget differs only in its
 | `onScoreSubmit`    | `({ value: number }) => void \| Promise<void>`                                                                                                                                                          | -        | Called when a score is selected (before feedback screen if enabled).         |
 | `onFeedbackSubmit` | `({ value?: number; comment?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Called when feedback is submitted (includes the selected score and comment). |
 
-### Widget-specific `scaleStyle`
+### Scale Style Options
+
+Each survey type supports specific scale styles for displaying the rating interface:
 
 #### CSAT2Survey
 
 | Prop                     | Type                    | Required | Description                                                                       |
 |--------------------------|-------------------------|----------|-----------------------------------------------------------------------------------|
-| `scaleStyle` | `'emoji'` \| `'thumbs'` | required | Emoji mood visualization (happy/sad faces) or thumbs up/down emoji visualization. |
+| `scaleStyle` | `'emoji'` \| `'thumbs'` | required | Emoji mood scale style (happy/sad faces) or thumbs up/down emoji scale style. |
 
 #### CSAT5Survey
 
 | Prop                     | Type                                  | Required | Description                                                                                                          |
 |--------------------------|---------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------|
-| `scaleStyle` | `'emoji'` \| `'numbers'` \| `'stars'` | required | Emoji visualization (5 emotion levels), numeric scale visualization (1–5), or star rating visualization (1–5 stars). |
+| `scaleStyle` | `'emoji'` \| `'numbers'` \| `'stars'` | required | Emoji scale style (5 emotion levels), numeric scale style (1–5), or star rating scale style (1–5 stars). |
 
 #### CES7Survey
 
 | Prop                     | Type        | Required | Description                        |
 |--------------------------|-------------|----------|------------------------------------|
-| `scaleStyle` | `'numbers'` | required | Numeric scale visualization (1–7). |
+| `scaleStyle` | `'numbers'` | required | Numeric scale style (1–7). |
 
 #### NPS10Survey
 
 | Prop                     | Type        | Required | Description                         |
 |--------------------------|-------------|----------|-------------------------------------|
-| `scaleStyle` | `'numbers'` | required | Numeric scale visualization (0–10). |
+| `scaleStyle` | `'numbers'` | required | Numeric scale style (0–10). |
 
 Note: The numeric ranges are defined by the widget (e.g., CSAT5 uses a 1–5 scale, NPS10 uses 0–10).
 
@@ -318,7 +335,7 @@ Reference: available keys
 | `base.title`   | The heading that shows main/feedback/success text            |
 | `base.body`    | Main content region (rating scale, feedback form or success) |
 | `base.close`   | Close button                                                 |
-| `scale.base`   | Container around the scale visualization                     |
+| `scale.base`   | Container around the scale style                     |
 | `scale.list`   | Wrapper for the interactive items (emoji/stars/numbers)      |
 | `scale.button` | Each clickable item in the scale                             |
 | `scale.icon`   | Icon inside a scale button (emoji, stars)                    |
@@ -357,7 +374,8 @@ You can then style these classes in your app stylesheet.
 
 ## Demo
 
-- Live Storybook: start locally with `npm run storybook`.
+- Live demo: [View Storybook](https://feedback.tools/react-feedback-surveys/storybook)
+- Run locally: `npm run storybook`
 
 ## Contributing
 
@@ -390,7 +408,10 @@ npm run build
 - [ ] Dark theme support
 - [ ] RTL language support
 
+## Changelog
+
+For a detailed history of changes, see the [Changelog](https://feedback.tools/react-feedback-surveys/changelog).
+
 ## License
 
-MIT © feedback.tools
-
+MIT © [feedback.tools](https://feedback.tools)
