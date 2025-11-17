@@ -38,6 +38,7 @@
     * [Production build](#production-build)
 - [Roadmap](#roadmap)
 - [Changelog](#changelog)
+- [Credits](#credits)
 - [License](#license)
 
 
@@ -450,6 +451,10 @@ npm run build
 ## Changelog
 
 For a detailed history of changes, see the [Changelog](https://feedback.tools/react-feedback-surveys/changelog).
+
+## Credits
+
+Emoji icons used in this package are from [Sensa Emoji](https://sensa.co/emoji) — thanks to the Sensa team for creating such a great set of expressive icons.
 
 ## License
 
