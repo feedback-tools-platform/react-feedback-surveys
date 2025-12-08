@@ -23,8 +23,8 @@ export const CSAT2SurveyThumbs: React.FC<CSAT2SurveyThumbsProps> = ({
   onChange
 }) => {
   const LIST: [React.ElementType, number, string][] = [
-    [ThumbsDownIcon, 1, labelLeft ?? 'Thumbs down'],
-    [ThumbsUpIcon, 2, labelRight ?? 'Thumbs up']
+    [ThumbsDownIcon, 0, labelLeft ?? 'Thumbs down'],
+    [ThumbsUpIcon, 1, labelRight ?? 'Thumbs up']
   ];
 
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {

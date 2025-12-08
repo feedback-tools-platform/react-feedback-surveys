@@ -278,7 +278,7 @@ Invoked immediately when the user selects a score on the rating scale — this c
 Use it to persist the rating instantly.  
 The actual `value` returned depends on the survey type:
 
-- **CSAT2:** `1–2`
+- **CSAT2:** `0–1`
 - **CSAT5:** `1–5`
 - **CES7:** `1–7`
 - **NPS10:** `0–10`

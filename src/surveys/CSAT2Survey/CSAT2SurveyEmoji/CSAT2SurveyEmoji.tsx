@@ -23,8 +23,8 @@ export const CSAT2SurveyEmoji: React.FC<CSAT2SurveyEmojiProps> = ({
   onChange
 }) => {
   const LIST: [React.ElementType, number, string][] = [
-    [AngryFaceIcon, 1, labelLeft ?? 'Dissatisfied'],
-    [HeartEyesFaceIcon, 2, labelRight ?? 'Satisfied']
+    [AngryFaceIcon, 0, labelLeft ?? 'Dissatisfied'],
+    [HeartEyesFaceIcon, 1, labelRight ?? 'Satisfied']
   ];
 
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
