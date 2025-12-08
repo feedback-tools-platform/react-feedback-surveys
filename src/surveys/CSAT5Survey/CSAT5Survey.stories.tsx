@@ -52,6 +52,30 @@ export const Emoji: Story = {
   }
 };
 
+export const Numbers: Story = {
+  args: {
+    scaleStyle: 'numbers',
+    ...commonProps,
+    responseType: 'text',
+    choiceOptions: []
+  },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
+export const Stars: Story = {
+  args: {
+    scaleStyle: 'stars',
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
 export const EmojiPopup: Story = {
   args: {
     scaleStyle: 'emoji',
@@ -70,18 +94,6 @@ export const EmojiPopup: Story = {
   ),
 };
 
-export const Numbers: Story = {
-  args: {
-    scaleStyle: 'numbers',
-    ...commonProps,
-    responseType: 'text',
-    choiceOptions: []
-  },
-  parameters: {
-    layout: 'centered',
-  }
-};
-
 export const NumbersPopup: Story = {
   args: {
     scaleStyle: 'numbers',
@@ -98,18 +110,6 @@ export const NumbersPopup: Story = {
       <CSAT5Survey {...args} />
     </Popup>
   ),
-};
-
-export const Stars: Story = {
-  args: {
-    scaleStyle: 'stars',
-    ...commonProps,
-    responseType: 'choices',
-    choiceOptions: ['Very easy', 'Very difficult']
-  },
-  parameters: {
-    layout: 'centered',
-  }
 };
 
 export const StarsPopup: Story = {

@@ -48,6 +48,18 @@ export const Emoji: Story = {
   }
 };
 
+export const Thumbs: Story = {
+  args: {
+    scaleStyle: 'thumbs',
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
 export const EmojiPopup: Story = {
   args: {
     scaleStyle: 'emoji',
@@ -66,17 +78,6 @@ export const EmojiPopup: Story = {
   ),
 };
 
-export const Thumbs: Story = {
-  args: {
-    scaleStyle: 'thumbs',
-    ...commonProps,
-    responseType: 'choices',
-    choiceOptions: ['Very easy', 'Very difficult']
-  },
-  parameters: {
-    layout: 'centered',
-  }
-};
 
 export const ThumbsPopup: Story = {
   args: {
