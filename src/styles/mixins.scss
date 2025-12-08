@@ -17,10 +17,10 @@
 @mixin buttonStyle {
   padding: 8px 32px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
-  color: var(--ft-color-bg);
-  background-color: var(--ft-color-text);
+  color: hsl(var(--ft-color-bg) / 100%);
+  background-color: hsl(var(--ft-color-text) / 100%);
   border-radius: 8px;
   transition: opacity 0.2s;
 

@@ -6,9 +6,9 @@
   max-height: calc(100vh - 48px);
   padding: 0;
   overflow: auto;
-  background-color: var(--ft-color-bg);
+  background-color: hsl(var(--ft-color-bg) / 100%);
   border-radius: 8px;
-  box-shadow: 0 0 10px var(--ft-shadow-color);
+  box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%);
   transform-origin: 50% 100%;
   z-index: var(--ft-popup-z-index);
 }
@@ -85,11 +85,11 @@
   right: 24px;
   width: 24px;
   height: 24px;
-  color: #98A2B3;
+  color: hsl(var(--ft-color-outline) / 100%);
   transition: color 0.15s;
 
   &:hover {
-    color: var(--ft-color-text);
+    color: hsl(var(--ft-color-text) / 100%);
   }
 
   @media (max-width: 400px) {

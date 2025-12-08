@@ -17,7 +17,7 @@
   justify-content: center;
   width: 56px;
   height: 56px;
-  background-color: var(--ft-control-bg-light);
+  background-color: hsl(var(--ft-color-control) / 100%);
   border-radius: 50%;
 
   &:hover {

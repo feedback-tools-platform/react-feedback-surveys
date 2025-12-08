@@ -51,7 +51,10 @@ export const NumbersPopup: Story = {
   args: {
     ...commonProps,
     responseType: 'choices',
-    choiceOptions: null,
+    choiceOptions: [
+      'Option 1',
+      'Option 2 with looong text content'
+    ],
   },
   name: 'Numbers (popup)',
   decorators: [

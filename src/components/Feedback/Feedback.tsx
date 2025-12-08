@@ -25,6 +25,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
   const [comment, setComment] = useState<string>('');
   const [selected, setSelected] = useState<string[]>([]);
+  const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
   const onCommentKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     event.stopPropagation();
@@ -32,7 +33,11 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
   const onCommentChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     setComment(event.currentTarget.value);
-  }, []);
+
+    if (isInvalid) {
+      setIsInvalid(false);
+    }
+  }, [isInvalid]);
 
   const onChoiceChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = event.currentTarget;
@@ -56,6 +61,11 @@ export const Feedback: React.FC<FeedbackProps> = ({
       return;
     }
 
+    if (responseType === 'text' && !commentValue) {
+      setIsInvalid(true);
+      return;
+    }
+
     onSubmit?.(comment.trim());
   }, [
     comment,
@@ -74,15 +84,15 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
   return (
     <form
+      aria-label="Feedback form"
       className={styles.base}
       noValidate
       onSubmit={onFormSubmit}
-      aria-label="Feedback form"
     >
       {(responseType === 'choices') && (
         <div
-          id={choicesId}
           className={styles.choices}
+          id={choicesId}
         >
           {choiceOptions?.map((choice) => (
             <div
@@ -91,6 +101,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
             >
               <label className={styles.label}>
                 <input
+                  aria-label={choice}
                   className={styles.checkbox}
                   checked={selected.includes(choice)}
                   name="feedback"
@@ -98,7 +109,6 @@ export const Feedback: React.FC<FeedbackProps> = ({
                   value={choice}
                   onChange={onChoiceChange}
                   onKeyDown={onCommentKeyDown}
-                  aria-label={choice}
                 />
 
                 <span className={styles.check} aria-hidden="true" />
@@ -120,15 +130,15 @@ export const Feedback: React.FC<FeedbackProps> = ({
           </label>
 
           <input
-            id={inputId}
-            name="feedback"
-            value={comment}
-            maxLength={1000}
-            className={styles.input}
-            placeholder="Other"
-            onChange={onCommentChange}
             aria-label="Additional feedback"
             aria-describedby={choicesId}
+            className={styles.input}
+            id={inputId}
+            maxLength={1000}
+            name="feedback"
+            placeholder="Other"
+            value={comment}
+            onChange={onCommentChange}
           />
         </>
       )}
@@ -145,7 +155,8 @@ export const Feedback: React.FC<FeedbackProps> = ({
           <textarea
             aria-label="Your feedback"
             aria-required="true"
-            className={styles.textarea}
+            aria-invalid={isInvalid}
+            className={`${styles.textarea} ${isInvalid ? styles.invalid : ''}`}
             id={textareaId}
             maxLength={1000}
             name="feedback"

@@ -1,11 +1,13 @@
 :root,
 :host {
-  --ft-color-text: #272522;
-  --ft-color-bg: #FFF;
-  --ft-color-muted: #667085;
-  --ft-control-bg: #F2F4F7;
-  --ft-control-bg-light: #F9FAFB;
-  --ft-shadow-color: rgb(0 0 0 / 20%);
+  --ft-color-text: 30 8% 14%;
+  --ft-color-bg: 0 0% 100%;
+  --ft-color-muted: 222 11% 46%;
+  --ft-color-error: 32 95% 44%;
+  --ft-color-border: 214 14% 83%;
+  --ft-color-outline: 218 14% 65%;
+  --ft-color-shadow: 0 0% 0%;
+  --ft-color-control: 214 20% 96%;
   --ft-popup-z-index: 49;
 }
 

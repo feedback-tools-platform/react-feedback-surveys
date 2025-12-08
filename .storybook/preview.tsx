@@ -45,6 +45,13 @@ const preview: Preview = {
     viewport: {
       options: MY_VIEWPORTS
     },
+    backgrounds: {
+      grid: {
+        cellSize: 20,
+        opacity: 0.1,
+        cellAmount: 5
+      }
+    }
   }
 };
 

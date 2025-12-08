@@ -13,13 +13,14 @@
   height: 40px;
   font-size: 18px;
   font-weight: 700;
-  color: var(--ft-color-muted);
-  background-color: var(--ft-control-bg);
+  color: hsl(var(--ft-color-muted) / 100%);
+  background-color: hsl(var(--ft-color-control) / 100%);
   border-radius: 50%;
-  transition: color 0.12s ease, transform 0.12s ease;
+  box-shadow: 0 0 0 0 hsl(var(--ft-color-control) / 100%);
+  transition: color 0.12s ease, box-shadow 0.12s ease;
 
   &:hover {
-    color: var(--ft-color-text);
-    transform: scale(1.1, 1.1);
+    color: hsl(var(--ft-color-text) / 100%);
+    box-shadow: 0 0 0 2px hsl(var(--ft-color-control) / 100%);
   }
 }

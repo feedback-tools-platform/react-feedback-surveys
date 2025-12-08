@@ -1,7 +1,7 @@
 .base {
   padding: 0;
   font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
-  color: var(--ft-color-text);
+  color: hsl(var(--ft-color-text) / 100%);
 }
 
 .head {

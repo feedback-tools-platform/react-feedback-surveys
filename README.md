@@ -344,11 +344,38 @@ You can override colors and fonts via CSS variables:
 
 ```css
 :root {
-  --ft-color-text: #272522;
-  --ft-color-muted: #667085;
-  --ft-control-bg: #F2F4F7;
-  --ft-shadow-color: rgba(0, 0, 0, 0.2);
+  /* Main text color for headings and body text */
+  --ft-color-text: 30 8% 14%;
+
+  /* Background color for survey widgets */
+  --ft-color-bg: 0 0% 100%;
+
+  /* Muted text color for labels and secondary content */
+  --ft-color-muted: 222 11% 46%;
+
+  /* Error color for validation messages */
+  --ft-color-error: 32 95% 44%;
+
+  /* Border color for inputs and containers */
+  --ft-color-border: 214 14% 83%;
+
+  /* Outline color for focused interactive elements */
+  --ft-color-outline: 218 14% 65%;
+
+  /* Shadow color for depth and elevation effects */
+  --ft-color-shadow: 0 0% 0%;
+
+  /* Background color for input controls and buttons */
+  --ft-color-control: 214 20% 96%;
+
+  /* Z-index for popup overlay positioning */
+  --ft-popup-z-index: 49;
 }
+
+/* Use with hsl() function: */
+/* color: hsl(var(--ft-color-text)); */
+/* background: hsl(var(--ft-color-bg)); */
+/* box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%); */
 ```
 
 Or wrap the survey in your own class and target the generated markup.
