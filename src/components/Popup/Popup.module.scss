@@ -9,6 +9,7 @@
   border-radius: 8px;
   box-shadow: 0 0 10px var(--ft-shadow-color);
   transform-origin: 50% 100%;
+  z-index: var(--ft-popup-z-index);
 }
 
 .animated {
