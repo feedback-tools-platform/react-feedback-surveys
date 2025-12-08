@@ -17,8 +17,13 @@
   justify-content: center;
   width: 56px;
   height: 56px;
-  background-color: #F9FAFB;
+  background-color: var(--ft-control-bg-light);
   border-radius: 50%;
+
+  @media (max-width: 400px) {
+    width: 48px;
+    height: 48px;
+  }
 
   &:hover {
     .icon {

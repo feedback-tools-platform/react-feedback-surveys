@@ -2,6 +2,7 @@
   position: fixed;
   margin: 0;
   box-sizing: border-box;
+  max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
   padding: 0;
   overflow: auto;
@@ -70,6 +71,10 @@
 .content {
   position: relative;
   padding: 24px;
+
+  @media (max-width: 400px) {
+    padding: 20px;
+  }
 }
 
 .close {
@@ -85,6 +90,11 @@
 
   &:hover {
     color: var(--ft-color-text);
+  }
+
+  @media (max-width: 400px) {
+    right: 20px;
+    top: 20px;
   }
 
   &::before,
