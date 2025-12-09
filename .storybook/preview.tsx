@@ -1,4 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
+import { withThemeByClassName } from '@storybook/addon-themes';
+import { themes } from '@storybook/theming';
 
 import '../src/styles/global.scss';
 import './preview.css';
@@ -52,7 +54,17 @@ const preview: Preview = {
         cellAmount: 5
       }
     }
-  }
+  },
+  decorators: [
+    withThemeByClassName({
+      themes: {
+        light: '',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+      parentSelector: 'body',
+    }),
+  ],
 };
 
 export default preview;

@@ -378,6 +378,100 @@ You can override colors and fonts via CSS variables:
 /* box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%); */
 ```
 
+#### Dark Theme Example
+
+The library uses CSS variables for all colors, making it easy to implement custom themes including dark mode. The library itself is theme-agnostic - you control how to override the variables.
+
+**Example dark theme color palette:**
+
+Here's an example of dark theme colors that work well with the survey components:
+
+```css
+/* Example: Class-based dark theme */
+.dark {
+  --ft-color-text: 210 11% 88%;
+  --ft-color-bg: 220 13% 13%;
+  --ft-color-muted: 214 10% 60%;
+  --ft-color-error: 14 90% 62%;
+  --ft-color-border: 217 10% 28%;
+  --ft-color-outline: 216 12% 45%;
+  --ft-color-shadow: 0 0% 0%;
+  --ft-color-control: 218 12% 19%;
+}
+
+/* Alternative: Using media query */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ft-color-text: 210 11% 88%;
+    --ft-color-bg: 220 13% 13%;
+    /* ... other variables */
+  }
+}
+
+/* Alternative: Data attribute based */
+[data-theme="dark"] {
+  --ft-color-text: 210 11% 88%;
+  --ft-color-bg: 220 13% 13%;
+  /* ... other variables */
+}
+```
+
+**Implementation example with React:**
+
+```typescript
+import { CSAT5Survey } from 'react-feedback-surveys';
+import 'react-feedback-surveys/index.css';
+import { useEffect } from 'react';
+
+function App() {
+  useEffect(() => {
+    // Example: Apply theme based on system preference
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Listen for system preference changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      document.documentElement.classList.toggle('dark', e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  return (
+    <CSAT5Survey
+      scaleStyle="emoji"
+      question="How satisfied are you with our product?"
+      onScoreSubmit={({ value }) => console.log('Score:', value)}
+    />
+  );
+}
+```
+
+**Manual theme toggle:**
+
+```typescript
+// Toggle between light and dark
+function toggleTheme() {
+  document.documentElement.classList.toggle('dark');
+}
+
+// Set specific theme
+function setTheme(theme: 'light' | 'dark') {
+  document.documentElement.classList.toggle('dark', theme === 'dark');
+}
+```
+
+**Notes:**
+- The library only uses CSS variables - how you define them is up to you
+- Choose any approach: class-based, data attributes, media queries, or CSS-in-JS
+- The example colors provide WCAG AA compliant contrast ratios
+- Emoji and icon colors remain unchanged regardless of theme
+
 Or wrap the survey in your own class and target the generated markup.
 
 For deeper customization strategies, see the section below.
@@ -472,7 +566,6 @@ npm run build
 ## Roadmap
 
 - [ ] Custom emoji & icon support
-- [ ] Dark theme support
 - [ ] RTL language support
 
 ## Changelog
