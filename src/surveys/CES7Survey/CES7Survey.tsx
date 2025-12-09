@@ -15,6 +15,7 @@ export interface CES7SurveyProps extends SharedSurveyProps {
 
 export const CES7Survey: React.FC<CES7SurveyProps> = ({
   classNames,
+  dir,
   scaleStyle,
   question,
   minLabel,
@@ -41,6 +42,7 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
+      dir={dir}
       screen={screen}
       question={question}
       textQuestion={textQuestion}

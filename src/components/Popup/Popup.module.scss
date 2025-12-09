@@ -82,7 +82,7 @@
 
   position: absolute;
   top: 24px;
-  right: 24px;
+  inset-inline-end: 24px;
   width: 24px;
   height: 24px;
   color: hsl(var(--ft-color-outline) / 100%);
@@ -93,7 +93,7 @@
   }
 
   @media (max-width: 400px) {
-    right: 20px;
+    inset-inline-end: 20px;
     top: 20px;
   }
 

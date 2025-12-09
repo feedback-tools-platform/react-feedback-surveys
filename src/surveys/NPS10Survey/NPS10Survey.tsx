@@ -15,6 +15,7 @@ export interface NPS10SurveyProps extends SharedSurveyProps {
 
 export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
   classNames,
+  dir,
   scaleStyle,
   question,
   minLabel,
@@ -41,6 +42,7 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
+      dir={dir}
       screen={screen}
       question={question}
       textQuestion={textQuestion}

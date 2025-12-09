@@ -7,7 +7,8 @@
 .head {
   display: flex;
   gap: 8px;
-  padding: 0 32px 20px 0;
+  padding-block: 0 20px;
+  padding-inline: 0 32px;
 }
 
 .title {

@@ -19,6 +19,8 @@ export interface SurveyRootProps {
   className?: string;
   /** Optional classNames to customize internal parts */
   classNames?: RootClassNames;
+  /** Text direction for RTL/LTR support */
+  dir?: SharedSurveyProps['dir'];
   /** Main survey question */
   question?: SharedSurveyProps['question'];
   /** Follow-up feedback question */
@@ -41,6 +43,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   children,
   className,
   classNames,
+  dir,
   question,
   textQuestion,
   textButtonLabel,
@@ -53,7 +56,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   const titleId = useId();
 
   return (
-    <div className={cn(styles.base, className, classNames?.base)}>
+    <div className={cn(styles.base, className, classNames?.base)} dir={dir}>
       <div className={cn(styles.head, classNames?.head)}>
         <div
           aria-level={2}

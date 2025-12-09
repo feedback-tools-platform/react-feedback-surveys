@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
 import { minHeightDecorator } from '../../utils/storybook';
@@ -18,6 +19,10 @@ const meta = {
         'stars'
       ]
     },
+    dir: {
+      control: 'radio',
+      options: ['ltr', 'rtl', 'auto']
+    },
     responseType: {
       control: 'radio',
       options: [null, 'choices', 'text']
@@ -36,7 +41,9 @@ const commonProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
   textQuestion: 'We’d love to hear your thoughts — what can we improve?',
   textButtonLabel: 'Submit',
   choiceOptions: null,
-  thankYouMessage: 'Thank you for your feedback'
+  thankYouMessage: 'Thank you for your feedback',
+  onScoreSubmit: fn(),
+  onFeedbackSubmit: fn()
 }
 
 export const Emoji: Story = {

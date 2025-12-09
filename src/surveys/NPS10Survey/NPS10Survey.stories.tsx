@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
 import { minHeightDecorator } from '../../utils/storybook';
@@ -13,6 +14,10 @@ const meta = {
     scaleStyle: {
       control: 'radio',
       options: ['numbers']
+    },
+    dir: {
+      control: 'radio',
+      options: ['ltr', 'rtl', 'auto']
     },
     responseType: {
       control: 'radio',
@@ -33,7 +38,9 @@ const commonProps: NPS10SurveyProps = {
   textQuestion: 'We’d love to hear your thoughts — what can we improve?',
   textButtonLabel: 'Submit',
   choiceOptions: null,
-  thankYouMessage: 'Thank you for your feedback'
+  thankYouMessage: 'Thank you for your feedback',
+  onScoreSubmit: fn(),
+  onFeedbackSubmit: fn()
 };
 
 export const Numbers: Story = {

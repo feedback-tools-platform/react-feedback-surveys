@@ -12,10 +12,10 @@
   color: hsl(var(--ft-color-muted) / 100%);
 
   &:first-child {
-    text-align: left;
+    text-align: start;
   }
 
   &:last-child {
-    text-align: right;
+    text-align: end;
   }
 }

@@ -16,6 +16,7 @@ export interface CSAT2SurveyProps extends SharedSurveyProps {
 
 export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
   classNames,
+  dir,
   scaleStyle,
   question,
   minLabel,
@@ -42,6 +43,7 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
     <SurveyRoot
       className={styles.base}
       classNames={classNames?.base}
+      dir={dir}
       screen={screen}
       question={question}
       textQuestion={textQuestion}

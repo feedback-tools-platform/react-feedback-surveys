@@ -1,6 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
 import { withThemeByClassName } from '@storybook/addon-themes';
-import { themes } from '@storybook/theming';
 
 import '../src/styles/global.scss';
 import './preview.css';
@@ -35,9 +34,6 @@ const MY_VIEWPORTS = {
 
 const preview: Preview = {
   parameters: {
-    actions: {
-      argTypesRegex: '^on.*'
-    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

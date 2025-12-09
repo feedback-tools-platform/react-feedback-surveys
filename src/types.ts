@@ -69,6 +69,8 @@ export interface SharedSurveyProps {
     base?: RootClassNames;
     scale?: ScaleClassNames;
   };
+  /** Text direction for RTL/LTR support */
+  dir?: 'ltr' | 'rtl' | 'auto';
   /** Main survey question (screen 1) */
   question: string;
   /** Left label for the rating scale */
