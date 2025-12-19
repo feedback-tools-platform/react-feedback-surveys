@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/feedback-tools-platform/react-feedback-surveys.git"
+    "url": "git+https://github.com/feedback-tools-platform/react-feedback-surveys.git"
   },
   "keywords": [
     "react",
