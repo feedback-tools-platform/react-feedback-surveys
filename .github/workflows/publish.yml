@@ -8,8 +8,8 @@ on:
     types: [created]
 
 permissions:
+  id-token: write # Required for OIDC
   contents: read
-  id-token: write
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-  publish-npm:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -34,4 +34,4 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm pack --dry-run
-      - run: npm publish --provenance --access public
+      - run: npm publish
