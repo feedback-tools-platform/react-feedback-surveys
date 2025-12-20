@@ -5,6 +5,7 @@ import { Popup } from '../../components/Popup';
 import { minHeightDecorator } from '../../utils/storybook';
 
 import { CSAT2Survey, type CSAT2SurveyProps } from './CSAT2Survey';
+import { Surface } from '../../components/Surface';
 
 const meta = {
   title: 'widgets/CSAT2 Survey',
@@ -55,13 +56,22 @@ export const Emoji: Story = {
   }
 };
 
-export const Thumbs: Story = {
+export const EmojiSurface: Story = {
   args: {
-    scaleStyle: 'thumbs',
+    scaleStyle: 'emoji',
     ...commonProps,
     responseType: 'choices',
     choiceOptions: ['Very easy', 'Very difficult']
   },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Emoji (surface)',
+  render: (args) => (
+    <Surface>
+      <CSAT2Survey {...args} />
+    </Surface>
+  ),
   parameters: {
     layout: 'centered',
   }
@@ -83,6 +93,39 @@ export const EmojiPopup: Story = {
       <CSAT2Survey {...args} />
     </Popup>
   ),
+};
+
+export const Thumbs: Story = {
+  args: {
+    scaleStyle: 'thumbs',
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
+export const ThumbsSurface: Story = {
+  args: {
+    scaleStyle: 'thumbs',
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Thumbs (surface)',
+  render: (args) => (
+    <Surface>
+      <CSAT2Survey {...args} />
+    </Surface>
+  ),
+  parameters: {
+    layout: 'centered',
+  }
 };
 
 

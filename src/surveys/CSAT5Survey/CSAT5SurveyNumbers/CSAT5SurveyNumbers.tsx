@@ -6,7 +6,7 @@ import { cn } from '../../../utils';
 
 import styles from './CSAT5SurveyNumbers.module.scss';
 
-const LIST = [1, 2, 3, 4, 5];
+const SCORES = [1, 2, 3, 4, 5];
 
 export interface CSAT5SurveyNumbersProps {
   classNames?: ScaleClassNames;
@@ -28,7 +28,7 @@ export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
   return (
     <div className={cn(styles.base, classNames?.base)}>
       <div className={cn(styles.list, classNames?.list)}>
-        {LIST.map((score) => (
+        {SCORES.map((score) => (
           <button
             key={score}
             aria-label={`Score ${score}`}

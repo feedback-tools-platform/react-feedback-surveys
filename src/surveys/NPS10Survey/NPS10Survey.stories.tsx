@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
+import { Surface } from '../../components/Surface';
 import { minHeightDecorator } from '../../utils/storybook';
 
 import { NPS10Survey, type NPS10SurveyProps } from './NPS10Survey';
@@ -47,6 +48,24 @@ export const Numbers: Story = {
   args: {
     ...commonProps
   },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
+export const NumbersSurface: Story = {
+  args: {
+    ...commonProps
+  },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Numbers (surface)',
+  render: (args) => (
+    <Surface>
+      <NPS10Survey {...args} />
+    </Surface>
+  ),
   parameters: {
     layout: 'centered',
   }

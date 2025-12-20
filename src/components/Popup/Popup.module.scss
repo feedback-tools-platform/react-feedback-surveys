@@ -2,15 +2,15 @@
   position: fixed;
   margin: 0;
   box-sizing: border-box;
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 48px);
-  padding: 0;
-  overflow: auto;
-  background-color: hsl(var(--ft-color-bg) / 100%);
-  border-radius: 8px;
-  box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%);
+  max-width: calc(100vw - var(--ft-surface-padding) * 2);
+  max-height: calc(100vh - var(--ft-surface-padding) * 2);
   transform-origin: 50% 100%;
   z-index: var(--ft-popup-z-index);
+
+  @media (max-width: 400px) {
+    max-width: calc(100vw - var(--ft-surface-padding-mobile) * 2);
+    max-height: calc(100vh - var(--ft-surface-padding-mobile) * 2);
+  }
 }
 
 .animated {
@@ -68,33 +68,24 @@
   left: 24px;
 }
 
-.content {
-  position: relative;
-  padding: 24px;
-
-  @media (max-width: 400px) {
-    padding: 20px;
-  }
-}
-
 .close {
   @include resetButton;
 
   position: absolute;
-  top: 24px;
-  inset-inline-end: 24px;
+  top: var(--ft-surface-padding);
+  inset-inline-end: var(--ft-surface-padding);
   width: 24px;
   height: 24px;
   color: hsl(var(--ft-color-outline) / 100%);
   transition: color 0.15s;
 
-  &:hover {
-    color: hsl(var(--ft-color-text) / 100%);
+  @media (max-width: 400px) {
+    top: var(--ft-surface-padding-mobile);
+    inset-inline-end: var(--ft-surface-padding-mobile);
   }
 
-  @media (max-width: 400px) {
-    inset-inline-end: 20px;
-    top: 20px;
+  &:hover {
+    color: hsl(var(--ft-color-text) / 100%);
   }
 
   &::before,

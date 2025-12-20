@@ -5,6 +5,7 @@ import { Popup } from '../../components/Popup';
 import { minHeightDecorator } from '../../utils/storybook';
 
 import { CSAT5Survey, type CSAT5SurveyProps } from '../CSAT5Survey';
+import { Surface } from '../../components/Surface';
 
 const meta = {
   title: 'widgets/CSAT5 Survey',
@@ -59,25 +60,22 @@ export const Emoji: Story = {
   }
 };
 
-export const Numbers: Story = {
+export const EmojiSurface: Story = {
   args: {
-    scaleStyle: 'numbers',
+    scaleStyle: 'emoji',
     ...commonProps,
-    responseType: 'text',
-    choiceOptions: []
+    textQuestion: '',
+    textButtonLabel: ''
   },
-  parameters: {
-    layout: 'centered',
-  }
-};
-
-export const Stars: Story = {
-  args: {
-    scaleStyle: 'stars',
-    ...commonProps,
-    responseType: 'choices',
-    choiceOptions: ['Very easy', 'Very difficult']
-  },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Emoji (surface)',
+  render: (args) => (
+    <Surface>
+      <CSAT5Survey {...args} />
+    </Surface>
+  ),
   parameters: {
     layout: 'centered',
   }
@@ -101,6 +99,39 @@ export const EmojiPopup: Story = {
   ),
 };
 
+export const Numbers: Story = {
+  args: {
+    scaleStyle: 'numbers',
+    ...commonProps,
+    responseType: 'text',
+    choiceOptions: []
+  },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
+export const NumbersSurface: Story = {
+  args: {
+    scaleStyle: 'numbers',
+    ...commonProps,
+    responseType: 'text',
+    choiceOptions: []
+  },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Numbers (surface)',
+  render: (args) => (
+    <Surface>
+      <CSAT5Survey {...args} />
+    </Surface>
+  ),
+  parameters: {
+    layout: 'centered',
+  }
+};
+
 export const NumbersPopup: Story = {
   args: {
     scaleStyle: 'numbers',
@@ -117,6 +148,39 @@ export const NumbersPopup: Story = {
       <CSAT5Survey {...args} />
     </Popup>
   ),
+};
+
+export const Stars: Story = {
+  args: {
+    scaleStyle: 'stars',
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  parameters: {
+    layout: 'centered',
+  }
+};
+
+export const StarsSurface: Story = {
+  args: {
+    scaleStyle: 'stars',
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Stars (surface)',
+  render: (args) => (
+    <Surface>
+      <CSAT5Survey {...args} />
+    </Surface>
+  ),
+  parameters: {
+    layout: 'centered',
+  }
 };
 
 export const StarsPopup: Story = {

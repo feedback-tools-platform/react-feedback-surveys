@@ -1,5 +1,7 @@
 import { cn } from '../../utils';
 
+import { Surface } from '../Surface';
+
 import styles from './Popup.module.scss';
 
 export interface PopupProps {
@@ -25,7 +27,7 @@ export const Popup: React.FC<PopupProps> = ({
 }) => {
   return (
     <div className={cn(styles.base, { [styles.animated]: animated }, styles[placement], className, classNames?.base)}>
-      <div className={cn(styles.content, classNames?.content)}>
+      <Surface className={classNames?.content}>
         {children}
 
         <button
@@ -35,7 +37,7 @@ export const Popup: React.FC<PopupProps> = ({
           type="button"
           onClick={onClose}
         />
-      </div>
+      </Surface>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import StarFilledIcon from '../../../icons/star_filled.svg';
 
 import styles from './CSAT5SurveyStars.module.scss';
 
-const LIST = [1, 2, 3, 4, 5];
+const SCORES = [1, 2, 3, 4, 5];
 
 export interface CSAT5SurveyStarsProps {
   classNames?: ScaleClassNames;
@@ -49,7 +49,7 @@ export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
         onBlur={onBlur}
         onMouseLeave={onBlur}
       >
-        {LIST.map((score) => (
+        {SCORES.map((score) => (
           <button
             key={score}
             aria-label={`${score} ${score > 1 ? 'stars' : 'star'}`}

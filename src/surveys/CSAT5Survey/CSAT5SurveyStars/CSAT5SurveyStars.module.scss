@@ -22,4 +22,8 @@
       transform: scale(1.1, 1.1);
     }
   }
+
+  &:focus-visible {
+    outline: 2px solid hsl(var(--ft-color-outline) / 100%);
+  }
 }

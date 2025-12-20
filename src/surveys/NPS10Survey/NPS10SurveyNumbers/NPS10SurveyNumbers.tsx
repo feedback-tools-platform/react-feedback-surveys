@@ -6,7 +6,7 @@ import { cn } from '../../../utils';
 
 import styles from './NPS10SurveyNumbers.module.scss';
 
-const LIST = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const SCORES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export interface NPS10SurveyNumbersProps {
   classNames?: ScaleClassNames;
@@ -28,7 +28,7 @@ export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
   return (
     <div className={cn(styles.base, classNames?.base)}>
       <div className={cn(styles.list, classNames?.list)}>
-        {LIST.map((score) => (
+        {SCORES.map((score) => (
           <button
             key={score}
             aria-label={`Score ${score}`}
@@ -41,7 +41,7 @@ export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
               {score}
             </span>
 
-            {((score === LIST[0]) && !!labelLeft) && (
+            {((score === SCORES[0]) && !!labelLeft) && (
               <span
                 key="left"
                 className={styles.label}
@@ -50,7 +50,7 @@ export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
               </span>
             )}
 
-            {((score === LIST[LIST.length - 1]) && !!labelRight) && (
+            {((score === SCORES[SCORES.length - 1]) && !!labelRight) && (
               <span
                 key="right"
                 className={styles.label}

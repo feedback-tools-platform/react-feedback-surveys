@@ -1,0 +1,13 @@
+.base {
+  display: inline-block;
+  position: relative;
+  padding: var(--ft-surface-padding);
+  overflow: auto;
+  background-color: hsl(var(--ft-color-bg) / 100%);
+  border-radius: 8px;
+  box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%);
+
+  @media (max-width: 400px) {
+    padding: var(--ft-surface-padding-mobile);
+  }
+}

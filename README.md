@@ -21,6 +21,7 @@
     * [CES7 (Customer Effort Score, 7-Point Scale)](#ces7-customer-effort-score-7-point-scale)
 - [Layout Components](#layout-components)
     * [Popup](#popup)
+    * [Surface](#surface)
 - [Props](#props)
     * [Shared Props](#shared-props)
     * [Scale Style Options](#scale-style-options)
@@ -245,6 +246,39 @@ import 'react-feedback-surveys/index.css';
 
 For more examples, check out the Storybook stories (e.g., `CSAT5Survey.stories.tsx`, `CSAT2Survey.stories.tsx`).
 
+### Surface
+
+The `<Surface>` component is a basic container wrapper that provides consistent styling for survey content. It's used internally by the Popup component and can be used standalone to display surveys with a card-like appearance.
+
+The Surface component provides:
+- Background color with depth/elevation (box shadow)
+- Rounded corners (8px border radius)
+- Responsive padding that adapts to mobile devices
+
+#### Usage
+
+```tsx
+import { Surface, CSAT5Survey } from 'react-feedback-surveys';
+import 'react-feedback-surveys/index.css';
+
+<Surface className="custom-surface">
+  <CSAT5Survey
+    scaleStyle="stars"
+    question="How would you rate your satisfaction?"
+    onScoreSubmit={({ value }) => {/* ... */}}
+  />
+</Surface>
+```
+
+#### Props
+
+| Prop        | Type              | Required | Default | Description                                        |
+|-------------|-------------------|----------|---------|----------------------------------------------------|
+| `className` | `string`          | -        | -       | Additional CSS class name for the surface container.|
+| `children`  | `React.ReactNode` | -        | -       | Content to render inside the surface.              |
+
+The Surface component uses the `--ft-surface-padding` and `--ft-surface-padding-mobile` CSS variables for responsive padding.
+
 ## Props
 
 Most props are shared across all survey widgets. Each widget differs only in its `scaleStyle` values.
@@ -370,6 +404,12 @@ You can override colors and fonts via CSS variables:
 
   /* Z-index for popup overlay positioning */
   --ft-popup-z-index: 49;
+
+  /* Padding for Surface component container (desktop) */
+  --ft-surface-padding: 24px;
+
+  /* Padding for Surface component container on mobile devices (max-width: 400px) */
+  --ft-surface-padding-mobile: 20px;
 }
 
 /* Use with hsl() function: */
@@ -418,7 +458,7 @@ Here's an example of dark theme colors that work well with the survey components
 
 **Implementation example with React:**
 
-```typescript
+```tsx
 import { CSAT5Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 import { useEffect } from 'react';
@@ -566,7 +606,6 @@ npm run build
 ## Roadmap
 
 - [ ] Custom emoji & icon support
-- [ ] RTL language support
 
 ## Changelog
 
