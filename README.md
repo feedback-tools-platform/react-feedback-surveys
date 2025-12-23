@@ -102,7 +102,7 @@ import 'react-feedback-surveys/index.css';
   textButtonLabel="Send"
   thankYouMessage="Thanks for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
-  onFeedbackSubmit={({ value, comment }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text }) => {/* ... */}}
 />
 ```
 
@@ -131,7 +131,7 @@ import 'react-feedback-surveys/index.css';
   textButtonLabel="Send"
   thankYouMessage="Thank you for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
-  onFeedbackSubmit={({ value, comment }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text }) => {/* ... */}}
 />
 ```
 
@@ -164,7 +164,7 @@ import 'react-feedback-surveys/index.css';
   textButtonLabel="Send"
   thankYouMessage="Thank you for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
-  onFeedbackSubmit={({ value, comment }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text }) => {/* ... */}}
 />
 ```
 
@@ -195,7 +195,7 @@ import 'react-feedback-surveys/index.css';
   textButtonLabel="Send"
   thankYouMessage="Thank you for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
-  onFeedbackSubmit={({ value, comment }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text }) => {/* ... */}}
 />
 ```
 
@@ -302,7 +302,7 @@ Most props are shared across all survey widgets. Each widget differs only in its
 | Prop               | Type                                                                                                                                                                                                   | Required | Description                                                                                                 |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------|
 | `onScoreSubmit`    | `({ value: number }) => void \| Promise<void>`                                                                                                                                                         | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
-| `onFeedbackSubmit` | `({ value: number; comment?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Fires when feedback is submitted. Includes the selected score and the user’s comment(s).                    |
+| `onFeedbackSubmit` | `({ value: number; text?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Fires when feedback is submitted. Includes the selected score and the user’s text(s).                    |
 
 > **Event behavior**
 
@@ -324,7 +324,7 @@ This callback provides both the original score and the user's input.
 
 **Arguments:**
 - `value: number` — the same score previously passed to `onScoreSubmit`
-- `comment: string | string[]` — depends on `responseType`:
+- `text: string | string[]` — depends on `responseType`:
     - `text`: a single text comment
     - `choices`: an array of selected options (may include a free-text comment if enabled)
 
@@ -567,7 +567,7 @@ import 'react-feedback-surveys/index.css';
   minLabel="Very unsatisfied"
   maxLabel="Very satisfied"
   onScoreSubmit={({ value }) => {/* ... */}}
-  onFeedbackSubmit={({ value, comment }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text }) => {/* ... */}}
 />
 ```
 

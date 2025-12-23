@@ -50,7 +50,7 @@ export interface SurveySubmitPayload {
   /** Selected rating value */
   value?: number;
   /** Optional text or array of selected choices */
-  comment?: string | string[];
+  text?: string | string[];
 }
 
 /**

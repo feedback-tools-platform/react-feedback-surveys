@@ -12,7 +12,7 @@ export interface FeedbackProps {
   /** Optional predefined feedback choices */
   choiceOptions?: SharedSurveyProps['choiceOptions'];
   /** Callback when feedback is submitted */
-  onSubmit?: (comment: string | string[]) => void;
+  onSubmit?: (text: string | string[]) => void;
 }
 
 export const Feedback: React.FC<FeedbackProps> = ({
@@ -23,16 +23,16 @@ export const Feedback: React.FC<FeedbackProps> = ({
 }) => {
   const formId = useId();
 
-  const [comment, setComment] = useState<string>('');
+  const [text, setText] = useState<string>('');
   const [selected, setSelected] = useState<string[]>([]);
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
-  const onCommentKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+  const onTextKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     event.stopPropagation();
   }, []);
 
-  const onCommentChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-    setComment(event.currentTarget.value);
+  const onTextChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+    setText(event.currentTarget.value);
 
     if (isInvalid) {
       setIsInvalid(false);
@@ -54,21 +54,21 @@ export const Feedback: React.FC<FeedbackProps> = ({
   const onFormSubmit = useCallback((event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const commentValue = comment.trim();
+    const textValue = text.trim();
 
     if (responseType === 'choices') {
-      onSubmit?.([...selected, commentValue].filter(Boolean));
+      onSubmit?.([...selected, textValue].filter(Boolean));
       return;
     }
 
-    if (responseType === 'text' && !commentValue) {
+    if (responseType === 'text' && !textValue) {
       setIsInvalid(true);
       return;
     }
 
-    onSubmit?.(comment.trim());
+    onSubmit?.(text.trim());
   }, [
-    comment,
+    text,
     responseType,
     selected,
     onSubmit
@@ -108,7 +108,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
                   type="checkbox"
                   value={choice}
                   onChange={onChoiceChange}
-                  onKeyDown={onCommentKeyDown}
+                  onKeyDown={onTextKeyDown}
                 />
 
                 <span className={styles.check} aria-hidden="true" />
@@ -137,8 +137,8 @@ export const Feedback: React.FC<FeedbackProps> = ({
             maxLength={1000}
             name="feedback"
             placeholder="Other"
-            value={comment}
-            onChange={onCommentChange}
+            value={text}
+            onChange={onTextChange}
           />
         </>
       )}
@@ -161,9 +161,9 @@ export const Feedback: React.FC<FeedbackProps> = ({
             maxLength={1000}
             name="feedback"
             rows={4}
-            value={comment}
-            onChange={onCommentChange}
-            onKeyDown={onCommentKeyDown}
+            value={text}
+            onChange={onTextChange}
+            onKeyDown={onTextKeyDown}
           />
         </>
       )}

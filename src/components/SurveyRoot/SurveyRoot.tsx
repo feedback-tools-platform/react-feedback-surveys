@@ -36,7 +36,7 @@ export interface SurveyRootProps {
   /** Current screen */
   screen: SurveyScreen;
   /** Callback when feedback is submitted */
-  onFeedback?: (comment: string | string[]) => void;
+  onFeedback?: (text: string | string[]) => void;
 }
 
 export const SurveyRoot: React.FC<SurveyRootProps> = ({

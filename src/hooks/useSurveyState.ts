@@ -58,18 +58,18 @@ const useSurveyState = ({
     }
   }, [responseType, onScoreSubmit]);
 
-  const onFeedbackChange = useCallback(async(comment: string | string[]) => {
-    if (!comment?.length) {
+  const onFeedbackChange = useCallback(async(text: string | string[]) => {
+    if (!text?.length) {
       return;
     }
 
     setError(null);
-    const sendComment = Array.isArray(comment) ? comment.join(';\n') : comment;
+    const sendText = Array.isArray(text) ? text.join(';\n') : text;
 
     if (onFeedbackSubmit) {
       setIsLoading(true);
       try {
-        await onFeedbackSubmit({ value, comment: sendComment });
+        await onFeedbackSubmit({ value, text: sendText });
         setIsSuccess(true);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to submit'));
