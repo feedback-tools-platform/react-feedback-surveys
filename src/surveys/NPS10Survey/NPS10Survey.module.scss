@@ -1,4 +1,8 @@
 .base {
-  width: 100%;
-  max-width: 520px;
+  width: 520px;
+  max-width: 100%;
+
+  @media (max-width: 575px) {
+    width: 100%;
+  }
 }

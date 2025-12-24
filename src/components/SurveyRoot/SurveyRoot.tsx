@@ -56,7 +56,10 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   const titleId = useId();
 
   return (
-    <div className={cn(styles.base, className, classNames?.base)} dir={dir}>
+    <div
+      className={cn(styles.base, className, classNames?.base)}
+      dir={dir}
+    >
       <div className={cn(styles.head, classNames?.head)}>
         <div
           aria-level={2}
