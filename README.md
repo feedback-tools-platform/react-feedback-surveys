@@ -405,6 +405,11 @@ You can override colors and fonts via CSS variables:
   /* Z-index for popup overlay positioning */
   --ft-popup-z-index: 49;
 
+  /* Inline-end offset for survey head inside popups (right padding in LTR, left in RTL) */
+  /* Automatically set to 32px inside Popup to prevent title overlap with close button */
+  /* Set to 0 by default for inline surveys */
+  --ft-popup-head-offset: 0;
+
   /* Padding for Surface component container (desktop) */
   --ft-surface-padding: 24px;
 

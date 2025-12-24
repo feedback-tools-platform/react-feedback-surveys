@@ -6,6 +6,7 @@
   max-height: calc(100vh - var(--ft-surface-padding) * 2);
   transform-origin: 50% 100%;
   z-index: var(--ft-popup-z-index);
+  --ft-popup-head-offset: 32px;
 
   @media (max-width: 400px) {
     max-width: calc(100vw - var(--ft-surface-padding-mobile) * 2);
