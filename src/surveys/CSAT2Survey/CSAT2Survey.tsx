@@ -56,8 +56,8 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
       {(scaleStyle === 'emoji') && (
         <CSAT2SurveyEmoji
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}
@@ -65,8 +65,8 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
       {(scaleStyle === 'thumbs') && (
         <CSAT2SurveyThumbs
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}

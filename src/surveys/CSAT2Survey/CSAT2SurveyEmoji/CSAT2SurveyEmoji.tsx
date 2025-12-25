@@ -11,20 +11,20 @@ import styles from './CSAT2SurveyEmoji.module.scss';
 
 export interface CSAT2SurveyEmojiProps {
   classNames?: ScaleClassNames;
-  labelLeft?: string;
-  labelRight?: string;
+  minLabel?: string;
+  maxLabel?: string;
   onChange: (value: number) => void;
 }
 
 export const CSAT2SurveyEmoji: React.FC<CSAT2SurveyEmojiProps> = ({
   classNames,
-  labelLeft,
-  labelRight,
+  minLabel,
+  maxLabel,
   onChange
 }) => {
   const LIST: [React.ElementType, number, string][] = [
-    [SlightlyFrowningFace, 0, labelLeft ?? 'Dissatisfied'],
-    [SmilingFaceIcon, 1, labelRight ?? 'Satisfied']
+    [SlightlyFrowningFace, 0, minLabel ?? 'Dissatisfied'],
+    [SmilingFaceIcon, 1, maxLabel ?? 'Satisfied']
   ];
 
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -53,11 +53,11 @@ export const CSAT2SurveyEmoji: React.FC<CSAT2SurveyEmojiProps> = ({
         ))}
       </div>
 
-      {!!labelLeft && !!labelRight && (
+      {!!minLabel && !!maxLabel && (
         <Labels
           className={cn(styles.labels, classNames?.labels)}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
         />
       )}
     </div>

@@ -4,22 +4,27 @@ import styles from './Labels.module.scss';
 
 export interface LabelsProps {
   className?: string;
-  labelLeft?: React.ReactNode;
-  labelRight?: React.ReactNode;
+  classNames?: {
+    base?: string;
+    label?: string;
+  }
+  minLabel?: React.ReactNode;
+  maxLabel?: React.ReactNode;
 }
 
 export const Labels: React.FC<LabelsProps> = ({
   className,
-  labelLeft,
-  labelRight
+  classNames,
+  minLabel,
+  maxLabel
 }) => (
-  <div className={cn(styles.base, className)}>
-    <div className={styles.label}>
-      {labelLeft}
+  <div className={cn(styles.base, classNames?.base, className)}>
+    <div className={cn(styles.label, classNames?.label)}>
+      {minLabel}
     </div>
 
-    <div className={styles.label}>
-      {labelRight}
+    <div className={cn(styles.label, classNames?.label)}>
+      {maxLabel}
     </div>
   </div>
 );

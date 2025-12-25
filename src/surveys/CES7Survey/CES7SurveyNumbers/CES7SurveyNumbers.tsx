@@ -10,15 +10,15 @@ const SCORES = [1, 2, 3, 4, 5, 6, 7];
 
 export interface CES7SurveyNumbersProps {
   classNames?: ScaleClassNames;
-  labelLeft?: string;
-  labelRight?: string;
+  minLabel?: string;
+  maxLabel?: string;
   onChange: (value: number) => void;
 }
 
 export const CES7SurveyNumbers: React.FC<CES7SurveyNumbersProps> = ({
   classNames,
-  labelLeft,
-  labelRight,
+  minLabel,
+  maxLabel,
   onChange
 }) => {
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -41,32 +41,32 @@ export const CES7SurveyNumbers: React.FC<CES7SurveyNumbersProps> = ({
               {score}
             </span>
 
-            {((score === SCORES[0]) && !!labelLeft) && (
+            {((score === SCORES[0]) && !!minLabel) && (
               <span
                 key="left"
                 className={styles.label}
               >
-                {` - ${labelLeft}`}
+                {` - ${minLabel}`}
               </span>
             )}
 
-            {((score === SCORES[SCORES.length - 1]) && !!labelRight) && (
+            {((score === SCORES[SCORES.length - 1]) && !!maxLabel) && (
               <span
                 key="right"
                 className={styles.label}
               >
-                {` - ${labelRight}`}
+                {` - ${maxLabel}`}
               </span>
             )}
           </button>
         ))}
       </div>
 
-      {!!labelLeft && !!labelRight && (
+      {!!minLabel && !!maxLabel && (
         <Labels
           className={cn(styles.labels, classNames?.labels)}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
         />
       )}
     </div>

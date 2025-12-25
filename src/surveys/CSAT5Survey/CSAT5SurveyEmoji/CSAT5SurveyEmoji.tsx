@@ -22,14 +22,14 @@ const LIST: [React.ElementType, number][] = [
 
 export interface CSAT5SurveyEmojiProps {
   classNames?: ScaleClassNames;
-  labelLeft?: string;
-  labelRight?: string;
+  minLabel?: string;
+  maxLabel?: string;
   onChange: (value: number) => void;
 }
 
 export const CSAT5SurveyEmoji: React.FC<CSAT5SurveyEmojiProps> = ({
-  labelLeft,
-  labelRight,
+  minLabel,
+  maxLabel,
   onChange,
   classNames
 }) => {
@@ -59,11 +59,11 @@ export const CSAT5SurveyEmoji: React.FC<CSAT5SurveyEmojiProps> = ({
         ))}
       </div>
 
-      {!!labelLeft && !!labelRight && (
+      {!!minLabel && !!maxLabel && (
         <Labels
           className={classNames?.labels}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
         />
       )}
     </div>

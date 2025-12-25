@@ -55,8 +55,8 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
       {(scaleStyle === 'numbers') && (
         <CES7SurveyNumbers
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}

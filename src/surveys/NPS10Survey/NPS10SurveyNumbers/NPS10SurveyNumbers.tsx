@@ -10,15 +10,15 @@ const SCORES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export interface NPS10SurveyNumbersProps {
   classNames?: ScaleClassNames;
-  labelLeft?: string;
-  labelRight?: string;
+  minLabel?: string;
+  maxLabel?: string;
   onChange: (value: number) => void;
 }
 
 export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
   classNames,
-  labelLeft,
-  labelRight,
+  minLabel,
+  maxLabel,
   onChange
 }) => {
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -41,32 +41,32 @@ export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
               {score}
             </span>
 
-            {((score === SCORES[0]) && !!labelLeft) && (
+            {((score === SCORES[0]) && !!minLabel) && (
               <span
                 key="left"
                 className={styles.label}
               >
-                {` - ${labelLeft}`}
+                {` - ${minLabel}`}
               </span>
             )}
 
-            {((score === SCORES[SCORES.length - 1]) && !!labelRight) && (
+            {((score === SCORES[SCORES.length - 1]) && !!maxLabel) && (
               <span
                 key="right"
                 className={styles.label}
               >
-                {` - ${labelRight}`}
+                {` - ${maxLabel}`}
               </span>
             )}
           </button>
         ))}
       </div>
 
-      {!!labelLeft && !!labelRight && (
+      {!!minLabel && !!maxLabel && (
         <Labels
           className={cn(styles.labels, classNames?.labels)}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
         />
       )}
     </div>

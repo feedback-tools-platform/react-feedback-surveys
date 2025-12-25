@@ -11,20 +11,20 @@ import styles from './CSAT2SurveyThumbs.module.scss';
 
 export interface CSAT2SurveyThumbsProps {
   classNames?: ScaleClassNames;
-  labelLeft?: string;
-  labelRight?: string;
+  minLabel?: string;
+  maxLabel?: string;
   onChange: (value: number) => void;
 }
 
 export const CSAT2SurveyThumbs: React.FC<CSAT2SurveyThumbsProps> = ({
   classNames,
-  labelLeft,
-  labelRight,
+  minLabel,
+  maxLabel,
   onChange
 }) => {
   const LIST: [React.ElementType, number, string][] = [
-    [ThumbsDownIcon, 0, labelLeft ?? 'Thumbs down'],
-    [ThumbsUpIcon, 1, labelRight ?? 'Thumbs up']
+    [ThumbsDownIcon, 0, minLabel ?? 'Thumbs down'],
+    [ThumbsUpIcon, 1, maxLabel ?? 'Thumbs up']
   ];
 
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -55,8 +55,8 @@ export const CSAT2SurveyThumbs: React.FC<CSAT2SurveyThumbsProps> = ({
 
       <Labels
         className={cn(styles.labels, classNames?.labels)}
-        labelLeft={labelLeft}
-        labelRight={labelRight}
+        minLabel={minLabel}
+        maxLabel={maxLabel}
       />
     </div>
   );

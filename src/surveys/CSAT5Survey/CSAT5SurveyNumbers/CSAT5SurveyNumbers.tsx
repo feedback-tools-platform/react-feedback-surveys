@@ -10,15 +10,15 @@ const SCORES = [1, 2, 3, 4, 5];
 
 export interface CSAT5SurveyNumbersProps {
   classNames?: ScaleClassNames;
-  labelLeft?: string;
-  labelRight?: string;
+  minLabel?: string;
+  maxLabel?: string;
   onChange: (value: number) => void;
 }
 
 export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
   classNames,
-  labelLeft,
-  labelRight,
+  minLabel,
+  maxLabel,
   onChange,
 }) => {
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -44,11 +44,11 @@ export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
         ))}
       </div>
 
-      {!!labelLeft && !!labelRight && (
+      {!!minLabel && !!maxLabel && (
         <Labels
           className={classNames?.labels}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
         />
       )}
     </div>

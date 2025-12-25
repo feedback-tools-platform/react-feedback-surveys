@@ -57,8 +57,8 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
       {(scaleStyle === 'emoji') && (
         <CSAT5SurveyEmoji
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}
@@ -66,8 +66,8 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
       {(scaleStyle === 'numbers') && (
         <CSAT5SurveyNumbers
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}
@@ -75,8 +75,8 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
       {(scaleStyle === 'stars') && (
         <CSAT5SurveyStars
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}

@@ -55,8 +55,8 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
       {(scaleStyle === 'numbers') && (
         <NPS10SurveyNumbers
           classNames={classNames?.scale}
-          labelLeft={minLabel}
-          labelRight={maxLabel}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
           onChange={onScoreChange}
         />
       )}
