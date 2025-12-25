@@ -8,13 +8,13 @@ import AngryFaceIcon from '../../../icons/angry_face.svg';
 import HeartEyesFaceIcon from '../../../icons/heart_eyes_face.svg';
 import NeutralFaceIcon from '../../../icons/neutral_face.svg';
 import SmilingFaceIcon from '../../../icons/smiling_face.svg';
-import WorriedFaceIcon from '../../../icons/worried_face.svg';
+import SlightlyFrowningFace from '../../../icons/slightly_frowning_face.svg';
 
 import styles from './CSAT5SurveyEmoji.module.scss';
 
 const LIST: [React.ElementType, number][] = [
   [AngryFaceIcon, 1],
-  [WorriedFaceIcon, 2],
+  [SlightlyFrowningFace, 2],
   [NeutralFaceIcon, 3],
   [SmilingFaceIcon, 4],
   [HeartEyesFaceIcon, 5]

@@ -4,8 +4,8 @@ import { Labels } from '../../../components/Labels';
 import type { ScaleClassNames } from '../../../types';
 import { cn } from '../../../utils';
 
-import AngryFaceIcon from '../../../icons/angry_face.svg';
-import HeartEyesFaceIcon from '../../../icons/heart_eyes_face.svg';
+import SlightlyFrowningFace from '../../../icons/slightly_frowning_face.svg';
+import SmilingFaceIcon from '../../../icons/smiling_face.svg';
 
 import styles from './CSAT2SurveyEmoji.module.scss';
 
@@ -23,8 +23,8 @@ export const CSAT2SurveyEmoji: React.FC<CSAT2SurveyEmojiProps> = ({
   onChange
 }) => {
   const LIST: [React.ElementType, number, string][] = [
-    [AngryFaceIcon, 0, labelLeft ?? 'Dissatisfied'],
-    [HeartEyesFaceIcon, 1, labelRight ?? 'Satisfied']
+    [SlightlyFrowningFace, 0, labelLeft ?? 'Dissatisfied'],
+    [SmilingFaceIcon, 1, labelRight ?? 'Satisfied']
   ];
 
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
