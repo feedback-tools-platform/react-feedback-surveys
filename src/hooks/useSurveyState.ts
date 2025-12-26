@@ -17,7 +17,6 @@ const useSurveyState = ({
   onScoreSubmit,
   onFeedbackSubmit
 }: UseSurveyStateProps) => {
-
   const [value, setValue] = useState<number | undefined>();
   const [error, setError] = useState<Error | null>(null);
 
@@ -33,7 +32,7 @@ const useSurveyState = ({
       return 'feedback';
     }
 
-    return 'main';
+    return 'rating';
   }, [
     value,
     isSuccess
@@ -56,7 +55,10 @@ const useSurveyState = ({
     } else {
       setIsSuccess(!responseType);
     }
-  }, [responseType, onScoreSubmit]);
+  }, [
+    responseType,
+    onScoreSubmit
+  ]);
 
   const onFeedbackChange = useCallback(async(text: string | string[]) => {
     if (!text?.length) {
@@ -79,7 +81,10 @@ const useSurveyState = ({
     } else {
       setIsSuccess(true);
     }
-  }, [value, onFeedbackSubmit]);
+  }, [
+    value,
+    onFeedbackSubmit
+  ]);
 
   return {
     error,

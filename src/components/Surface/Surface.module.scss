@@ -1,3 +1,5 @@
+@use '../../styles/variables' as *;
+
 .base {
   display: inline-block;
   position: relative;
@@ -7,7 +9,7 @@
   border-radius: 8px;
   box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%);
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     padding: var(--ft-surface-padding-mobile);
   }
 }

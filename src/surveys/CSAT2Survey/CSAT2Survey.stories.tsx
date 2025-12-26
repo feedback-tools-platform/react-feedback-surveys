@@ -47,6 +47,8 @@ const commonProps: Omit<CSAT2SurveyProps, 'scaleStyle'> = {
 export const Emoji: Story = {
   args: {
     ...commonProps,
+    minLabel: 'No',
+    maxLabel: 'Yes',
     scaleStyle: 'emoji',
     responseType: 'text',
     choiceOptions: []
@@ -60,6 +62,8 @@ export const EmojiSurface: Story = {
   args: {
     scaleStyle: 'emoji',
     ...commonProps,
+    minLabel: 'No',
+    maxLabel: 'Yes',
     responseType: 'choices',
     choiceOptions: ['Very easy', 'Very difficult']
   },
@@ -81,6 +85,8 @@ export const EmojiPopup: Story = {
   args: {
     scaleStyle: 'emoji',
     ...commonProps,
+    minLabel: 'No',
+    maxLabel: 'Yes',
     responseType: 'choices',
     choiceOptions: ['Very easy', 'Very difficult']
   },

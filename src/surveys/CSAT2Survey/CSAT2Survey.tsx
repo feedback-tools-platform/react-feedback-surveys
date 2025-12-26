@@ -8,6 +8,7 @@ import { CSAT2SurveyEmoji } from './CSAT2SurveyEmoji';
 import { CSAT2SurveyThumbs } from './CSAT2SurveyThumbs';
 
 import styles from './CSAT2Survey.module.scss';
+import { cn } from '../../utils';
 
 export interface CSAT2SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
@@ -42,7 +43,12 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
   return (
     <SurveyRoot
       className={styles.base}
-      classNames={classNames?.base}
+      classNames={{
+        ...classNames?.base,
+        rating: cn(styles.rating, classNames?.base?.rating),
+        feedback: cn(styles.feedback, classNames?.base?.feedback),
+        success: cn(styles.success, classNames?.base?.success)
+      }}
       dir={dir}
       screen={screen}
       question={question}

@@ -61,7 +61,7 @@
 
 ## Installation
 
-### 1) Install
+### 1. Install
 
 ```shell
 npm i react-feedback-surveys
@@ -69,7 +69,7 @@ npm i react-feedback-surveys
 yarn add react-feedback-surveys
 ```
 
-### 2) Styles
+### 2. Styles
 
 ```tsx
 import 'react-feedback-surveys/index.css';
@@ -285,24 +285,57 @@ Most props are shared across all survey widgets. Each widget differs only in its
 
 ### Shared Props
 
-| Prop               | Type                                                                                                                                                                                                    | Required | Description                                                                  |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|------------------------------------------------------------------------------|
-| `classNames`       | `{ base?: { base?: string; head?: string; title?: string; body?: string; close?: string }; scale?: { base?: string; list?: string; button?: string; icon?: string; score?: string; labels?: string } }` | -        | Optional class names to target internal parts.                               |
-| `question`         | `string`                                                                                                                                                                                                | required | Main survey question displayed on the first screen.                          |
-| `minLabel`         | `string`                                                                                                                                                                                                | -        | Left label for the scale.                                                    |
-| `maxLabel`         | `string`                                                                                                                                                                                                | -        | Right label for the scale.                                                   |
-| `responseType`     | `null \| 'text' \| 'choices'`                                                                                                                                                                           | -        | Enables optional follow-up feedback.                                         |
-| `textQuestion`     | `string`                                                                                                                                                                                                | -        | Follow-up question displayed when `responseType` is defined.                 |
-| `textButtonLabel`  | `string`                                                                                                                                                                                                | -        | Submit label for the feedback screen.                                        |
-| `choiceOptions`    | `string[] \| null`                                                                                                                                                                                      | -        | Predefined choices (when `responseType === 'choices'`).                      |
-| `thankYouMessage`  | `string`                                                                                                                                                                                                | required | Message shown after submission.                                              |
+| Prop               | Type                          | Required | Description                                                                  |
+|--------------------|-------------------------------|----------|------------------------------------------------------------------------------|
+| `classNames`       | `ClassNamesConfig` (see below)| -        | Optional class names to target internal parts.                               |
+| `dir`              | `'ltr' \| 'rtl' \| 'auto'`    | -        | Text direction for RTL/LTR language support.                                 |
+| `question`         | `string`                      | required | Main survey question displayed on the first screen.                          |
+| `minLabel`         | `string`                      | -        | Left label for the scale.                                                    |
+| `maxLabel`         | `string`                      | -        | Right label for the scale.                                                   |
+| `responseType`     | `null \| 'text' \| 'choices'` | -        | Enables optional follow-up feedback.                                         |
+| `textQuestion`     | `string`                      | -        | Follow-up question displayed when `responseType` is defined.                 |
+| `textButtonLabel`  | `string`                      | -        | Submit label for the feedback screen.                                        |
+| `choiceOptions`    | `string[] \| null`            | -        | Predefined choices (when `responseType === 'choices'`).                      |
+| `thankYouMessage`  | `string`                      | required | Message shown after submission.                                              |
+
+#### ClassNamesConfig Type
+
+```typescript
+interface ClassNamesConfig {
+  base?: {
+    base?: string;       // The outer widget container
+    head?: string;       // Header row containing title and close button
+    title?: string;      // The heading that shows main/feedback/success text
+    body?: string;       // Main content region (rating scale, feedback form or success)
+    rating?: string;     // Additional class applied when rating screen is active
+    feedback?: string;   // Additional class applied when feedback screen is active
+    success?: string;    // Additional class applied when success screen is active
+    close?: string;      // Close button
+  };
+  scale?: {
+    base?: string;       // Container around the scale style
+    list?: string;       // Wrapper for the interactive items (emoji/stars/numbers)
+    button?: string;     // Each clickable item in the scale
+    icon?: string;       // Icon inside a scale button (emoji, stars)
+    score?: string;      // Number inside a scale button (for numeric variants)
+    labels?: string;     // Left/Right labels displayed under the scale
+  };
+}
+```
 
 ### Shared Events
 
-| Prop               | Type                                                                                                                                                                                                   | Required | Description                                                                                                 |
-|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------|
-| `onScoreSubmit`    | `({ value: number }) => void \| Promise<void>`                                                                                                                                                         | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
-| `onFeedbackSubmit` | `({ value: number; text?: string \| string[] }) => void \| Promise<void>`                                                                                                                           | -        | Fires when feedback is submitted. Includes the selected score and the user’s text(s).                    |
+| Prop               | Type                                              | Required | Description                                                                                                 |
+|--------------------|---------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------|
+| `onScoreSubmit`    | `(payload: ScorePayload) => void \| Promise<void>`       | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
+| `onFeedbackSubmit` | `(payload: FeedbackPayload) => void \| Promise<void>` | -        | Fires when feedback is submitted. Includes the selected score and the user's text(s). |
+
+**Event Payload Types:**
+
+```typescript
+type ScorePayload = { value: number };
+type FeedbackPayload = { value: number; text?: string | string[] };
+```
 
 > **Event behavior**
 
@@ -534,19 +567,22 @@ When is this useful?
 
 Reference: available keys
 
-| Key            | Applies to                                                   |
-|----------------|--------------------------------------------------------------|
-| `base.base`    | The outer widget container                                   |
-| `base.head`    | Header row containing title and close button                 |
-| `base.title`   | The heading that shows main/feedback/success text            |
-| `base.body`    | Main content region (rating scale, feedback form or success) |
-| `base.close`   | Close button                                                 |
-| `scale.base`   | Container around the scale style                     |
-| `scale.list`   | Wrapper for the interactive items (emoji/stars/numbers)      |
-| `scale.button` | Each clickable item in the scale                             |
-| `scale.icon`   | Icon inside a scale button (emoji, stars)                    |
-| `scale.score`  | Number inside a scale button (for numeric variants)          |
-| `scale.labels` | Left/Right labels displayed under the scale                  |
+| Key             | Applies to                                                   |
+|-----------------|--------------------------------------------------------------|
+| `base.base`     | The outer widget container                                   |
+| `base.head`     | Header row containing title and close button                 |
+| `base.title`    | The heading that shows main/feedback/success text            |
+| `base.body`     | Main content region (rating scale, feedback form or success) |
+| `base.rating`   | Additional class applied when rating screen is active        |
+| `base.feedback` | Additional class applied when feedback screen is active      |
+| `base.success`  | Additional class applied when success screen is active       |
+| `base.close`    | Close button                                                 |
+| `scale.base`    | Container around the scale style                             |
+| `scale.list`    | Wrapper for the interactive items (emoji/stars/numbers)      |
+| `scale.button`  | Each clickable item in the scale                             |
+| `scale.icon`    | Icon inside a scale button (emoji, stars)                    |
+| `scale.score`   | Number inside a scale button (for numeric variants)          |
+| `scale.labels`  | Left/Right labels displayed under the scale                  |
 
 Example: customizing a CSAT5Survey widget
 
@@ -559,6 +595,9 @@ import 'react-feedback-surveys/index.css';
     base: {
       base: 'my-survey-base',
       body: 'my-survey-body',
+      rating: 'my-rating-screen',
+      feedback: 'my-feedback-screen',
+      success: 'my-success-screen',
     },
     scale: {
       list: 'my-scale-list',

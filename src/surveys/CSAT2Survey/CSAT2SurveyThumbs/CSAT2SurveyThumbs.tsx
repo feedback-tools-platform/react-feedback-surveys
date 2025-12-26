@@ -53,11 +53,14 @@ export const CSAT2SurveyThumbs: React.FC<CSAT2SurveyThumbsProps> = ({
         ))}
       </div>
 
-      <Labels
-        className={cn(styles.labels, classNames?.labels)}
-        minLabel={minLabel}
-        maxLabel={maxLabel}
-      />
+      {!!minLabel && !!maxLabel && (
+        <Labels
+          className={cn(styles.labels, classNames?.labels)}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
+          placement="center"
+        />
+      )}
     </div>
   );
 };

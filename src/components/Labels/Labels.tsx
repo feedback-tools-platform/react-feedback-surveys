@@ -10,21 +10,27 @@ export interface LabelsProps {
   }
   minLabel?: React.ReactNode;
   maxLabel?: React.ReactNode;
+  placement?: 'between' | 'center';
 }
 
 export const Labels: React.FC<LabelsProps> = ({
   className,
   classNames,
   minLabel,
-  maxLabel
+  maxLabel,
+  placement = 'between',
 }) => (
-  <div className={cn(styles.base, classNames?.base, className)}>
+  <div className={cn(styles.base, styles[placement], classNames?.base, className)}>
     <div className={cn(styles.label, classNames?.label)}>
-      {minLabel}
+      <span className={styles.text}>
+        {minLabel}
+      </span>
     </div>
 
     <div className={cn(styles.label, classNames?.label)}>
-      {maxLabel}
+      <span className={styles.text}>
+        {maxLabel}
+      </span>
     </div>
   </div>
 );

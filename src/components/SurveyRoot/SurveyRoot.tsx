@@ -57,7 +57,12 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
 
   return (
     <div
-      className={cn(styles.base, className, classNames?.base)}
+      className={cn(
+        styles.base,
+        className,
+        classNames?.base,
+        classNames?.[screen]
+      )}
       dir={dir}
     >
       <div className={cn(styles.head, classNames?.head)}>
@@ -67,13 +72,13 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           className={cn(styles.title, classNames?.title)}
           role="heading"
         >
-          {(screen === 'main') && question}
+          {(screen === 'rating') && question}
           {(screen === 'feedback') && textQuestion}
           {(screen === 'success') && thankYouMessage}
         </div>
       </div>
 
-      {(screen === 'main') && (
+      {(screen === 'rating') && (
         <div
           aria-label="Rating selection"
           aria-labelledby={titleId}

@@ -1,8 +1,15 @@
-.base {
-  width: 320px;
-  max-width: 100%;
+@use '../../styles/variables' as *;
 
-  @media (max-width: 400px) {
+.base {
+  max-width: 100%;
+}
+
+.rating,
+.feedback,
+.success {
+  width: 320px;
+
+  @media (max-width: $breakpoint-xs) {
     width: 100%;
   }
 }

@@ -9,6 +9,7 @@ import { CSAT5SurveyNumbers } from './CSAT5SurveyNumbers';
 import { CSAT5SurveyStars } from './CSAT5SurveyStars';
 
 import styles from './CSAT5Survey.module.scss';
+import { cn } from '../../utils';
 
 export interface CSAT5SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
@@ -43,7 +44,12 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
   return (
     <SurveyRoot
       className={styles.base}
-      classNames={classNames?.base}
+      classNames={{
+        ...classNames?.base,
+        rating: cn(styles.rating, classNames?.base?.rating),
+        feedback: cn(styles.feedback, classNames?.base?.feedback),
+        success: cn(styles.success, classNames?.base?.success)
+      }}
       dir={dir}
       screen={screen}
       question={question}

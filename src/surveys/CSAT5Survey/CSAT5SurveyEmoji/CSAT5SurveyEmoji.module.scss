@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 .list {
   display: flex;
   justify-content: space-between;
@@ -19,7 +21,7 @@
   background-color: hsl(var(--ft-color-control) / 100%);
   border-radius: 50%;
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     width: 48px;
     height: 48px;
   }

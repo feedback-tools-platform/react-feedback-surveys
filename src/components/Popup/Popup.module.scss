@@ -1,3 +1,5 @@
+@use '../../styles/variables' as *;
+
 .base {
   position: fixed;
   display: flex;
@@ -9,7 +11,7 @@
   z-index: var(--ft-popup-z-index);
   --ft-popup-head-offset: 32px;
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     max-width: calc(100vw - var(--ft-surface-padding-mobile) * 2);
     max-height: calc(100vh - var(--ft-surface-padding-mobile) * 2);
   }
@@ -36,7 +38,7 @@
   top: var(--ft-surface-padding);
   left: var(--ft-surface-padding);
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     top: var(--ft-surface-padding-mobile);
     left: var(--ft-surface-padding-mobile);
   }
@@ -46,7 +48,7 @@
   top: var(--ft-surface-padding);
   right: var(--ft-surface-padding);
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     top: var(--ft-surface-padding-mobile);
     right: var(--ft-surface-padding-mobile);
   }
@@ -56,7 +58,7 @@
   right: var(--ft-surface-padding);
   bottom: var(--ft-surface-padding);
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     right: var(--ft-surface-padding-mobile);
     bottom: var(--ft-surface-padding-mobile);
   }
@@ -66,7 +68,7 @@
   bottom: var(--ft-surface-padding);
   left: var(--ft-surface-padding);
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     bottom: var(--ft-surface-padding-mobile);
     left: var(--ft-surface-padding-mobile);
   }
@@ -83,7 +85,7 @@
   color: hsl(var(--ft-color-outline) / 100%);
   transition: color 0.15s;
 
-  @media (max-width: 400px) {
+  @media (max-width: $breakpoint-xs) {
     top: var(--ft-surface-padding-mobile);
     inset-inline-end: var(--ft-surface-padding-mobile);
   }

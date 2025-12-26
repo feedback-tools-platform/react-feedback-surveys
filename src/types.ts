@@ -10,6 +10,12 @@ export interface RootClassNames {
   title?: string;
   /** Survey content wrapper (scale or feedback screen) */
   body?: string;
+  /** Rating screen wrapper */
+  rating?: string;
+  /** Feedback screen wrapper */
+  feedback?: string;
+  /** Success screen wrapper */
+  success?: string;
   /** Close button element */
   close?: string;
 }
@@ -36,8 +42,8 @@ export interface ScaleClassNames {
  * Available screens in survey flow
  */
 export type SurveyScreen =
-/** Rating screen (first screen) */
-  | 'main'
+  /** Rating screen (first screen) */
+  | 'rating'
   /** Final "thanks" message screen */
   | 'success'
   /** Feedback input screen */

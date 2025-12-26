@@ -1,8 +1,26 @@
-.base {
-  width: 520px;
-  max-width: 100%;
+@use '../../styles/variables' as *;
 
-  @media (max-width: 575px) {
+.base {
+  max-width: 100%;
+}
+
+.rating {
+  width: 520px;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 320px;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+}
+
+.feedback,
+.success {
+  width: 280px;
+
+  @media (max-width: $breakpoint-sm) {
     width: 100%;
   }
 }

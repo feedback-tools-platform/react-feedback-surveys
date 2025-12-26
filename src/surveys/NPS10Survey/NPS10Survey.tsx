@@ -7,6 +7,7 @@ import type { SharedSurveyProps } from '../../types';
 import { NPS10SurveyNumbers } from './NPS10SurveyNumbers';
 
 import styles from './NPS10Survey.module.scss';
+import { cn } from '../../utils';
 
 export interface NPS10SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
@@ -41,7 +42,12 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
   return (
     <SurveyRoot
       className={styles.base}
-      classNames={classNames?.base}
+      classNames={{
+        ...classNames?.base,
+        rating: cn(styles.rating, classNames?.base?.rating),
+        feedback: cn(styles.feedback, classNames?.base?.feedback),
+        success: cn(styles.success, classNames?.base?.success)
+      }}
       dir={dir}
       screen={screen}
       question={question}

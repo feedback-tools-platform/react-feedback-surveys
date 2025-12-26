@@ -3,6 +3,7 @@ import React from 'react';
 import { SurveyRoot } from '../../components/SurveyRoot';
 import useSurveyState from '../../hooks/useSurveyState';
 import type { SharedSurveyProps } from '../../types';
+import { cn } from '../../utils';
 
 import { CES7SurveyNumbers } from './CES7SurveyNumbers';
 
@@ -41,7 +42,12 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
   return (
     <SurveyRoot
       className={styles.base}
-      classNames={classNames?.base}
+      classNames={{
+        ...classNames?.base,
+        rating: cn(styles.rating, classNames?.base?.rating),
+        feedback: cn(styles.feedback, classNames?.base?.feedback),
+        success: cn(styles.success, classNames?.base?.success)
+      }}
       dir={dir}
       screen={screen}
       question={question}

@@ -1,21 +1,58 @@
+@use '../../styles/variables' as *;
+
 .base {
   margin: 12px 0 0;
   display: flex;
-  justify-content: space-between;
 }
 
 .label {
-  flex: 0 0 50%;
-  max-width: 50%;
   font-size: 14px;
   line-height: 1.4286;
   color: hsl(var(--ft-color-muted) / 100%);
+  flex: 0 0 50%;
+  max-width: 50%;
+}
 
-  &:first-child {
-    text-align: start;
+.between {
+  justify-content: space-between;
+
+  .label {
+    flex: 0 0 50%;
+    max-width: 50%;
+
+    &:first-child {
+      text-align: start;
+    }
+
+    &:last-child {
+      text-align: end;
+    }
+  }
+}
+
+.center {
+  .label {
+    flex: 0 0 50%;
+    max-width: 50%;
+
+    &:first-child {
+      padding-right: 8px;
+      text-align: end;
+    }
+
+    &:last-child {
+      padding-left: 8px;
+      text-align: start;
+    }
   }
 
-  &:last-child {
-    text-align: end;
+  .text {
+    display: inline-block;
+    text-align: center;
+    min-width: 56px;
+
+    @media (max-width: $breakpoint-sm) {
+      min-width: 48px;
+    }
   }
 }

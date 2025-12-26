@@ -1,9 +1,11 @@
+@use '../../../styles/variables' as *;
+
 .list {
   display: flex;
   justify-content: space-between;
   gap: 6px;
 
-  @media (max-width: 575px) {
+  @media (max-width: $breakpoint-sm) {
     flex-direction: column-reverse;
     gap: 4px;
   }
@@ -28,7 +30,7 @@
     color: hsl(var(--ft-color-text) / 100%);
     box-shadow: 0 0 0 2px hsl(var(--ft-color-control) / 100%);
 
-    @media (max-width: 575px) {
+    @media (max-width: $breakpoint-sm) {
       box-shadow: none;
     }
   }
@@ -44,12 +46,12 @@
   .label {
     display: none;
 
-    @media (max-width: 575px) {
+    @media (max-width: $breakpoint-sm) {
       display: inline;
     }
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: $breakpoint-sm) {
     width: 100%;
     height: auto;
     padding: 6px;
@@ -60,7 +62,7 @@
 }
 
 .labels {
-  @media (max-width: 575px) {
+  @media (max-width: $breakpoint-sm) {
     display: none;
   }
 }

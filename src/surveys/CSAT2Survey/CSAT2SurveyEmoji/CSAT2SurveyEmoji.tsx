@@ -58,6 +58,7 @@ export const CSAT2SurveyEmoji: React.FC<CSAT2SurveyEmojiProps> = ({
           className={cn(styles.labels, classNames?.labels)}
           minLabel={minLabel}
           maxLabel={maxLabel}
+          placement="center"
         />
       )}
     </div>
