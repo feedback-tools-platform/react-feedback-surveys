@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { fn, userEvent, within, expect } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
 import { minHeightDecorator } from '../../utils/storybook';
@@ -99,6 +99,24 @@ export const EmojiPopup: Story = {
   ),
 };
 
+export const EmojiInteractions: Story = {
+  ...Emoji,
+  name: 'Emoji (interactions)',
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    // Click on score 5
+    const scoreButton = canvas.getByRole('button', { name: 'Score 5' });
+    await userEvent.click(scoreButton);
+
+    // Verify score callback was called
+    await expect(args.onScoreSubmit).toHaveBeenCalledWith({ value: 5 });
+
+    // Verify thank you message appears (no feedback screen for Emoji)
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
+};
+
 export const Numbers: Story = {
   args: {
     scaleStyle: 'numbers',
@@ -150,6 +168,41 @@ export const NumbersPopup: Story = {
   ),
 };
 
+export const NumbersInteractions: Story = {
+  ...Numbers,
+  name: 'Numbers (interactions)',
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    // Click on score 4
+    const scoreButton = canvas.getByRole('button', { name: 'Score 4' });
+    await userEvent.click(scoreButton);
+
+    // Verify score callback was called
+    await expect(args.onScoreSubmit).toHaveBeenCalledWith({ value: 4 });
+
+    // Wait for feedback screen to appear
+    const textarea = await canvas.findByRole('textbox', { name: 'Your feedback' });
+    await expect(textarea).toBeInTheDocument();
+
+    // Type feedback text
+    await userEvent.type(textarea, 'Good product overall');
+
+    // Submit feedback
+    const submitButton = canvas.getByRole('button', { name: 'Submit' });
+    await userEvent.click(submitButton);
+
+    // Verify feedback callback was called
+    await expect(args.onFeedbackSubmit).toHaveBeenCalledWith({
+      value: 4,
+      text: 'Good product overall'
+    });
+
+    // Verify thank you message appears
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
+};
+
 export const Stars: Story = {
   args: {
     scaleStyle: 'stars',
@@ -199,4 +252,40 @@ export const StarsPopup: Story = {
       <CSAT5Survey {...args} />
     </Popup>
   ),
+};
+
+export const StarsInteractions: Story = {
+  ...Stars,
+  name: 'Stars (interactions)',
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    // Click on score 3
+    const scoreButton = canvas.getByRole('button', { name: '3 stars' });
+    await userEvent.click(scoreButton);
+
+    // Verify score callback was called
+    await expect(args.onScoreSubmit).toHaveBeenCalledWith({ value: 3 });
+
+    // Wait for feedback screen with choices
+    const checkbox1 = await canvas.findByRole('checkbox', { name: 'Very easy' });
+    await expect(checkbox1).toBeInTheDocument();
+
+    // Select first choice
+    await userEvent.click(checkbox1);
+    await expect(checkbox1).toBeChecked();
+
+    // Submit feedback
+    const submitButton = canvas.getByRole('button', { name: 'Submit' });
+    await userEvent.click(submitButton);
+
+    // Verify feedback callback was called
+    await expect(args.onFeedbackSubmit).toHaveBeenCalledWith({
+      value: 3,
+      text: 'Very easy'
+    });
+
+    // Verify thank you message appears
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
 };

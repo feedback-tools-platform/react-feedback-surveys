@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { withoutVitePlugins } from '@storybook/builder-vite';
 
 const config: StorybookConfig = {
   stories: [
@@ -8,7 +9,8 @@ const config: StorybookConfig = {
     '@storybook/addon-a11y',
     '@storybook/addon-docs',
     '@storybook/addon-themes',
-    '@chromatic-com/storybook'
+    '@chromatic-com/storybook',
+    '@storybook/addon-vitest'
   ],
   framework: {
     name: '@storybook/react-vite',
@@ -16,6 +18,14 @@ const config: StorybookConfig = {
   },
   core: {
     disableTelemetry: true,
-  }
+  },
+  async viteFinal(config) {
+    // This will remove vite-plugin-dts from your storybook build
+    config.plugins = await withoutVitePlugins(config.plugins, [
+      'vite:dts',
+    ]);
+
+    return config;
+  },
 };
 export default config;

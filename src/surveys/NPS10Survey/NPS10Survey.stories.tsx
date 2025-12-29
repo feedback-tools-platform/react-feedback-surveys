@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { fn, userEvent, within, expect } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
 import { Surface } from '../../components/Surface';
@@ -84,4 +84,39 @@ export const NumbersPopup: Story = {
       <NPS10Survey {...args} />
     </Popup>
   ),
+};
+
+export const NumbersInteractions: Story = {
+  ...Numbers,
+  name: 'Numbers (interactions)',
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    // Click on score 9
+    const scoreButton = canvas.getByRole('button', { name: 'Score 9' });
+    await userEvent.click(scoreButton);
+
+    // Verify score callback was called
+    await expect(args.onScoreSubmit).toHaveBeenCalledWith({ value: 9 });
+
+    // Wait for feedback screen to appear
+    const textarea = await canvas.findByRole('textbox', { name: 'Your feedback' });
+    await expect(textarea).toBeInTheDocument();
+
+    // Type feedback text
+    await userEvent.type(textarea, 'Excellent service!');
+
+    // Submit feedback
+    const submitButton = canvas.getByRole('button', { name: 'Submit' });
+    await userEvent.click(submitButton);
+
+    // Verify feedback callback was called
+    await expect(args.onFeedbackSubmit).toHaveBeenCalledWith({
+      value: 9,
+      text: 'Excellent service!'
+    });
+
+    // Verify thank you message appears
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
 };

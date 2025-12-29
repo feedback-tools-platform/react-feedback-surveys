@@ -34,21 +34,30 @@ const MY_VIEWPORTS = {
 
 const preview: Preview = {
   parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i
-      }
-    },
-    viewport: {
-      options: MY_VIEWPORTS
-    },
     backgrounds: {
       grid: {
         cellSize: 20,
         opacity: 0.1,
         cellAmount: 5
       }
+    },
+
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i
+      }
+    },
+
+    viewport: {
+      options: MY_VIEWPORTS
+    },
+
+    a11y: {
+      // 'todo' - show a11y violations in the test UI only
+      // 'error' - fail CI on a11y violations
+      // 'off' - skip a11y checks entirely
+      test: 'todo'
     }
   },
   decorators: [
