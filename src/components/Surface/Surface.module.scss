@@ -1,8 +1,8 @@
 @use '../../styles/variables' as *;
 
 .base {
-  display: inline-block;
   position: relative;
+  display: inline-block;
   padding: var(--ft-surface-padding);
   overflow: auto;
   background-color: hsl(var(--ft-color-bg) / 100%);

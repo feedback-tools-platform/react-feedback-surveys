@@ -6,11 +6,11 @@
 }
 
 .label {
+  flex: 0 0 50%;
+  max-width: 50%;
   font-size: 14px;
   line-height: 1.4286;
   color: hsl(var(--ft-color-muted) / 100%);
-  flex: 0 0 50%;
-  max-width: 50%;
 }
 
 .between {
@@ -48,8 +48,8 @@
 
   .text {
     display: inline-block;
-    text-align: center;
     min-width: 56px;
+    text-align: center;
 
     @media (max-width: $breakpoint-sm) {
       min-width: 48px;

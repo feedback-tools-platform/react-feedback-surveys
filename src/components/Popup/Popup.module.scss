@@ -1,15 +1,16 @@
 @use '../../styles/variables' as *;
 
 .base {
+  --ft-popup-head-offset: 32px;
+
   position: fixed;
-  display: flex;
+  z-index: var(--ft-popup-z-index);
   margin: 0;
+  display: flex;
   box-sizing: border-box;
   max-width: calc(100vw - var(--ft-surface-padding) * 2);
   max-height: calc(100vh - var(--ft-surface-padding) * 2);
   transform-origin: 50% 100%;
-  z-index: var(--ft-popup-z-index);
-  --ft-popup-head-offset: 32px;
 
   @media (max-width: $breakpoint-xs) {
     max-width: calc(100vw - var(--ft-surface-padding-mobile) * 2);
@@ -79,16 +80,11 @@
 
   position: absolute;
   top: var(--ft-surface-padding);
-  inset-inline-end: var(--ft-surface-padding);
   width: 24px;
   height: 24px;
   color: hsl(var(--ft-color-outline) / 100%);
   transition: color 0.15s;
-
-  @media (max-width: $breakpoint-xs) {
-    top: var(--ft-surface-padding-mobile);
-    inset-inline-end: var(--ft-surface-padding-mobile);
-  }
+  inset-inline-end: var(--ft-surface-padding);
 
   &:hover {
     color: hsl(var(--ft-color-text) / 100%);
@@ -115,5 +111,10 @@
     margin: -8px 0 0 -1px;
     width: 2px;
     height: 16px;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    top: var(--ft-surface-padding-mobile);
+    inset-inline-end: var(--ft-surface-padding-mobile);
   }
 }
