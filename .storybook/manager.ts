@@ -4,7 +4,7 @@ import { create } from 'storybook/theming';
 const theme = create({
   base: 'light',
   brandTitle: 'React Feedback Surveys',
-  brandUrl: 'https://github.com/feedback-tools-platform/react-feedback-surveys',
+  brandUrl: 'https://feedback.tools/react-feedback-surveys',
   brandTarget: '_self',
 });
 
