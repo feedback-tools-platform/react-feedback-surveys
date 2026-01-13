@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-01-13
+
+### Added
+
+- **Docker support** - Storybook now available as a Docker image published to DockerHub. Deploy component documentation as a containerized service with automatic builds on release.
+- **GitHub Actions workflow** - Automated Docker image publishing to `feedbacktools/react-feedback-surveys` with version tags.
+
+### Changed
+
+- **Dependencies** - Updated all packages to latest stable versions for security patches and performance improvements.
+
 ## [1.5.0] - 2025-12-26
 
 ### Added
