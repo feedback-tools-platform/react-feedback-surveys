@@ -1,0 +1,215 @@
+<div style={{ maxWidth: '800px', margin: '0 auto' }}>
+
+# React Feedback Surveys
+
+> Lightweight, customizable survey widgets to collect user feedback in React apps.
+
+<div style={{
+  display: 'flex',
+  gap: '12px',
+  flexWrap: 'wrap',
+  marginBottom: '2em'
+}}>
+  <a href="https://www.npmjs.com/package/react-feedback-surveys" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/npm/v/react-feedback-surveys.svg?style=flat-square" alt="npm version" />
+  </a>
+  <a href="https://www.npmjs.com/package/react-feedback-surveys" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/npm/dm/react-feedback-surveys.svg?style=flat-square" alt="npm downloads" />
+  </a>
+  <a href="https://github.com/feedback-tools-platform/react-feedback-surveys/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/npm/l/react-feedback-surveys.svg?style=flat-square" alt="license" />
+  </a>
+  <a href="https://bundlephobia.com/package/react-feedback-surveys" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/bundlephobia/minzip/react-feedback-surveys?style=flat-square" alt="bundle size" />
+  </a>
+</div>
+
+## Features
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1em',
+  marginBottom: '2em',
+  marginTop: '2em'
+}}>
+  <div>
+    <strong>📊 Ready-to-use widgets</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      CSAT (2 or 5 points), CES (7 points), NPS (0–10)
+    </p>
+  </div>
+  <div>
+    <strong>🎨 Multiple scale styles</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      Emoji, stars, numbers, thumbs
+    </p>
+  </div>
+  <div>
+    <strong>📍 Flexible placement</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      Embed inline or display as popup overlay
+    </p>
+  </div>
+  <div>
+    <strong>💬 Follow-up feedback</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      Optional text input or multiple choice responses
+    </p>
+  </div>
+  <div>
+    <strong>🎯 Fully customizable</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      CSS variables and custom class names
+    </p>
+  </div>
+  <div>
+    <strong>📦 Zero dependencies</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      Lightweight with TypeScript support
+    </p>
+  </div>
+</div>
+
+## Quick Start
+
+Install the package:
+
+```bash
+npm i react-feedback-surveys
+# or
+yarn add react-feedback-surveys
+```
+
+Import styles and use a survey component:
+
+```tsx
+import { CSAT5Survey } from 'react-feedback-surveys';
+import 'react-feedback-surveys/index.css';
+
+function App() {
+  return (
+    <CSAT5Survey
+      scaleStyle="emoji"
+      question="How satisfied are you with our product?"
+      minLabel="Very unsatisfied"
+      maxLabel="Very satisfied"
+      thankYouMessage="Thanks for your feedback!"
+      onScoreSubmit={({ value }) => console.log('Score:', value)}
+    />
+  );
+}
+```
+
+## Survey Components
+
+Explore the available survey widgets in the sidebar:
+
+- **CSAT5Survey** - Customer Satisfaction Score (5-point scale)
+- **CSAT2Survey** - Customer Satisfaction Score (2-point scale)
+- **NPS10Survey** - Net Promoter Score (0–10 scale)
+- **CES7Survey** - Customer Effort Score (7-point scale)
+
+## Layout Components
+
+- **Popup** - Fixed overlay wrapper with positioning and animations
+- **Surface** - Basic container with consistent styling
+
+## Resources
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+  gap: '16px',
+  flexWrap: 'wrap',
+  marginTop: '2em'
+}}>
+  <a
+    href="https://github.com/feedback-tools-platform/react-feedback-surveys"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'inline-block',
+      textAlign: 'center',
+      padding: '0 16px',
+      backgroundColor: 'var(--color-bg-secondary, #f5f5f5)',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      color: 'inherit',
+      fontWeight: '500'
+    }}
+  >
+    🔗&nbsp;&nbsp;GitHub Repository
+  </a>
+  <a
+    href="https://www.npmjs.com/package/react-feedback-surveys"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'inline-block',
+      textAlign: 'center',
+      padding: '0 16px',
+      backgroundColor: 'var(--color-bg-secondary, #f5f5f5)',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      color: 'inherit',
+      fontWeight: '500'
+    }}
+  >
+    📦&nbsp;&nbsp;NPM Package
+  </a>
+  <a
+    href="https://feedback.tools/react-feedback-surveys/changelog"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'inline-block',
+      textAlign: 'center',
+      padding: '0 16px',
+      backgroundColor: 'var(--color-bg-secondary, #f5f5f5)',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      color: 'inherit',
+      fontWeight: '500'
+    }}
+  >
+    📝&nbsp;&nbsp;Changelog
+  </a>
+  <a
+    href="https://feedback.tools"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'inline-block',
+      textAlign: 'center',
+      padding: '0 16px',
+      backgroundColor: 'var(--color-bg-secondary, #f5f5f5)',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      color: 'inherit',
+      fontWeight: '500'
+    }}
+  >
+    🌐&nbsp;&nbsp;Website
+  </a>
+</div>
+
+<div style={{
+  marginTop: '3em',
+  marginBottom: '3em',
+  padding: '1.5em',
+  backgroundColor: 'var(--color-bg-secondary, #f5f5f5)',
+  borderRadius: '8px'
+}}>
+  <p style={{ margin: 0, fontSize: '0.95em' }}>
+    <strong>💡 Getting Started:</strong> Browse the survey components in the sidebar to see live examples and interactive demos. Each story includes controls to customize the component properties in real-time.
+  </p>
+</div>
+
+---
+
+<p style={{ fontSize: '0.9em', color: 'var(--color-text-secondary, #666)', textAlign: 'center', marginTop: '3em' }}>
+  Made with ❤️ by <a href="https://feedback.tools" target="_blank" rel="noopener noreferrer">feedback.tools</a> • Licensed under MIT
+</p>
+
+</div>

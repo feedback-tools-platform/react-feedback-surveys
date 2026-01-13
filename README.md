@@ -619,7 +619,7 @@ You can then style these classes in your app stylesheet.
 
 ## Demo
 
-- Live demo: [View Storybook](https://feedback.tools/react-feedback-surveys/storybook)
+- Live demo: [View Storybook](https://feedback.tools/react-feedback-surveys/storybook/)
 - Run locally: `npm run storybook`
 
 ## Contributing
