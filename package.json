@@ -2,7 +2,7 @@
   "name": "react-feedback-surveys",
   "description": "CSAT, CES, and NPS survey widgets for React",
   "private": false,
-  "version": "1.5.2",
+  "version": "1.5.3",
   "license": "MIT",
   "repository": {
     "type": "git",
