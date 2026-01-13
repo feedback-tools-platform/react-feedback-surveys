@@ -1,0 +1,37 @@
+# Dependencies
+node_modules
+npm-debug.log
+
+# Build outputs
+dist
+storybook-static
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Git
+.git
+.gitignore
+
+# CI/CD
+.github
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Tests
+coverage
+.nyc_output
+
+# Misc
+.DS_Store
+*.log
+.env
+.env.local
+README.md
+CHANGELOG.md
