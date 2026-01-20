@@ -653,7 +653,7 @@ npm run build
 
 ## Changelog
 
-For a detailed history of changes, see the [Changelog](https://feedback.tools/react-feedback-surveys/changelog).
+For a detailed history of changes, see the [Changelog](https://feedback.tools/react-feedback-surveys/docs/changelog).
 
 ## Credits
 
