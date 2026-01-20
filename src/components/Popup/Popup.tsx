@@ -4,15 +4,13 @@ import { Surface } from '../Surface';
 
 import styles from './Popup.module.scss';
 
-export interface PopupProps {
+export interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
   animated?: boolean;
-  className?: string;
   classNames?: {
     base?: string;
     content?: string;
     close?: string;
   }
-  children?: React.ReactNode;
   placement?: 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
   onClose?: () => void;
 }
@@ -23,10 +21,14 @@ export const Popup: React.FC<PopupProps> = ({
   classNames,
   children,
   placement = 'bottomRight',
-  onClose
+  onClose,
+  ...props
 }) => {
   return (
-    <div className={cn(styles.base, { [styles.animated]: animated }, styles[placement], className, classNames?.base)}>
+    <div
+      className={cn(styles.base, { [styles.animated]: animated }, styles[placement], className, classNames?.base)}
+      {...props}
+    >
       <Surface className={classNames?.content}>
         {children}
 

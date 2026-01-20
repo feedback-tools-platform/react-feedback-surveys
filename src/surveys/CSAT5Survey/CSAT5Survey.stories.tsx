@@ -289,3 +289,51 @@ export const StarsInteractions: Story = {
     await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
   },
 };
+
+export const Preview: Story = {
+  args: {
+    scaleStyle: 'emoji',
+    ...commonProps,
+  },
+  name: 'Preview docs',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        padding: '1.5rem',
+        background: '#5fe7d0'
+      }}
+    >
+      <Surface>
+        <CSAT5Survey {...args} />
+      </Surface>
+    </div>
+  ),
+};
+
+export const PreviewPopup: Story = {
+  args: {
+    scaleStyle: 'stars',
+    ...commonProps,
+  },
+  name: 'Preview docs (popup)',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        padding: '1.5rem',
+        background: '#5fe7d0'
+      }}
+    >
+      <Popup style={{ position: 'static' }}>
+        <CSAT5Survey {...args} />
+      </Popup>
+    </div>
+  ),
+};

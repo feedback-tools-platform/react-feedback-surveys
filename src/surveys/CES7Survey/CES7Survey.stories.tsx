@@ -132,3 +132,26 @@ export const NumbersInteractions: Story = {
     await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
   },
 };
+
+export const Preview: Story = {
+  args: {
+    ...commonProps
+  },
+  name: 'Preview docs',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        padding: '1.5rem',
+        backgroundColor: '#5fe7d0'
+      }}
+    >
+      <Surface>
+        <CES7Survey {...args} />
+      </Surface>
+    </div>
+  )
+};

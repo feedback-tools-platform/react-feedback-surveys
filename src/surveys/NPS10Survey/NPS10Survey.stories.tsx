@@ -120,3 +120,55 @@ export const NumbersInteractions: Story = {
     await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
   },
 };
+
+export const Preview: Story = {
+  args: {
+    ...commonProps
+  },
+  name: 'Preview docs',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        padding: '1.5rem',
+        background: '#5fe7d0'
+      }}
+    >
+      <Surface>
+        <NPS10Survey {...args} />
+      </Surface>
+    </div>
+  )
+};
+
+export const PreviewMobile: Story = {
+  args: {
+    ...commonProps
+  },
+  globals: {
+    viewport: {
+      value: 'iphoneXR'
+    }
+  },
+  name: 'Preview docs (mobile)',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div
+      style={{
+        maxWidth: 360,
+        display: 'flex',
+        padding: '1.5rem',
+        background: '#5fe7d0'
+      }}
+    >
+      <Surface>
+        <NPS10Survey {...args} />
+      </Surface>
+    </div>
+  )
+};

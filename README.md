@@ -86,7 +86,7 @@ Surveys to ask users about their overall satisfaction.
 - "How would you rate your overall experience?"
 - "How satisfied are you with our customer support?"
 
-<img alt="CSAT5" src="docs/assets/csat5.png" width="400" />
+<img alt="CSAT5" src="docs/assets/csat5.png" width="416" />
 
 ```tsx
 import { CSAT5Survey } from 'react-feedback-surveys';
@@ -117,7 +117,7 @@ Surveys to ask users about specific features or flows.
 - "Did you find what you were looking for?"
 - "Are you satisfied with the checkout process?"
 
-<img alt="CSAT2" src="docs/assets/csat2.png" width="390" />
+<img alt="CSAT2" src="docs/assets/csat2.png" width="386" />
 
 ```tsx
 import { CSAT2Survey } from 'react-feedback-surveys';
@@ -146,9 +146,9 @@ Surveys to ask users if they'd recommend your product.
 - "On a scale of 0-10, would you recommend our service?"
 - "How likely are you to recommend this product to others?"
 
-<img alt="NPS10" src="docs/assets/nps10.png" width="600" />
+<img alt="NPS10" src="docs/assets/nps10.png" width="616" />
 
-<img alt="NPS10 mobile" src="docs/assets/nps10-mobile.png" width="362" />
+<img alt="NPS10 mobile" src="docs/assets/nps10-mobile.png" width="340" />
 
 ```tsx
 import { NPS10Survey } from 'react-feedback-surveys';
@@ -179,7 +179,7 @@ Surveys to ask users how easy it is to use your product.
 - "How much effort did it take to resolve your issue?"
 - "How easy was it to sign up for an account?"
 
-<img alt="CES7" src="docs/assets/ces7.png" width="420" />
+<img alt="CES7" src="docs/assets/ces7.png" width="436" />
 
 ```tsx
 import { CES7Survey } from 'react-feedback-surveys';
@@ -207,7 +207,7 @@ import 'react-feedback-surveys/index.css';
 
 The `<Popup>` component wraps survey widgets in a fixed overlay that slides in from the screen edge. It includes positioning, animations, and a close button for easy dismissal.
 
-<img alt="CSAT5 Popup" src="docs/assets/csat5-popup.png" width="400" />
+<img alt="CSAT5 Popup" src="docs/assets/csat5-popup.png" width="416" />
 
 #### Usage
 

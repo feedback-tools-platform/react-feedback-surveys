@@ -223,3 +223,26 @@ export const ThumbsInteractions: Story = {
     await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
   },
 };
+export const Preview: Story = {
+  args: {
+    scaleStyle: 'thumbs',
+    ...commonProps,
+  },
+  name: 'Preview docs',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        padding: '1.5rem',
+        background: '#5fe7d0'
+      }}
+    >
+      <Surface>
+        <CSAT2Survey {...args} />
+      </Surface>
+    </div>
+  )
+};

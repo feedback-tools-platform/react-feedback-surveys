@@ -2,16 +2,17 @@ import { cn } from '../../utils';
 
 import styles from './Surface.module.scss';
 
-export interface SurfaceProps {
-  className?: string;
-  children?: React.ReactNode;
-}
+export type SurfaceProps = React.HTMLAttributes<HTMLDivElement>
 
 export const Surface: React.FC<SurfaceProps> = ({
   className,
-  children
+  children,
+  ...props
 }) => (
-  <div className={cn(styles.base, className)}>
+  <div
+    className={cn(styles.base, className)}
+    {...props}
+  >
     {children}
   </div>
 );
