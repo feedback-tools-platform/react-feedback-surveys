@@ -1,16 +1,16 @@
-:root {
-  --ft-color-text: 30 8% 14%;
-  --ft-color-bg: 0 0% 100%;
-  --ft-color-muted: 222 11% 46%;
-  --ft-color-error: 32 95% 44%;
-  --ft-color-border: 214 14% 83%;
-  --ft-color-outline: 218 14% 65%;
-  --ft-color-shadow: 0 0% 0%;
-  --ft-color-control: 214 20% 96%;
-  --ft-popup-z-index: 49;
-  --ft-popup-head-offset: 0;
-  --ft-surface-padding: 24px;
-  --ft-surface-padding-mobile: 20px;
-  --ft-surface-radius: 8px;
+:root,
+:host {
+  --_color-text: var(--ft-color-text, 30 8% 14%);
+  --_color-bg: var(--ft-color-bg, 0 0% 100%);
+  --_color-muted: var(--ft-color-muted, 222 11% 46%);
+  --_color-error: var(--ft-color-error, 32 95% 44%);
+  --_color-border: var(--ft-color-border, 214 14% 83%);
+  --_color-outline: var(--ft-color-outline, 218 14% 65%);
+  --_color-shadow: var(--ft-color-shadow, 0 0% 0%);
+  --_color-control: var(--ft-color-control, 214 20% 96%);
+  --_popup-z-index: var(--ft-popup-z-index, 49);
+  --_popup-head-offset: var(--ft-popup-head-offset, 0);
+  --_surface-padding: var(--ft-surface-padding, 24px);
+  --_surface-padding-mobile: var(--ft-surface-padding-mobile, 20px);
+  --_surface-radius: var(--ft-surface-radius, 8px);
 }
-
