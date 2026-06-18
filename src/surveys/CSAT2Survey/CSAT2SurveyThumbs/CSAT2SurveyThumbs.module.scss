@@ -17,7 +17,7 @@
   justify-content: center;
   width: 56px;
   height: 56px;
-  background-color: hsl(var(--ft-color-control) / 100%);
+  background-color: hsl(var(--_color-control) / 100%);
   border-radius: 50%;
 
   &:hover {
@@ -27,6 +27,6 @@
   }
 
   &:focus-visible {
-    outline: 2px solid hsl(var(--ft-color-outline) / 100%);
+    outline: 2px solid hsl(var(--_color-outline) / 100%);
   }
 }

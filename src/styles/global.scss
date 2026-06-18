@@ -1,5 +1,4 @@
-:root,
-:host {
+:root {
   --ft-color-text: 30 8% 14%;
   --ft-color-bg: 0 0% 100%;
   --ft-color-muted: 222 11% 46%;
@@ -14,16 +13,3 @@
   --ft-surface-padding-mobile: 20px;
 }
 
-body {
-  margin: 0;
-  box-sizing: border-box;
-  padding: 0;
-}
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  box-sizing: border-box;
-  padding: 0;
-}

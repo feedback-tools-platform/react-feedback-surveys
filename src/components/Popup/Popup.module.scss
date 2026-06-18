@@ -4,17 +4,17 @@
   --ft-popup-head-offset: 32px;
 
   position: fixed;
-  z-index: var(--ft-popup-z-index);
+  z-index: var(--_popup-z-index);
   margin: 0;
   display: flex;
   box-sizing: border-box;
-  max-width: calc(100vw - var(--ft-surface-padding) * 2);
-  max-height: calc(100vh - var(--ft-surface-padding) * 2);
+  max-width: calc(100vw - var(--_surface-padding) * 2);
+  max-height: calc(100vh - var(--_surface-padding) * 2);
   transform-origin: 50% 100%;
 
   @media (max-width: $breakpoint-xs) {
-    max-width: calc(100vw - var(--ft-surface-padding-mobile) * 2);
-    max-height: calc(100vh - var(--ft-surface-padding-mobile) * 2);
+    max-width: calc(100vw - var(--_surface-padding-mobile) * 2);
+    max-height: calc(100vh - var(--_surface-padding-mobile) * 2);
   }
 }
 
@@ -36,42 +36,42 @@
 }
 
 .topLeft {
-  top: var(--ft-surface-padding);
-  left: var(--ft-surface-padding);
+  top: var(--_surface-padding);
+  left: var(--_surface-padding);
 
   @media (max-width: $breakpoint-xs) {
-    top: var(--ft-surface-padding-mobile);
-    left: var(--ft-surface-padding-mobile);
+    top: var(--_surface-padding-mobile);
+    left: var(--_surface-padding-mobile);
   }
 }
 
 .topRight {
-  top: var(--ft-surface-padding);
-  right: var(--ft-surface-padding);
+  top: var(--_surface-padding);
+  right: var(--_surface-padding);
 
   @media (max-width: $breakpoint-xs) {
-    top: var(--ft-surface-padding-mobile);
-    right: var(--ft-surface-padding-mobile);
+    top: var(--_surface-padding-mobile);
+    right: var(--_surface-padding-mobile);
   }
 }
 
 .bottomRight {
-  right: var(--ft-surface-padding);
-  bottom: var(--ft-surface-padding);
+  right: var(--_surface-padding);
+  bottom: var(--_surface-padding);
 
   @media (max-width: $breakpoint-xs) {
-    right: var(--ft-surface-padding-mobile);
-    bottom: var(--ft-surface-padding-mobile);
+    right: var(--_surface-padding-mobile);
+    bottom: var(--_surface-padding-mobile);
   }
 }
 
 .bottomLeft {
-  bottom: var(--ft-surface-padding);
-  left: var(--ft-surface-padding);
+  bottom: var(--_surface-padding);
+  left: var(--_surface-padding);
 
   @media (max-width: $breakpoint-xs) {
-    bottom: var(--ft-surface-padding-mobile);
-    left: var(--ft-surface-padding-mobile);
+    bottom: var(--_surface-padding-mobile);
+    left: var(--_surface-padding-mobile);
   }
 }
 
@@ -79,15 +79,15 @@
   @include resetButton;
 
   position: absolute;
-  top: var(--ft-surface-padding);
+  top: var(--_surface-padding);
   width: 24px;
   height: 24px;
-  color: hsl(var(--ft-color-outline) / 100%);
+  color: hsl(var(--_color-outline) / 100%);
   transition: color 0.15s;
-  inset-inline-end: var(--ft-surface-padding);
+  inset-inline-end: var(--_surface-padding);
 
   &:hover {
-    color: hsl(var(--ft-color-text) / 100%);
+    color: hsl(var(--_color-text) / 100%);
   }
 
   &::before,
@@ -114,7 +114,7 @@
   }
 
   @media (max-width: $breakpoint-xs) {
-    top: var(--ft-surface-padding-mobile);
-    inset-inline-end: var(--ft-surface-padding-mobile);
+    top: var(--_surface-padding-mobile);
+    inset-inline-end: var(--_surface-padding-mobile);
   }
 }

@@ -3,13 +3,13 @@
 .base {
   position: relative;
   display: inline-block;
-  padding: var(--ft-surface-padding);
+  padding: var(--_surface-padding);
   overflow: auto;
-  background-color: hsl(var(--ft-color-bg) / 100%);
+  background-color: hsl(var(--_color-bg) / 100%);
   border-radius: 8px;
-  box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%);
+  box-shadow: 0 0 10px hsl(var(--_color-shadow) / 20%);
 
   @media (max-width: $breakpoint-xs) {
-    padding: var(--ft-surface-padding-mobile);
+    padding: var(--_surface-padding-mobile);
   }
 }

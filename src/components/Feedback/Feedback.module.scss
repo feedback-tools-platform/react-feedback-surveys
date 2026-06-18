@@ -35,18 +35,18 @@
 .check {
   height: 20px;
   min-width: 20px;
-  border: 1px solid hsl(var(--ft-color-border) / 100%);
+  border: 1px solid hsl(var(--_color-border) / 100%);
   border-radius: 4px;
 
   .label:hover & {
-    border-color: hsl(var(--ft-color-text) / 100%);
+    border-color: hsl(var(--_color-text) / 100%);
   }
 }
 
 .checkbox:checked + .check {
   position: relative;
-  background-color: hsl(var(--ft-color-text) / 100%);
-  border-color: hsl(var(--ft-color-text) / 100%);
+  background-color: hsl(var(--_color-text) / 100%);
+  border-color: hsl(var(--_color-text) / 100%);
 
   &::after {
     position: absolute;
@@ -56,7 +56,7 @@
     height: 7px;
     content: '';
     border: 2px solid;
-    border-color: transparent transparent hsl(var(--ft-color-bg) / 100%) hsl(var(--ft-color-bg) / 100%);
+    border-color: transparent transparent hsl(var(--_color-bg) / 100%) hsl(var(--_color-bg) / 100%);
     transform: translate(-45%, -75%) rotate(-45deg);
     pointer-events: none;
   }
@@ -77,19 +77,19 @@
   padding: 8px 12px;
   font-size: 16px;
   line-height: 1.5;
-  background-color: hsl(var(--ft-color-bg) / 100%);
-  border: 1px solid hsl(var(--ft-color-border) / 100%);
+  background-color: hsl(var(--_color-bg) / 100%);
+  border: 1px solid hsl(var(--_color-border) / 100%);
   border-radius: 8px;
-  outline: 0 solid hsl(var(--ft-color-outline) / 14%);
+  outline: 0 solid hsl(var(--_color-outline) / 14%);
   resize: none;
   transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;
 
   &:focus {
-    outline: 4px solid hsl(var(--ft-color-outline) / 14%);
+    outline: 4px solid hsl(var(--_color-outline) / 14%);
   }
 
   &.invalid {
-    border-color: hsl(var(--ft-color-error) / 100%);
+    border-color: hsl(var(--_color-error) / 100%);
   }
 }
 

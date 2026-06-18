@@ -13,18 +13,18 @@
   height: 40px;
   font-size: 18px;
   font-weight: 700;
-  color: hsl(var(--ft-color-muted) / 100%);
-  background-color: hsl(var(--ft-color-control) / 100%);
+  color: hsl(var(--_color-muted) / 100%);
+  background-color: hsl(var(--_color-control) / 100%);
   border-radius: 50%;
-  box-shadow: 0 0 0 0 hsl(var(--ft-color-control) / 100%);
+  box-shadow: 0 0 0 0 hsl(var(--_color-control) / 100%);
   transition: color 0.12s ease, box-shadow 0.12s ease;
 
   &:hover {
-    color: hsl(var(--ft-color-text) / 100%);
-    box-shadow: 0 0 0 2px hsl(var(--ft-color-control) / 100%);
+    color: hsl(var(--_color-text) / 100%);
+    box-shadow: 0 0 0 2px hsl(var(--_color-control) / 100%);
   }
 
   &:focus-visible {
-    outline: 2px solid hsl(var(--ft-color-outline) / 100%);
+    outline: 2px solid hsl(var(--_color-outline) / 100%);
   }
 }
