@@ -6,7 +6,7 @@
   padding: var(--_surface-padding);
   overflow: auto;
   background-color: hsl(var(--_color-bg) / 100%);
-  border-radius: 8px;
+  border-radius: var(--_surface-radius);
   box-shadow: 0 0 10px hsl(var(--_color-shadow) / 20%);
 
   @media (max-width: $breakpoint-xs) {

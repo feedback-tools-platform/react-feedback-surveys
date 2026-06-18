@@ -21,7 +21,7 @@
   text-align: center;
   color: hsl(var(--_color-bg) / 100%);
   background-color: hsl(var(--_color-text) / 100%);
-  border-radius: 8px;
+  border-radius: var(--_surface-radius);
   transition: opacity 0.2s;
 
   &:hover {
@@ -38,5 +38,5 @@
   overflow: hidden;
   white-space: nowrap;
   border-width: 0;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
 }

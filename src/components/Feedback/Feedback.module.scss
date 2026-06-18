@@ -79,7 +79,7 @@
   line-height: 1.5;
   background-color: hsl(var(--_color-bg) / 100%);
   border: 1px solid hsl(var(--_color-border) / 100%);
-  border-radius: 8px;
+  border-radius: var(--_surface-radius);
   outline: 0 solid hsl(var(--_color-outline) / 14%);
   resize: none;
   transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;

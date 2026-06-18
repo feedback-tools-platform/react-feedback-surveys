@@ -252,7 +252,7 @@ The `<Surface>` component is a basic container wrapper that provides consistent 
 
 The Surface component provides:
 - Background color with depth/elevation (box shadow)
-- Rounded corners (8px border radius)
+- Rounded corners (controlled via `--ft-surface-radius`)
 - Responsive padding that adapts to mobile devices
 
 #### Usage
@@ -277,7 +277,7 @@ import 'react-feedback-surveys/index.css';
 | `className` | `string`          | -        | -       | Additional CSS class name for the surface container.|
 | `children`  | `React.ReactNode` | -        | -       | Content to render inside the surface.              |
 
-The Surface component uses the `--ft-surface-padding` and `--ft-surface-padding-mobile` CSS variables for responsive padding.
+The Surface component uses the `--ft-surface-padding`, `--ft-surface-padding-mobile`, and `--ft-surface-radius` CSS variables for responsive padding and border radius.
 
 ## Props
 
@@ -448,6 +448,9 @@ You can override colors and fonts via CSS variables:
 
   /* Padding for Surface component container on mobile devices (max-width: 400px) */
   --ft-surface-padding-mobile: 20px;
+
+  /* Border radius for Surface container, inputs, and submit button */
+  --ft-surface-radius: 8px;
 }
 
 /* Use with hsl() function: */
