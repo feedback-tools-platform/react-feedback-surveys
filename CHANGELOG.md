@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.5] - 2026-06-18
+
+### Fixed
+
+- **CSS variable inheritance** - Private CSS variables (`--_*`) are now defined on `:root, :host` instead of inside component classes, fixing inheritance for `Popup` and `Surface` which are ancestors of `SurveyRoot` in the DOM tree.
+- **CSS reset scope** - Box model reset (`margin`, `padding`, `box-sizing`) is now applied inside `Popup` as well, covering all descendants including `Surface` and the close button.
+
 ## [1.5.4] - 2026-06-18
 
 ### Added
