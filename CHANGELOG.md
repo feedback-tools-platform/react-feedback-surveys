@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-06-19
+
+### Added
+
+- **CI workflow** - GitHub Actions pipeline with parallel lint, typecheck, and Storybook (Playwright/Chromium) test jobs. Runs on push and pull requests to `main`.
+- **README badges** - Added CI status, Storybook badges.
+
 ## [1.5.5] - 2026-06-18
 
 ### Fixed
