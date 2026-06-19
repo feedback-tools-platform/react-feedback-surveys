@@ -42,7 +42,8 @@
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
     "stylelint": "stylelint --fix '**/*.scss'",
-    "chromatic": "npx chromatic"
+    "chromatic": "npx chromatic",
+    "capture-previews": "node scripts/capture-previews.mjs"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",

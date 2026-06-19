@@ -127,12 +127,12 @@ export const Preview: Story = {
   },
   name: 'Preview docs',
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   render: (args) => (
     <div
       style={{
-        display: 'flex',
+        display: 'inline-flex',
         padding: '1.5rem',
         background: '#5fe7d0'
       }}
@@ -155,13 +155,14 @@ export const PreviewMobile: Story = {
   },
   name: 'Preview docs (mobile)',
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   render: (args) => (
     <div
       style={{
-        maxWidth: 360,
-        display: 'flex',
+        width: 340,
+        boxSizing: 'border-box',
+        display: 'inline-flex',
         padding: '1.5rem',
         background: '#5fe7d0'
       }}

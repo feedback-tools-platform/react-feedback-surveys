@@ -230,12 +230,12 @@ export const Preview: Story = {
   },
   name: 'Preview docs',
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   render: (args) => (
     <div
       style={{
-        display: 'flex',
+        display: 'inline-flex',
         padding: '1.5rem',
         background: '#5fe7d0'
       }}
