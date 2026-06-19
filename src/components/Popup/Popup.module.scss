@@ -3,14 +3,6 @@
 .base {
   --_popup-head-offset: 32px;
 
-  *,
-  *::before,
-  *::after {
-    margin: 0;
-    box-sizing: border-box;
-    padding: 0;
-  }
-
   position: fixed;
   z-index: var(--_popup-z-index);
   margin: 0;
