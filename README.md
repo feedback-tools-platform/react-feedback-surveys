@@ -4,6 +4,8 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-feedback-surveys.svg?style=flat-square)](https://www.npmjs.com/package/react-feedback-surveys)
 [![license](https://img.shields.io/npm/l/react-feedback-surveys.svg?style=flat-square)](https://github.com/feedback-tools-platform/react-feedback-surveys/blob/main/LICENSE)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/react-feedback-surveys?style=flat-square)](https://bundlephobia.com/package/react-feedback-surveys)
+[![CI](https://github.com/feedback-tools-platform/react-feedback-surveys/actions/workflows/ci.yml/badge.svg)](https://github.com/feedback-tools-platform/react-feedback-surveys/actions/workflows/ci.yml)
+[![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white)](https://feedback.tools/react-feedback-surveys/storybook/)
 
 > Lightweight, customizable survey widgets to collect user feedback in React apps.
 
