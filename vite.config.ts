@@ -2,7 +2,7 @@
 import { resolve, join } from 'path';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,7 +18,7 @@ export default defineConfig({
       include: '**/*.svg'
     }),
     dts({
-      rollupTypes: true,
+      bundleTypes: true,
       tsconfigPath: './tsconfig.app.json'
     })
   ],
