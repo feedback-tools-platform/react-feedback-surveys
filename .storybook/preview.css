@@ -24,7 +24,7 @@ body {
   --ft-color-control: 218 12% 19%;
 }
 
-body.dark {
+.dark body {
   background-color: hsl(220deg 13% 9%);
 }
 

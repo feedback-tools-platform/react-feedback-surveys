@@ -7,6 +7,7 @@ import type {
 } from '../../types';
 import { cn } from '../../utils';
 
+import { Contact } from '../Contact';
 import { Feedback } from '../Feedback';
 import { Success } from '../Success';
 
@@ -33,10 +34,20 @@ export interface SurveyRootProps {
   choiceOptions?: SharedSurveyProps['choiceOptions'];
   /** Success message text */
   thankYouMessage?: SharedSurveyProps['thankYouMessage'];
+  /** Question shown on the email collection screen */
+  contactQuestion?: SharedSurveyProps['contactQuestion'];
+  /** Descriptive text shown above the email input */
+  contactSubtext?: SharedSurveyProps['contactSubtext'];
+  /** Submit button text for the email collection screen */
+  contactButtonSendLabel?: SharedSurveyProps['contactButtonSendLabel'];
+  /** Skip button text for the email collection screen */
+  contactButtonSkipLabel?: SharedSurveyProps['contactButtonSkipLabel'];
   /** Current screen */
   screen: SurveyScreen;
   /** Callback when feedback is submitted */
   onFeedback?: (text: string | string[]) => void;
+  /** Callback when contact info is submitted (omitted when skipped) */
+  onContact?: (email?: string) => void;
 }
 
 export const SurveyRoot: React.FC<SurveyRootProps> = ({
@@ -50,8 +61,13 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
+  contactQuestion,
+  contactSubtext,
+  contactButtonSendLabel,
+  contactButtonSkipLabel,
   screen,
-  onFeedback
+  onFeedback,
+  onContact
 }) => {
   const titleId = useId();
 
@@ -74,6 +90,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         >
           {(screen === 'rating') && question}
           {(screen === 'feedback') && textQuestion}
+          {(screen === 'contact') && contactQuestion}
           {(screen === 'success') && thankYouMessage}
         </div>
       </div>
@@ -101,6 +118,22 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
             choiceOptions={choiceOptions}
             responseType={responseType}
             onSubmit={onFeedback}
+          />
+        </div>
+      )}
+
+      {(screen === 'contact') && (
+        <div
+          aria-label="Contact form"
+          aria-labelledby={titleId}
+          className={cn(styles.body, classNames?.body)}
+          role="region"
+        >
+          <Contact
+            buttonSendLabel={contactButtonSendLabel}
+            buttonSkipLabel={contactButtonSkipLabel}
+            subtext={contactSubtext}
+            onSubmit={onContact}
           />
         </div>
       )}

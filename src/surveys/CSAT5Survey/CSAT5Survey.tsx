@@ -3,13 +3,13 @@ import React from 'react';
 import { SurveyRoot } from '../../components/SurveyRoot';
 import useSurveyState from '../../hooks/useSurveyState';
 import type { SharedSurveyProps } from '../../types';
+import { cn } from '../../utils';
 
 import { CSAT5SurveyEmoji } from './CSAT5SurveyEmoji';
 import { CSAT5SurveyNumbers } from './CSAT5SurveyNumbers';
 import { CSAT5SurveyStars } from './CSAT5SurveyStars';
 
 import styles from './CSAT5Survey.module.scss';
-import { cn } from '../../utils';
 
 export interface CSAT5SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
@@ -28,17 +28,28 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
+  collectContact,
+  userId,
+  contactQuestion,
+  contactSubtext,
+  contactButtonSendLabel,
+  contactButtonSkipLabel,
   onScoreSubmit,
-  onFeedbackSubmit
+  onFeedbackSubmit,
+  onContactSubmit
 }) => {
   const {
     screen,
     onScoreChange,
-    onFeedbackChange
+    onFeedbackChange,
+    onContactChange
   } = useSurveyState({
     responseType,
+    collectContact,
+    userId,
     onScoreSubmit,
-    onFeedbackSubmit
+    onFeedbackSubmit,
+    onContactSubmit
   })
 
   return (
@@ -48,6 +59,7 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
         ...classNames?.base,
         rating: cn(styles.rating, classNames?.base?.rating),
         feedback: cn(styles.feedback, classNames?.base?.feedback),
+        contact: cn(styles.contact, classNames?.base?.contact),
         success: cn(styles.success, classNames?.base?.success)
       }}
       dir={dir}
@@ -58,7 +70,12 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
+      contactQuestion={contactQuestion}
+      contactSubtext={contactSubtext}
+      contactButtonSendLabel={contactButtonSendLabel}
+      contactButtonSkipLabel={contactButtonSkipLabel}
       onFeedback={onFeedbackChange}
+      onContact={onContactChange}
     >
       {(scaleStyle === 'emoji') && (
         <CSAT5SurveyEmoji

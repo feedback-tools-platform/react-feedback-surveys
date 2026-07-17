@@ -14,6 +14,8 @@ export interface RootClassNames {
   rating?: string;
   /** Feedback screen wrapper */
   feedback?: string;
+  /** Contact screen wrapper */
+  contact?: string;
   /** Success screen wrapper */
   success?: string;
   /** Close button element */
@@ -44,10 +46,12 @@ export interface ScaleClassNames {
 export type SurveyScreen =
   /** Rating screen (first screen) */
   | 'rating'
-  /** Final "thanks" message screen */
-  | 'success'
   /** Feedback input screen */
-  | 'feedback';
+  | 'feedback'
+  /** Optional email/contact collection screen */
+  | 'contact'
+  /** Final "thanks" message screen */
+  | 'success';
 
 /**
  * Payload sent when submitting survey data
@@ -65,6 +69,25 @@ export interface SurveySubmitPayload {
  * @returns void or Promise<void> for async operations
  */
 export type SurveyCallback = (payload: SurveySubmitPayload) => void | Promise<void>;
+
+/**
+ * Payload sent when submitting collected contact
+ */
+export interface ContactSubmitPayload {
+  /** Selected rating value */
+  value?: number;
+  /** Submitted feedback text or selected choices */
+  text?: string | string[];
+  /** Respondent's email address */
+  email: string;
+}
+
+/**
+ * Callback function for contact submission
+ * @param payload - The collected contact data
+ * @returns void or Promise<void> for async operations
+ */
+export type ContactCallback = (payload: ContactSubmitPayload) => void | Promise<void>;
 
 /**
  * Shared props for all survey components
@@ -93,8 +116,22 @@ export interface SharedSurveyProps {
   choiceOptions?: string[] | null;
   /** Success message text */
   thankYouMessage: string;
+  /** Enables an optional email collection step before the success screen. Skipped when `userId` is already provided */
+  collectContact?: boolean;
+  /** Existing user identity, if already known. When provided, the email collection step is skipped */
+  userId?: string;
+  /** Question shown on the contact collection screen */
+  contactQuestion?: string;
+  /** Descriptive text shown above the email input */
+  contactSubtext?: string;
+  /** Submit button text for the contact collection screen */
+  contactButtonSendLabel?: string;
+  /** Skip button text for the contact collection screen */
+  contactButtonSkipLabel?: string;
   /** Callback when score data is submitted */
   onScoreSubmit?: SurveyCallback;
   /** Callback when survey data is submitted */
   onFeedbackSubmit?: SurveyCallback;
+  /** Callback when contact is submitted */
+  onContactSubmit?: ContactCallback;
 }

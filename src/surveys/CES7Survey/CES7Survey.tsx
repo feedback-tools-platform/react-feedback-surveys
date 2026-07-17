@@ -26,17 +26,28 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
+  collectContact,
+  userId,
+  contactQuestion,
+  contactSubtext,
+  contactButtonSendLabel,
+  contactButtonSkipLabel,
   onScoreSubmit,
-  onFeedbackSubmit
+  onFeedbackSubmit,
+  onContactSubmit
 }) => {
   const {
     screen,
     onScoreChange,
-    onFeedbackChange
+    onFeedbackChange,
+    onContactChange
   } = useSurveyState({
     responseType,
+    collectContact,
+    userId,
     onScoreSubmit,
-    onFeedbackSubmit
+    onFeedbackSubmit,
+    onContactSubmit
   })
 
   return (
@@ -46,6 +57,7 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
         ...classNames?.base,
         rating: cn(styles.rating, classNames?.base?.rating),
         feedback: cn(styles.feedback, classNames?.base?.feedback),
+        contact: cn(styles.contact, classNames?.base?.contact),
         success: cn(styles.success, classNames?.base?.success)
       }}
       dir={dir}
@@ -56,7 +68,12 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
+      contactQuestion={contactQuestion}
+      contactSubtext={contactSubtext}
+      contactButtonSendLabel={contactButtonSendLabel}
+      contactButtonSkipLabel={contactButtonSkipLabel}
       onFeedback={onFeedbackChange}
+      onContact={onContactChange}
     >
       {(scaleStyle === 'numbers') && (
         <CES7SurveyNumbers

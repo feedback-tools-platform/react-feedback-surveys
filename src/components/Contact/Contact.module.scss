@@ -1,0 +1,62 @@
+.sr {
+  @include srOnly;
+}
+
+.subtext {
+  margin: 0 0 16px;
+  line-height: 1.25;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px 12px;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  color: hsl(var(--_color-text) / 100%);
+  background-color: hsl(var(--_color-bg) / 100%);
+  border: 1px solid hsl(var(--_color-border) / 100%);
+  border-radius: var(--_surface-radius);
+  outline: 0 solid hsl(var(--_color-outline) / 14%);
+  transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;
+
+  &:focus {
+    outline: 4px solid hsl(var(--_color-outline) / 14%);
+  }
+
+  &.invalid {
+    border-color: hsl(var(--_color-error) / 100%);
+
+    &:focus {
+      outline-color: hsl(var(--_color-error) / 14%);
+    }
+  }
+}
+
+.submit {
+  @include resetButton;
+  @include buttonStyle;
+
+  margin-top: 16px;
+  width: 100%;
+}
+
+.skip {
+  @include resetButton;
+
+  margin-top: 8px;
+  display: block;
+  width: 100%;
+  padding: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  color: hsl(var(--_color-muted) / 100%);
+  cursor: pointer;
+
+  &:hover {
+    color: hsl(var(--_color-text) / 100%);
+  }
+}

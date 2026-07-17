@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-07-17
+
+### Added
+
+- **Optional email collection** - New `collectContact`, `userId`, `contactQuestion`, `contactSubtext`, `contactButtonSendLabel`, and `contactButtonSkipLabel` props add an optional email collection screen before the success screen. Skipped automatically when `userId` is already known. New `onContactSubmit` event fires when a respondent submits an email.
+
+### Changed
+
+- **Feedback and label styling** - Added a focus outline to choice checkboxes, fixed font inheritance and checkmark proportions in feedback inputs, and prevented label overflow with `box-sizing: border-box`.
+
 ## [1.6.1] - 2026-07-10
 
 ### Changed

@@ -3,12 +3,12 @@ import React from 'react';
 import { SurveyRoot } from '../../components/SurveyRoot';
 import useSurveyState from '../../hooks/useSurveyState';
 import type { SharedSurveyProps } from '../../types';
+import { cn } from '../../utils';
 
 import { CSAT2SurveyEmoji } from './CSAT2SurveyEmoji';
 import { CSAT2SurveyThumbs } from './CSAT2SurveyThumbs';
 
 import styles from './CSAT2Survey.module.scss';
-import { cn } from '../../utils';
 
 export interface CSAT2SurveyProps extends SharedSurveyProps {
   /** Visual style for the rating scale */
@@ -27,17 +27,28 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
   responseType,
   choiceOptions,
   thankYouMessage,
+  collectContact,
+  userId,
+  contactQuestion,
+  contactSubtext,
+  contactButtonSendLabel,
+  contactButtonSkipLabel,
   onScoreSubmit,
-  onFeedbackSubmit
+  onFeedbackSubmit,
+  onContactSubmit
 }) => {
   const {
     screen,
     onScoreChange,
-    onFeedbackChange
+    onFeedbackChange,
+    onContactChange
   } = useSurveyState({
     responseType,
+    collectContact,
+    userId,
     onScoreSubmit,
-    onFeedbackSubmit
+    onFeedbackSubmit,
+    onContactSubmit
   })
 
   return (
@@ -47,6 +58,7 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
         ...classNames?.base,
         rating: cn(styles.rating, classNames?.base?.rating),
         feedback: cn(styles.feedback, classNames?.base?.feedback),
+        contact: cn(styles.contact, classNames?.base?.contact),
         success: cn(styles.success, classNames?.base?.success)
       }}
       dir={dir}
@@ -57,7 +69,12 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}
+      contactQuestion={contactQuestion}
+      contactSubtext={contactSubtext}
+      contactButtonSendLabel={contactButtonSendLabel}
+      contactButtonSkipLabel={contactButtonSkipLabel}
       onFeedback={onFeedbackChange}
+      onContact={onContactChange}
     >
       {(scaleStyle === 'emoji') && (
         <CSAT2SurveyEmoji

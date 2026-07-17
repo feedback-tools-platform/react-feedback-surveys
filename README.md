@@ -51,6 +51,7 @@
 - **Multiple scale styles** – emoji, stars, numbers, thumbs
 - **Flexible placement** – embed inline or display as popup overlay
 - **Follow-up feedback** – optional text input or multiple choice responses
+- **Optional email collection** – close the loop by capturing a respondent's email when no user identity is known
 - **Fully customizable** – CSS variables and custom class names
 - **Zero dependencies**
 - **TypeScript support**
@@ -299,6 +300,12 @@ Most props are shared across all survey widgets. Each widget differs only in its
 | `textButtonLabel`  | `string`                      | -        | Submit label for the feedback screen.                                        |
 | `choiceOptions`    | `string[] \| null`            | -        | Predefined choices (when `responseType === 'choices'`).                      |
 | `thankYouMessage`  | `string`                      | required | Message shown after submission.                                              |
+| `collectContact`     | `boolean`                     | -        | Enables an optional email collection step before the success screen.         |
+| `userId`           | `string`                      | -        | Existing user identity. When provided, the email collection step is skipped. |
+| `contactQuestion`    | `string`                      | -        | Question shown on the email collection screen.                               |
+| `contactSubtext`   | `string`                      | -        | Descriptive text shown above the email input.                                |
+| `contactButtonSendLabel` | `string`                      | -        | Submit label for the email collection screen.                                |
+| `contactButtonSkipLabel`  | `string`                      | -        | Skip label for the email collection screen.                                  |
 
 #### ClassNamesConfig Type
 
@@ -311,6 +318,7 @@ interface ClassNamesConfig {
     body?: string;       // Main content region (rating scale, feedback form or success)
     rating?: string;     // Additional class applied when rating screen is active
     feedback?: string;   // Additional class applied when feedback screen is active
+    contact?: string;    // Additional class applied when email collection screen is active
     success?: string;    // Additional class applied when success screen is active
     close?: string;      // Close button
   };
@@ -331,12 +339,14 @@ interface ClassNamesConfig {
 |--------------------|---------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------|
 | `onScoreSubmit`    | `(payload: ScorePayload) => void \| Promise<void>`       | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
 | `onFeedbackSubmit` | `(payload: FeedbackPayload) => void \| Promise<void>` | -        | Fires when feedback is submitted. Includes the selected score and the user's text(s). |
+| `onContactSubmit`  | `(payload: ContactPayload) => void \| Promise<void>` | -        | Fires when the respondent submits an email on the optional email collection screen. Not called when the step is skipped or not shown. |
 
 **Event Payload Types:**
 
 ```typescript
 type ScorePayload = { value: number };
 type FeedbackPayload = { value: number; text?: string | string[] };
+type ContactPayload = { value?: number; text?: string | string[]; email: string };
 ```
 
 > **Event behavior**
@@ -368,6 +378,36 @@ You should listen to **both** `onScoreSubmit` and `onFeedbackSubmit`.
 A user may select a score but abandon the follow-up screen (close the widget, navigate away, refresh, etc.).  
 Handling both events ensures you capture at least the rating even when additional feedback is not provided — and still receive extended data when it is.
 
+#### `onContactSubmit`
+
+When `collectContact` is `true` and no `userId` is provided, an optional email collection screen is shown after the rating/feedback screens and before the success screen. This lets you "close the feedback loop" by capturing an email for a respondent whose identity isn't already known to the host app.
+
+- If `userId` is provided, the step is skipped entirely — the widget assumes identity is already known.
+- The step is always optional: respondents can submit an email or skip it, and either action advances to the success screen.
+- `onContactSubmit` only fires when the respondent actually submits an email; it is **not** called when the step is skipped or not shown.
+
+**Arguments:**
+- `value?: number` — the selected rating, if any.
+- `text?: string | string[]` — the submitted feedback text or choices, if any.
+- `email: string` — the email address entered by the respondent.
+
+```tsx
+<CSAT5Survey
+  scaleStyle="numbers"
+  question="How would you rate your satisfaction with our product?"
+  responseType="text"
+  textQuestion="We'd love to hear your thoughts — what can we improve?"
+  thankYouMessage="Thanks for your feedback!"
+  collectContact
+  userId={currentUser?.id}
+  contactQuestion="Mind sharing your email so we can follow up?"
+  contactButtonSendLabel="Submit"
+  contactButtonSkipLabel="Skip"
+  onScoreSubmit={({ value }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text }) => {/* ... */}}
+  onContactSubmit={({ value, text, email }) => {/* attribute the feedback to this email */}}
+/>
+```
 
 ### Scale Style Options
 
@@ -580,6 +620,7 @@ Reference: available keys
 | `base.body`     | Main content region (rating scale, feedback form or success) |
 | `base.rating`   | Additional class applied when rating screen is active        |
 | `base.feedback` | Additional class applied when feedback screen is active      |
+| `base.contact`  | Additional class applied when email collection screen is active |
 | `base.success`  | Additional class applied when success screen is active       |
 | `base.close`    | Close button                                                 |
 | `scale.base`    | Container around the scale style                             |

@@ -290,6 +290,152 @@ export const StarsInteractions: Story = {
   },
 };
 
+const emailProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
+  ...commonProps,
+  responseType: 'text',
+  choiceOptions: [],
+  collectContact: true,
+  contactQuestion: 'Want us to follow up?',
+  contactSubtext: "Leave your email and we'll get back to you about your feedback. Optional.",
+  contactButtonSendLabel: 'Send',
+  contactButtonSkipLabel: 'Skip',
+  onContactSubmit: fn()
+}
+
+const goToEmailStep = async (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+
+  // Click on score 4
+  const scoreButton = canvas.getByRole('button', { name: 'Score 4' });
+  await userEvent.click(scoreButton);
+
+  // Submit follow-up feedback
+  const textarea = await canvas.findByRole('textbox', { name: 'Your feedback' });
+  await userEvent.type(textarea, 'Good product overall');
+  const feedbackSubmit = canvas.getByRole('button', { name: 'Submit' });
+  await userEvent.click(feedbackSubmit);
+
+  // Wait for the email step to appear, then leave it for manual interaction
+  await canvas.findByRole('textbox', { name: 'Email address' });
+};
+
+export const EmailStep: Story = {
+  args: {
+    scaleStyle: 'numbers',
+    ...emailProps
+  },
+  name: 'Numbers (email step)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement }) => {
+    await goToEmailStep(canvasElement);
+  },
+};
+
+export const EmailStepSurface: Story = {
+  ...EmailStep,
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Numbers (email step, surface)',
+  render: (args) => (
+    <Surface>
+      <CSAT5Survey {...args} />
+    </Surface>
+  ),
+};
+
+export const EmailStepPopup: Story = {
+  ...EmailStep,
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Numbers (email step, popup)',
+  render: (args) => (
+    <Popup>
+      <CSAT5Survey {...args} />
+    </Popup>
+  ),
+};
+
+export const EmailSubmitInteractions: Story = {
+  args: {
+    scaleStyle: 'numbers',
+    ...emailProps
+  },
+  name: 'Numbers (email submit)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    await goToEmailStep(canvasElement);
+
+    // Email collection screen appears instead of the thank-you screen
+    await expect(canvas.getByText('Want us to follow up?')).toBeInTheDocument();
+    const emailInput = canvas.getByRole('textbox', { name: 'Email address' });
+    await userEvent.type(emailInput, 'user@example.com');
+
+    const emailSubmit = canvas.getByRole('button', { name: 'Send' });
+    await userEvent.click(emailSubmit);
+
+    // Verify contact callback was called and success screen appears
+    await expect(args.onContactSubmit).toHaveBeenCalledWith({
+      value: 4,
+      text: 'Good product overall',
+      email: 'user@example.com'
+    });
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
+};
+
+export const EmailSkipInteractions: Story = {
+  ...EmailSubmitInteractions,
+  name: 'Numbers (email skip)',
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    await goToEmailStep(canvasElement);
+
+    // Skip the email collection screen
+    const skipButton = await canvas.findByRole('button', { name: 'Skip' });
+    await userEvent.click(skipButton);
+
+    // Verify contact callback was NOT called and success screen still appears
+    await expect(args.onContactSubmit).not.toHaveBeenCalled();
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
+};
+
+export const EmailSkippedWithUserId: Story = {
+  args: {
+    scaleStyle: 'emoji',
+    ...commonProps,
+    textQuestion: '',
+    textButtonLabel: '',
+    collectContact: true,
+    userId: 'user-123',
+    onContactSubmit: fn()
+  },
+  name: 'Emoji (email skipped, userId provided)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    // Click on score 5
+    const scoreButton = canvas.getByRole('button', { name: 'Score 5' });
+    await userEvent.click(scoreButton);
+
+    // Email step is skipped entirely because userId is already known
+    await expect(args.onContactSubmit).not.toHaveBeenCalled();
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
+};
+
 export const Preview: Story = {
   args: {
     scaleStyle: 'emoji',

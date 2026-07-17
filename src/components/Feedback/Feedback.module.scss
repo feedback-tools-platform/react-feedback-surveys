@@ -43,6 +43,10 @@
   }
 }
 
+.checkbox:focus-visible + .check {
+  outline: 4px solid hsl(var(--_color-outline) / 14%);
+}
+
 .checkbox:checked + .check {
   position: relative;
   background-color: hsl(var(--_color-text) / 100%);
@@ -53,7 +57,7 @@
     top: 50%;
     left: 50%;
     width: 10px;
-    height: 7px;
+    height: 4px;
     content: '';
     border: 2px solid;
     border-color: transparent transparent hsl(var(--_color-bg) / 100%) hsl(var(--_color-bg) / 100%);
@@ -64,18 +68,19 @@
 
 .input {
   margin-top: 8px;
-  height: 32px;
+  padding: 4px 12px;
 }
 
 .textarea {
   height: 192px;
+  padding: 8px 12px;
 }
 
 .input,
 .textarea {
-  width: 100%;
-  padding: 8px 12px;
   box-sizing: border-box;
+  width: 100%;
+  font-family: inherit;
   font-size: 16px;
   line-height: 1.5;
   color: hsl(var(--_color-text) / 100%);
@@ -92,6 +97,10 @@
 
   &.invalid {
     border-color: hsl(var(--_color-error) / 100%);
+
+    &:focus {
+      outline-color: hsl(var(--_color-error) / 14%);
+    }
   }
 }
 

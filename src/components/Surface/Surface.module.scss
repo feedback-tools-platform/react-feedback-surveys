@@ -2,7 +2,7 @@
 
 .base {
   position: relative;
-  display: inline-block;
+  display: block;
   padding: var(--_surface-padding);
   overflow: auto;
   background-color: hsl(var(--_color-bg) / 100%);
