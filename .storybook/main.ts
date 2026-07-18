@@ -23,7 +23,7 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     // This will remove vite-plugin-dts from your storybook build
     config.plugins = await withoutVitePlugins(config.plugins, [
-      'vite:dts',
+      'unplugin-dts',
     ]);
 
     return config;
