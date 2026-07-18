@@ -22,7 +22,8 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
   minLabel,
   maxLabel,
   textQuestion,
-  textButtonLabel,
+  textButtonSendLabel,
+  textButtonSkipLabel,
   responseType,
   choiceOptions,
   thankYouMessage,
@@ -64,7 +65,8 @@ export const NPS10Survey: React.FC<NPS10SurveyProps> = ({
       screen={screen}
       question={question}
       textQuestion={textQuestion}
-      textButtonLabel={textButtonLabel}
+      textButtonSendLabel={textButtonSendLabel}
+      textButtonSkipLabel={textButtonSkipLabel}
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}

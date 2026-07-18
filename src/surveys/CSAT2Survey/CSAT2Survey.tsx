@@ -23,7 +23,8 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
   minLabel,
   maxLabel,
   textQuestion,
-  textButtonLabel,
+  textButtonSendLabel,
+  textButtonSkipLabel,
   responseType,
   choiceOptions,
   thankYouMessage,
@@ -65,7 +66,8 @@ export const CSAT2Survey: React.FC<CSAT2SurveyProps> = ({
       screen={screen}
       question={question}
       textQuestion={textQuestion}
-      textButtonLabel={textButtonLabel}
+      textButtonSendLabel={textButtonSendLabel}
+      textButtonSkipLabel={textButtonSkipLabel}
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}

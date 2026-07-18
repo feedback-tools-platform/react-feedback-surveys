@@ -102,7 +102,8 @@ import 'react-feedback-surveys/index.css';
   maxLabel="Very satisfied"
   responseType="text"
   textQuestion="We'd love to hear your thoughts — what can we improve?"
-  textButtonLabel="Send"
+  textButtonSendLabel="Send"
+  textButtonSkipLabel="Skip"
   thankYouMessage="Thanks for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
   onFeedbackSubmit={({ value, text }) => {/* ... */}}
@@ -131,7 +132,8 @@ import 'react-feedback-surveys/index.css';
   question="Are you satisfied with the result?"
   responseType="text"
   textQuestion="We'd love to hear your thoughts — what can we improve?"
-  textButtonLabel="Send"
+  textButtonSendLabel="Send"
+  textButtonSkipLabel="Skip"
   thankYouMessage="Thank you for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
   onFeedbackSubmit={({ value, text }) => {/* ... */}}
@@ -164,7 +166,8 @@ import 'react-feedback-surveys/index.css';
   maxLabel="Very likely"
   responseType="text"
   textQuestion="We'd love to hear your thoughts — what can we improve?"
-  textButtonLabel="Send"
+  textButtonSendLabel="Send"
+  textButtonSkipLabel="Skip"
   thankYouMessage="Thank you for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
   onFeedbackSubmit={({ value, text }) => {/* ... */}}
@@ -195,7 +198,8 @@ import 'react-feedback-surveys/index.css';
   maxLabel="Very easy"
   responseType="text"
   textQuestion="We'd love to hear your thoughts — what can we improve?"
-  textButtonLabel="Send"
+  textButtonSendLabel="Send"
+  textButtonSkipLabel="Skip"
   thankYouMessage="Thank you for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
   onFeedbackSubmit={({ value, text }) => {/* ... */}}
@@ -297,7 +301,8 @@ Most props are shared across all survey widgets. Each widget differs only in its
 | `maxLabel`         | `string`                      | -        | Right label for the scale.                                                   |
 | `responseType`     | `null \| 'text' \| 'choices'` | -        | Enables optional follow-up feedback.                                         |
 | `textQuestion`     | `string`                      | -        | Follow-up question displayed when `responseType` is defined.                 |
-| `textButtonLabel`  | `string`                      | -        | Submit label for the feedback screen.                                        |
+| `textButtonSendLabel`  | `string`                      | -        | Submit label for the feedback screen.                                        |
+| `textButtonSkipLabel`  | `string`                      | -        | Skip label for the feedback screen.                                          |
 | `choiceOptions`    | `string[] \| null`            | -        | Predefined choices (when `responseType === 'choices'`).                      |
 | `thankYouMessage`  | `string`                      | required | Message shown after submission.                                              |
 | `collectContact`     | `boolean`                     | -        | Enables an optional email collection step before the success screen.         |
@@ -366,6 +371,8 @@ The actual `value` returned depends on the survey type:
 
 Invoked when the user completes the follow-up step and submits their feedback (only applies when `responseType` is `text` or `choices`).  
 This callback provides both the original score and the user's input.
+
+The feedback step is always optional: respondents can submit feedback or skip it via the `textButtonSkipLabel` button (or by submitting with empty input), and either action advances to the next screen. `onFeedbackSubmit` only fires when feedback text or choices are actually submitted; it is **not** called when the step is skipped.
 
 **Arguments:**
 - `value: number` — the same score previously passed to `onScoreSubmit`

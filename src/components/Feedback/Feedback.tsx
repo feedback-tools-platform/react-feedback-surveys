@@ -6,17 +6,20 @@ import styles from './Feedback.module.scss';
 
 export interface FeedbackProps {
   /** Submit button label */
-  buttonLabel?: React.ReactNode;
+  buttonSendLabel?: React.ReactNode;
+  /** Skip button label */
+  buttonSkipLabel?: React.ReactNode;
   /** Type of feedback collection */
   responseType?: SharedSurveyProps['responseType'];
   /** Optional predefined feedback choices */
   choiceOptions?: SharedSurveyProps['choiceOptions'];
-  /** Callback when feedback is submitted */
-  onSubmit?: (text: string | string[]) => void;
+  /** Callback when feedback is submitted (omitted when skipped) */
+  onSubmit?: (text?: string | string[]) => void;
 }
 
 export const Feedback: React.FC<FeedbackProps> = ({
-  buttonLabel = 'Submit',
+  buttonSendLabel = 'Submit',
+  buttonSkipLabel = 'Skip',
   responseType,
   choiceOptions,
   onSubmit
@@ -25,7 +28,6 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
   const [text, setText] = useState<string>('');
   const [selected, setSelected] = useState<string[]>([]);
-  const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
   const onTextKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     event.stopPropagation();
@@ -33,11 +35,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
   const onTextChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     setText(event.currentTarget.value);
-
-    if (isInvalid) {
-      setIsInvalid(false);
-    }
-  }, [isInvalid]);
+  }, []);
 
   const onChoiceChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = event.currentTarget;
@@ -61,11 +59,6 @@ export const Feedback: React.FC<FeedbackProps> = ({
       return;
     }
 
-    if (responseType === 'text' && !textValue) {
-      setIsInvalid(true);
-      return;
-    }
-
     onSubmit?.(text.trim());
   }, [
     text,
@@ -73,6 +66,10 @@ export const Feedback: React.FC<FeedbackProps> = ({
     selected,
     onSubmit
   ]);
+
+  const onSkip = useCallback((): void => {
+    onSubmit?.(undefined);
+  }, [onSubmit]);
 
   if (!responseType) {
     return null;
@@ -154,9 +151,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
           <textarea
             aria-label="Your feedback"
-            aria-required="true"
-            aria-invalid={isInvalid}
-            className={`${styles.textarea} ${isInvalid ? styles.invalid : ''}`}
+            className={styles.textarea}
             id={textareaId}
             maxLength={1000}
             name="feedback"
@@ -172,7 +167,15 @@ export const Feedback: React.FC<FeedbackProps> = ({
         className={styles.submit}
         type="submit"
       >
-        {buttonLabel}
+        {buttonSendLabel}
+      </button>
+
+      <button
+        className={styles.skip}
+        type="button"
+        onClick={onSkip}
+      >
+        {buttonSkipLabel}
       </button>
     </form>
   );

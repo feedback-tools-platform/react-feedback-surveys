@@ -111,7 +111,9 @@ export interface SharedSurveyProps {
   /** Follow-up feedback question (screen 2) */
   textQuestion?: string;
   /** Submit button text */
-  textButtonLabel?: string;
+  textButtonSendLabel?: string;
+  /** Skip button text */
+  textButtonSkipLabel?: string;
   /** Optional predefined choices for feedback */
   choiceOptions?: string[] | null;
   /** Success message text */

@@ -10,9 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Optional email collection** - New `collectContact`, `userId`, `contactQuestion`, `contactSubtext`, `contactButtonSendLabel`, and `contactButtonSkipLabel` props add an optional email collection screen before the success screen. Skipped automatically when `userId` is already known. New `onContactSubmit` event fires when a respondent submits an email.
+- **Skippable feedback step** - New `textButtonSkipLabel` prop adds a Skip button to the follow-up feedback screen, mirroring the email collection step. Skipping (or submitting with empty input) advances to the next screen without calling `onFeedbackSubmit`.
 
 ### Changed
 
+- **BREAKING: `textButtonLabel` renamed to `textButtonSendLabel`** - Aligns naming with the new `textButtonSkipLabel` and the existing `contactButtonSendLabel`/`contactButtonSkipLabel` pair. Update your prop usage:
+  ```tsx
+  <CSAT5Survey textButtonSendLabel="Send" textButtonSkipLabel="Skip" />
+  ```
 - **Feedback and label styling** - Added a focus outline to choice checkboxes, fixed font inheritance and checkmark proportions in feedback inputs, and prevented label overflow with `box-sizing: border-box`.
 
 ## [1.6.1] - 2026-07-10

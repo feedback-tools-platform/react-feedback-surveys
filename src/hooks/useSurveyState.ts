@@ -88,8 +88,9 @@ const useSurveyState = ({
     finishFlow
   ]);
 
-  const onFeedbackChange = useCallback(async(text: string | string[]) => {
+  const onFeedbackChange = useCallback(async(text?: string | string[]) => {
     if (!text?.length) {
+      finishFlow();
       return;
     }
 

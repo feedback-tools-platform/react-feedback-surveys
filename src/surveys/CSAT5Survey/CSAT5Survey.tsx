@@ -24,7 +24,8 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
   minLabel,
   maxLabel,
   textQuestion,
-  textButtonLabel,
+  textButtonSendLabel,
+  textButtonSkipLabel,
   responseType,
   choiceOptions,
   thankYouMessage,
@@ -66,7 +67,8 @@ export const CSAT5Survey: React.FC<CSAT5SurveyProps> = ({
       screen={screen}
       question={question}
       textQuestion={textQuestion}
-      textButtonLabel={textButtonLabel}
+      textButtonSendLabel={textButtonSendLabel}
+      textButtonSkipLabel={textButtonSkipLabel}
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}

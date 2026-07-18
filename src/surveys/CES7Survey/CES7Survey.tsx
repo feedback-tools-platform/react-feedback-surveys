@@ -22,7 +22,8 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
   minLabel,
   maxLabel,
   textQuestion,
-  textButtonLabel,
+  textButtonSendLabel,
+  textButtonSkipLabel,
   responseType,
   choiceOptions,
   thankYouMessage,
@@ -64,7 +65,8 @@ export const CES7Survey: React.FC<CES7SurveyProps> = ({
       screen={screen}
       question={question}
       textQuestion={textQuestion}
-      textButtonLabel={textButtonLabel}
+      textButtonSendLabel={textButtonSendLabel}
+      textButtonSkipLabel={textButtonSkipLabel}
       responseType={responseType}
       choiceOptions={choiceOptions}
       thankYouMessage={thankYouMessage}

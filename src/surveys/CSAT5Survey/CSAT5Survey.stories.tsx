@@ -40,7 +40,8 @@ const commonProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
   maxLabel: 'Very satisfied',
   responseType: null,
   textQuestion: 'We’d love to hear your thoughts — what can we improve?',
-  textButtonLabel: 'Submit',
+  textButtonSendLabel: 'Submit',
+  textButtonSkipLabel: 'Skip',
   choiceOptions: null,
   thankYouMessage: 'Thank you for your feedback',
   onScoreSubmit: fn(),
@@ -52,7 +53,7 @@ export const Emoji: Story = {
     scaleStyle: 'emoji',
     ...commonProps,
     textQuestion: '',
-    textButtonLabel: ''
+    textButtonSendLabel: ''
   },
   parameters: {
     title: 'teest',
@@ -65,7 +66,7 @@ export const EmojiSurface: Story = {
     scaleStyle: 'emoji',
     ...commonProps,
     textQuestion: '',
-    textButtonLabel: ''
+    textButtonSendLabel: ''
   },
   decorators: [
     minHeightDecorator(240)
@@ -86,7 +87,7 @@ export const EmojiPopup: Story = {
     scaleStyle: 'emoji',
     ...commonProps,
     textQuestion: '',
-    textButtonLabel: ''
+    textButtonSendLabel: ''
   },
   decorators: [
     minHeightDecorator(240)
@@ -414,7 +415,7 @@ export const EmailSkippedWithUserId: Story = {
     scaleStyle: 'emoji',
     ...commonProps,
     textQuestion: '',
-    textButtonLabel: '',
+    textButtonSendLabel: '',
     collectContact: true,
     userId: 'user-123',
     onContactSubmit: fn()

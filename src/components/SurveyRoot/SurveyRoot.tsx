@@ -27,7 +27,9 @@ export interface SurveyRootProps {
   /** Follow-up feedback question */
   textQuestion?: SharedSurveyProps['textQuestion'];
   /** Submit button text */
-  textButtonLabel?: SharedSurveyProps['textButtonLabel'];
+  textButtonSendLabel?: SharedSurveyProps['textButtonSendLabel'];
+  /** Skip button text */
+  textButtonSkipLabel?: SharedSurveyProps['textButtonSkipLabel'];
   /** Type of feedback collection */
   responseType?: SharedSurveyProps['responseType']
   /** Optional predefined choices for feedback */
@@ -44,9 +46,9 @@ export interface SurveyRootProps {
   contactButtonSkipLabel?: SharedSurveyProps['contactButtonSkipLabel'];
   /** Current screen */
   screen: SurveyScreen;
-  /** Callback when feedback is submitted */
-  onFeedback?: (text: string | string[]) => void;
-  /** Callback when contact info is submitted (omitted when skipped) */
+  /** Callback when feedback is submitted (omitted when skipped) */
+  onFeedback?: (text?: string | string[]) => void;
+  /** Callback when contact is submitted (omitted when skipped) */
   onContact?: (email?: string) => void;
 }
 
@@ -57,7 +59,8 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   dir,
   question,
   textQuestion,
-  textButtonLabel,
+  textButtonSendLabel,
+  textButtonSkipLabel,
   responseType,
   choiceOptions,
   thankYouMessage,
@@ -114,7 +117,8 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           role="region"
         >
           <Feedback
-            buttonLabel={textButtonLabel}
+            buttonSendLabel={textButtonSendLabel}
+            buttonSkipLabel={textButtonSkipLabel}
             choiceOptions={choiceOptions}
             responseType={responseType}
             onSubmit={onFeedback}
