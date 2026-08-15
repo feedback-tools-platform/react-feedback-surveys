@@ -9,8 +9,18 @@
 
 > Lightweight, customizable survey widgets to collect user feedback in React apps.
 
+## Introduction
+
+react-feedback-surveys is a standalone, open-source (MIT) UI library — no backend, no hosting, no
+account required. Render the components, wire `onScoreSubmit`/`onFeedbackSubmit` to your own backend
+(or nowhere at all).
+
+Want AI-generated insights, a hosted dashboard, and response storage without building your own backend?
+Check out [feedback.tools](https://feedback.tools) — built by the same team.
+
 ## Table of Contents
 
+- [Introduction](#introduction)
 - [Features](#features)
 - [Survey Types](#survey-types)
 - [Installation](#installation)
