@@ -13,4 +13,13 @@
   --_surface-padding: var(--ft-surface-padding, 24px);
   --_surface-padding-mobile: var(--ft-surface-padding-mobile, 20px);
   --_surface-radius: var(--ft-surface-radius, 8px);
+  --_font-family: var(--ft-font-family, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+
+  font-family: var(--_font-family);
+}
+
+input,
+textarea,
+select {
+  font: inherit;
 }
