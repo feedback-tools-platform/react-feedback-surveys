@@ -5,11 +5,11 @@ import { Popup } from '../../components/Popup';
 import { Surface } from '../../components/Surface';
 import { minHeightDecorator } from '../../utils/storybook';
 
-import { CES7Survey, type CES7SurveyProps } from './CES7Survey';
+import { Survey, type CesSurveyProps } from './Survey';
 
 const meta = {
-  title: 'widgets/CES7 Survey',
-  component: CES7Survey,
+  title: 'widgets/Survey/CES',
+  component: Survey,
   tags: ['autodocs'],
   argTypes: {
     scaleStyle: {
@@ -25,12 +25,13 @@ const meta = {
       options: [null, 'choices', 'text']
     }
   }
-} satisfies Meta<typeof CES7Survey>;
+} satisfies Meta<typeof Survey>;
 
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: CES7SurveyProps = {
+const commonProps: CesSurveyProps = {
+  type: 'ces',
   scaleStyle: 'numbers',
   question: 'How easy was it to complete your task?',
   minLabel: 'Very difficult',
@@ -71,7 +72,7 @@ export const NumbersSurface: Story = {
   ],
   render: (args) => (
     <Surface>
-      <CES7Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -94,7 +95,7 @@ export const NumbersPopup: Story = {
   ],
   render: (args) => (
     <Popup>
-      <CES7Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -151,7 +152,7 @@ export const Preview: Story = {
       }}
     >
       <Surface>
-        <CES7Survey {...args} />
+        <Survey {...args} />
       </Surface>
     </div>
   )

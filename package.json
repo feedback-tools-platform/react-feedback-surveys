@@ -2,7 +2,7 @@
   "name": "react-feedback-surveys",
   "description": "CSAT, CES, and NPS survey widgets for React",
   "private": false,
-  "version": "1.7.0",
+  "version": "1.8.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -42,8 +42,9 @@
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
     "stylelint": "stylelint --fix '**/*.scss'",
+    "capture-previews": "node scripts/capture-previews.mjs",
     "chromatic": "npx chromatic",
-    "capture-previews": "node scripts/capture-previews.mjs"
+    "setup-tests": "npx playwright install chromium"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",

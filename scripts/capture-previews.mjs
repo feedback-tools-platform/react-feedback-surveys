@@ -10,12 +10,12 @@ const BASE_URL = `http://localhost:${PORT}`;
 const OUTPUT_DIR = join(ROOT, 'docs/assets');
 
 const PREVIEWS = [
-  {id: 'widgets-ces7-survey--preview', file: 'ces7.png'},
-  {id: 'widgets-csat2-survey--preview', file: 'csat2.png'},
-  {id: 'widgets-csat5-survey--preview', file: 'csat5.png'},
-  {id: 'widgets-csat5-survey--preview-popup', file: 'csat5-popup.png'},
-  {id: 'widgets-nps10-survey--preview', file: 'nps10.png'},
-  {id: 'widgets-nps10-survey--preview-mobile', file: 'nps10-mobile.png', viewport: {width: 414, height: 896}},
+  {id: 'widgets-survey-ces--preview', file: 'ces7.png'},
+  {id: 'widgets-survey-csat-2-points--preview', file: 'csat2.png'},
+  {id: 'widgets-survey-csat-5-points--preview', file: 'csat5.png'},
+  {id: 'widgets-survey-csat-5-points--preview-popup', file: 'csat5-popup.png'},
+  {id: 'widgets-survey-nps--preview', file: 'nps10.png'},
+  {id: 'widgets-survey-nps--preview-mobile', file: 'nps10-mobile.png', viewport: {width: 414, height: 896}},
 ];
 
 async function isStorybookRunning() {

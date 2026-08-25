@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-08-25
+
+### Changed
+
+- **BREAKING: Single `Survey` component replaces `CSAT5Survey`, `CSAT2Survey`, `CES7Survey`, and `NPS10Survey`** - The four named components are gone. Import `Survey` instead and select the format with props: `type` (`'csat'` | `'nps'` | `'ces'`) and, for `csat`, `points` (`2` | `5`). `scaleStyle` keeps its previous meaning, with valid values now depending on `type`/`points`.
+  ```tsx
+  // Before
+  import { CSAT5Survey } from 'react-feedback-surveys';
+  <CSAT5Survey scaleStyle="emoji" question="…" />
+
+  // After
+  import { Survey } from 'react-feedback-surveys';
+  <Survey type="csat" points={5} scaleStyle="emoji" question="…" />
+  ```
+  There are no deprecated aliases — update all imports when upgrading. See the [README](README.md#survey-component) for the full format matrix.
+
 ## [1.7.0] - 2026-07-17
 
 ### Added

@@ -5,11 +5,11 @@ import { Popup } from '../../components/Popup';
 import { Surface } from '../../components/Surface';
 import { minHeightDecorator } from '../../utils/storybook';
 
-import { NPS10Survey, type NPS10SurveyProps } from './NPS10Survey';
+import { Survey, type NpsSurveyProps } from './Survey';
 
 const meta = {
-  title: 'widgets/NPS10 Survey',
-  component: NPS10Survey,
+  title: 'widgets/Survey/NPS',
+  component: Survey,
   tags: ['autodocs'],
   argTypes: {
     scaleStyle: {
@@ -25,12 +25,13 @@ const meta = {
       options: [null, 'choices', 'text']
     }
   }
-} satisfies Meta<typeof NPS10Survey>;
+} satisfies Meta<typeof Survey>;
 
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: NPS10SurveyProps = {
+const commonProps: NpsSurveyProps = {
+  type: 'nps',
   scaleStyle: 'numbers',
   question: 'How likely are you to recommend our product/service to a friend or colleague?',
   minLabel: 'Very unlikely',
@@ -64,7 +65,7 @@ export const NumbersSurface: Story = {
   name: 'Numbers (surface)',
   render: (args) => (
     <Surface>
-      <NPS10Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -82,7 +83,7 @@ export const NumbersPopup: Story = {
   name: 'Numbers (popup)',
   render: (args) => (
     <Popup>
-      <NPS10Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -139,7 +140,7 @@ export const Preview: Story = {
       }}
     >
       <Surface>
-        <NPS10Survey {...args} />
+        <Survey {...args} />
       </Surface>
     </div>
   )
@@ -169,7 +170,7 @@ export const PreviewMobile: Story = {
       }}
     >
       <Surface>
-        <NPS10Survey {...args} />
+        <Survey {...args} />
       </Surface>
     </div>
   )

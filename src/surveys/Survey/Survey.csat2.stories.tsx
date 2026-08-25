@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn, userEvent, within, expect } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
+import { Surface } from '../../components/Surface';
 import { minHeightDecorator } from '../../utils/storybook';
 
-import { CSAT2Survey, type CSAT2SurveyProps } from './CSAT2Survey';
-import { Surface } from '../../components/Surface';
+import { Survey, type CsatSurveyProps2 } from './Survey';
 
 const meta = {
-  title: 'widgets/CSAT2 Survey',
-  component: CSAT2Survey,
+  title: 'widgets/Survey/CSAT 2 points',
+  component: Survey,
   tags: ['autodocs'],
   argTypes: {
     scaleStyle: {
@@ -25,12 +25,14 @@ const meta = {
       options: [null, 'choices', 'text']
     }
   }
-} satisfies Meta<typeof CSAT2Survey>;
+} satisfies Meta<typeof Survey>;
 
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: Omit<CSAT2SurveyProps, 'scaleStyle'> = {
+const commonProps: Omit<CsatSurveyProps2, 'scaleStyle'> = {
+  type: 'csat',
+  points: 2,
   classNames: undefined,
   question: 'Are you satisfied with the result?',
   minLabel: undefined,
@@ -74,7 +76,7 @@ export const EmojiSurface: Story = {
   name: 'Emoji (surface)',
   render: (args) => (
     <Surface>
-      <CSAT2Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -97,7 +99,7 @@ export const EmojiPopup: Story = {
   name: 'Emoji (popup)',
   render: (args) => (
     <Popup>
-      <CSAT2Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -162,7 +164,7 @@ export const ThumbsSurface: Story = {
   name: 'Thumbs (surface)',
   render: (args) => (
     <Surface>
-      <CSAT2Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -184,7 +186,7 @@ export const ThumbsPopup: Story = {
   name: 'Thumbs (popup)',
   render: (args) => (
     <Popup>
-      <CSAT2Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -224,6 +226,7 @@ export const ThumbsInteractions: Story = {
     await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
   },
 };
+
 export const Preview: Story = {
   args: {
     scaleStyle: 'thumbs',
@@ -242,7 +245,7 @@ export const Preview: Story = {
       }}
     >
       <Surface>
-        <CSAT2Survey {...args} />
+        <Survey {...args} />
       </Surface>
     </div>
   )

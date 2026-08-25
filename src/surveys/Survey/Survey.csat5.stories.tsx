@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn, userEvent, within, expect } from 'storybook/test';
 
 import { Popup } from '../../components/Popup';
+import { Surface } from '../../components/Surface';
 import { minHeightDecorator } from '../../utils/storybook';
 
-import { CSAT5Survey, type CSAT5SurveyProps } from '../CSAT5Survey';
-import { Surface } from '../../components/Surface';
+import { Survey, type CsatSurveyProps5 } from './Survey';
 
 const meta = {
-  title: 'widgets/CSAT5 Survey',
-  component: CSAT5Survey,
+  title: 'widgets/Survey/CSAT 5 points',
+  component: Survey,
   tags: ['autodocs'],
   argTypes: {
     scaleStyle: {
@@ -29,12 +29,14 @@ const meta = {
       options: [null, 'choices', 'text']
     }
   }
-} satisfies Meta<typeof CSAT5Survey>;
+} satisfies Meta<typeof Survey>;
 
 export default meta;
 type Story = StoryObj<typeof meta>
 
-const commonProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
+const commonProps: Omit<CsatSurveyProps5, 'scaleStyle'> = {
+  type: 'csat',
+  points: 5,
   question: 'How would you rate your satisfaction with our product?',
   minLabel: 'Very unsatisfied',
   maxLabel: 'Very satisfied',
@@ -50,21 +52,20 @@ const commonProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
 
 export const Emoji: Story = {
   args: {
-    scaleStyle: 'emoji',
     ...commonProps,
+    scaleStyle: 'emoji',
     textQuestion: '',
     textButtonSendLabel: ''
   },
   parameters: {
-    title: 'teest',
     layout: 'centered',
   }
 };
 
 export const EmojiSurface: Story = {
   args: {
-    scaleStyle: 'emoji',
     ...commonProps,
+    scaleStyle: 'emoji',
     textQuestion: '',
     textButtonSendLabel: ''
   },
@@ -74,7 +75,7 @@ export const EmojiSurface: Story = {
   name: 'Emoji (surface)',
   render: (args) => (
     <Surface>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -84,8 +85,8 @@ export const EmojiSurface: Story = {
 
 export const EmojiPopup: Story = {
   args: {
-    scaleStyle: 'emoji',
     ...commonProps,
+    scaleStyle: 'emoji',
     textQuestion: '',
     textButtonSendLabel: ''
   },
@@ -95,7 +96,7 @@ export const EmojiPopup: Story = {
   name: 'Emoji (popup)',
   render: (args) => (
     <Popup>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -120,8 +121,8 @@ export const EmojiInteractions: Story = {
 
 export const Numbers: Story = {
   args: {
-    scaleStyle: 'numbers',
     ...commonProps,
+    scaleStyle: 'numbers',
     responseType: 'text',
     choiceOptions: []
   },
@@ -132,8 +133,8 @@ export const Numbers: Story = {
 
 export const NumbersSurface: Story = {
   args: {
-    scaleStyle: 'numbers',
     ...commonProps,
+    scaleStyle: 'numbers',
     responseType: 'text',
     choiceOptions: []
   },
@@ -143,7 +144,7 @@ export const NumbersSurface: Story = {
   name: 'Numbers (surface)',
   render: (args) => (
     <Surface>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -153,8 +154,8 @@ export const NumbersSurface: Story = {
 
 export const NumbersPopup: Story = {
   args: {
-    scaleStyle: 'numbers',
     ...commonProps,
+    scaleStyle: 'numbers',
     responseType: 'text',
     choiceOptions: []
   },
@@ -164,7 +165,7 @@ export const NumbersPopup: Story = {
   name: 'Numbers (popup)',
   render: (args) => (
     <Popup>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -206,8 +207,8 @@ export const NumbersInteractions: Story = {
 
 export const Stars: Story = {
   args: {
-    scaleStyle: 'stars',
     ...commonProps,
+    scaleStyle: 'stars',
     responseType: 'choices',
     choiceOptions: ['Very easy', 'Very difficult']
   },
@@ -218,8 +219,8 @@ export const Stars: Story = {
 
 export const StarsSurface: Story = {
   args: {
-    scaleStyle: 'stars',
     ...commonProps,
+    scaleStyle: 'stars',
     responseType: 'choices',
     choiceOptions: ['Very easy', 'Very difficult']
   },
@@ -229,7 +230,7 @@ export const StarsSurface: Story = {
   name: 'Stars (surface)',
   render: (args) => (
     <Surface>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
   parameters: {
@@ -239,8 +240,8 @@ export const StarsSurface: Story = {
 
 export const StarsPopup: Story = {
   args: {
-    scaleStyle: 'stars',
     ...commonProps,
+    scaleStyle: 'stars',
     responseType: 'choices',
     choiceOptions: ['Very easy', 'Very difficult']
   },
@@ -250,7 +251,7 @@ export const StarsPopup: Story = {
   name: 'Stars (popup)',
   render: (args) => (
     <Popup>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
@@ -291,7 +292,7 @@ export const StarsInteractions: Story = {
   },
 };
 
-const emailProps: Omit<CSAT5SurveyProps, 'scaleStyle'> = {
+const emailProps: Omit<CsatSurveyProps5, 'scaleStyle'> = {
   ...commonProps,
   responseType: 'text',
   choiceOptions: [],
@@ -322,8 +323,8 @@ const goToEmailStep = async (canvasElement: HTMLElement) => {
 
 export const EmailStep: Story = {
   args: {
-    scaleStyle: 'numbers',
-    ...emailProps
+    ...emailProps,
+    scaleStyle: 'numbers'
   },
   name: 'Numbers (email step)',
   parameters: {
@@ -342,7 +343,7 @@ export const EmailStepSurface: Story = {
   name: 'Numbers (email step, surface)',
   render: (args) => (
     <Surface>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Surface>
   ),
 };
@@ -355,15 +356,15 @@ export const EmailStepPopup: Story = {
   name: 'Numbers (email step, popup)',
   render: (args) => (
     <Popup>
-      <CSAT5Survey {...args} />
+      <Survey {...args} />
     </Popup>
   ),
 };
 
 export const EmailSubmitInteractions: Story = {
   args: {
-    scaleStyle: 'numbers',
-    ...emailProps
+    ...emailProps,
+    scaleStyle: 'numbers'
   },
   name: 'Numbers (email submit)',
   parameters: {
@@ -412,8 +413,8 @@ export const EmailSkipInteractions: Story = {
 
 export const EmailSkippedWithUserId: Story = {
   args: {
-    scaleStyle: 'emoji',
     ...commonProps,
+    scaleStyle: 'emoji',
     textQuestion: '',
     textButtonSendLabel: '',
     collectContact: true,
@@ -439,8 +440,8 @@ export const EmailSkippedWithUserId: Story = {
 
 export const Preview: Story = {
   args: {
-    scaleStyle: 'emoji',
     ...commonProps,
+    scaleStyle: 'emoji',
   },
   name: 'Preview docs',
   parameters: {
@@ -455,7 +456,7 @@ export const Preview: Story = {
       }}
     >
       <Surface>
-        <CSAT5Survey {...args} />
+        <Survey {...args} />
       </Surface>
     </div>
   ),
@@ -463,8 +464,8 @@ export const Preview: Story = {
 
 export const PreviewPopup: Story = {
   args: {
-    scaleStyle: 'stars',
     ...commonProps,
+    scaleStyle: 'stars',
   },
   name: 'Preview docs (popup)',
   parameters: {
@@ -479,7 +480,7 @@ export const PreviewPopup: Story = {
       }}
     >
       <Popup style={{ position: 'static' }}>
-        <CSAT5Survey {...args} />
+        <Survey {...args} />
       </Popup>
     </div>
   ),

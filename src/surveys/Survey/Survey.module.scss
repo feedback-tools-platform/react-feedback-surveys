@@ -1,0 +1,79 @@
+@use '../../styles/variables' as *;
+
+.base {
+  max-width: 100%;
+}
+
+// --- CSAT, 5-point ---
+
+.ratingCsat5,
+.feedbackCsat5,
+.contactCsat5,
+.successCsat5 {
+  width: 320px;
+
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+}
+
+// --- CSAT, 2-point ---
+
+.ratingCsat2,
+.feedbackCsat2,
+.contactCsat2,
+.successCsat2 {
+  width: 280px;
+
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+}
+
+// --- CES, 7-point ---
+
+.ratingCes {
+  width: 340px;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 280px;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+}
+
+.feedbackCes,
+.contactCes,
+.successCes {
+  width: 280px;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 100%;
+  }
+}
+
+// --- NPS, 10-point ---
+
+.ratingNps {
+  width: 520px;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 320px;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+}
+
+.feedbackNps,
+.contactNps,
+.successNps {
+  width: 280px;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 100%;
+  }
+}

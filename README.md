@@ -26,21 +26,17 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
 - [Installation](#installation)
     * [1. Install](#1-install)
     * [2. Styles](#2-styles)
-- [Survey Components](#survey-components)
-    * [CSAT5 (Customer Satisfaction Score, 5-Point Scale)](#csat5-customer-satisfaction-score-5-point-scale)
-    * [CSAT2 (Customer Satisfaction Score, 2-Point Scale)](#csat2-customer-satisfaction-score-2-point-scale)
-    * [NPS10 (Net Promoter Score, 0–10 Scale)](#nps10-net-promoter-score-010-scale)
-    * [CES7 (Customer Effort Score, 7-Point Scale)](#ces7-customer-effort-score-7-point-scale)
+- [Survey Component](#survey-component)
+    * [CSAT (Customer Satisfaction Score)](#csat-customer-satisfaction-score)
+    * [NPS (Net Promoter Score)](#nps-net-promoter-score)
+    * [CES (Customer Effort Score)](#ces-customer-effort-score)
 - [Layout Components](#layout-components)
     * [Popup](#popup)
     * [Surface](#surface)
 - [Props](#props)
     * [Shared Props](#shared-props)
+    * [Format Props](#format-props)
     * [Scale Style Options](#scale-style-options)
-        + [CSAT2Survey](#csat2survey)
-        + [CSAT5Survey](#csat5survey)
-        + [CES7Survey](#ces7survey)
-        + [NPS10Survey](#nps10survey)
 - [Styling](#styling)
     * [CSS Variables](#css-variables)
     * [Custom Classes](#custom-classes)
@@ -57,7 +53,8 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
 
 ## Features
 
-- **Ready-to-use survey widgets** – CSAT (2 or 5 points), CES (7 points), NPS (0–10)
+- **A single `Survey` component** – the format (methodology, scale length, visual style) is configuration, not a different import
+- **Ready-to-use survey formats** – CSAT (2 or 5 points), CES (7 points), NPS (0–10)
 - **Multiple scale styles** – emoji, stars, numbers, thumbs
 - **Flexible placement** – embed inline or display as popup overlay
 - **Follow-up feedback** – optional text input or multiple choice responses
@@ -68,9 +65,11 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
 
 ## Survey Types
 
-- **CSAT (Customer Satisfaction Score):** 2-point (`csat2`) or 5-point (`csat5`) scales
-- **NPS (Net Promoter Score):** 0–10 numeric scale (`nps10`)
-- **CES (Customer Effort Score):** 7-point numeric scale (`ces7`)
+`Survey` covers three feedback methodologies, selected with the `type` prop. `CSAT` is the only one with a variable scale length, set via `points`:
+
+- **CSAT (Customer Satisfaction Score):** `type="csat"`, 2-point or 5-point scale (`points={2}` or `points={5}`)
+- **NPS (Net Promoter Score):** `type="nps"`, fixed 0–10 scale
+- **CES (Customer Effort Score):** `type="ces"`, fixed 7-point scale
 
 ## Installation
 
@@ -88,24 +87,28 @@ yarn add react-feedback-surveys
 import 'react-feedback-surveys/index.css';
 ```
 
-## Survey Components
+## Survey Component
 
-### CSAT5 (Customer Satisfaction Score, 5-Point Scale)
+Every format is reached through the same `Survey` import — `type` and `points` pick the methodology and scale length, `scaleStyle` picks the visual style. See [Format Props](#format-props) for the full matrix of valid `type`/`points`/`scaleStyle` combinations.
 
-Surveys to ask users about their overall satisfaction.
+### CSAT (Customer Satisfaction Score)
+
+Surveys to ask users about their overall satisfaction, or about a specific feature or flow.
 
 **Example questions:**
 - "How satisfied are you with our product?"
-- "How would you rate your overall experience?"
-- "How satisfied are you with our customer support?"
+- "Was this search helpful?"
+- "Are you satisfied with the checkout process?"
 
-<img alt="CSAT5" src="docs/assets/csat5.png" width="416" />
+<img alt="CSAT, 5-point scale" src="docs/assets/csat5.png" width="416" />
 
 ```tsx
-import { CSAT5Survey } from 'react-feedback-surveys';
+import { Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
-<CSAT5Survey
+<Survey
+  type="csat"
+  points={5}
   scaleStyle="emoji"
   question="How would you rate your satisfaction with our product?"
   minLabel="Very unsatisfied"
@@ -120,24 +123,12 @@ import 'react-feedback-surveys/index.css';
 />
 ```
 
-`scaleStyle`: `emoji` | `numbers` | `stars`.
-
-### CSAT2 (Customer Satisfaction Score, 2-Point Scale)
-
-Surveys to ask users about specific features or flows.
-
-**Example questions:**
-- "Was this search helpful?"
-- "Did you find what you were looking for?"
-- "Are you satisfied with the checkout process?"
-
-<img alt="CSAT2" src="docs/assets/csat2.png" width="386" />
+<img alt="CSAT, 2-point scale" src="docs/assets/csat2.png" width="386" />
 
 ```tsx
-import { CSAT2Survey } from 'react-feedback-surveys';
-import 'react-feedback-surveys/index.css';
-
-<CSAT2Survey
+<Survey
+  type="csat"
+  points={2}
   scaleStyle="thumbs"
   question="Are you satisfied with the result?"
   responseType="text"
@@ -150,26 +141,27 @@ import 'react-feedback-surveys/index.css';
 />
 ```
 
-`scaleStyle`: `emoji` | `thumbs`.
+`points={5}` → `scaleStyle`: `emoji` | `numbers` | `stars`. `points={2}` → `scaleStyle`: `emoji` | `thumbs`.
 
-### NPS10 (Net Promoter Score, 0–10 Scale)
+### NPS (Net Promoter Score)
 
-Surveys to ask users if they'd recommend your product.
+Surveys to ask users if they'd recommend your product. Fixed 0–10 scale — no `points` prop needed.
 
 **Example questions:**
 - "How likely are you to recommend us to a friend or colleague?"
 - "On a scale of 0-10, would you recommend our service?"
 - "How likely are you to recommend this product to others?"
 
-<img alt="NPS10" src="docs/assets/nps10.png" width="616" />
+<img alt="NPS" src="docs/assets/nps10.png" width="616" />
 
-<img alt="NPS10 mobile" src="docs/assets/nps10-mobile.png" width="340" />
+<img alt="NPS mobile" src="docs/assets/nps10-mobile.png" width="340" />
 
 ```tsx
-import { NPS10Survey } from 'react-feedback-surveys';
+import { Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
-<NPS10Survey
+<Survey
+  type="nps"
   scaleStyle="numbers"
   question="How likely are you to recommend our product/service to a friend or colleague?"
   minLabel="Very unlikely"
@@ -186,22 +178,23 @@ import 'react-feedback-surveys/index.css';
 
 `scaleStyle`: `numbers`.
 
-### CES7 (Customer Effort Score, 7-Point Scale)
+### CES (Customer Effort Score)
 
-Surveys to ask users how easy it is to use your product.
+Surveys to ask users how easy it is to use your product. Fixed 7-point scale — no `points` prop needed.
 
 **Example questions:**
 - "How easy was it to complete your task?"
 - "How much effort did it take to resolve your issue?"
 - "How easy was it to sign up for an account?"
 
-<img alt="CES7" src="docs/assets/ces7.png" width="436" />
+<img alt="CES" src="docs/assets/ces7.png" width="436" />
 
 ```tsx
-import { CES7Survey } from 'react-feedback-surveys';
+import { Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
-<CES7Survey
+<Survey
+  type="ces"
   scaleStyle="numbers"
   question="How easy was it to complete your task?"
   minLabel="Very difficult"
@@ -229,7 +222,7 @@ The `<Popup>` component wraps survey widgets in a fixed overlay that slides in f
 #### Usage
 
 ```tsx
-import { Popup, CSAT5Survey } from 'react-feedback-surveys';
+import { Popup, Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
 <Popup
@@ -242,7 +235,9 @@ import 'react-feedback-surveys/index.css';
   placement="bottomRight"
   onClose={() => console.log('Closed')}
 >
-  <CSAT5Survey
+  <Survey
+    type="csat"
+    points={5}
     scaleStyle="stars"
     question="How would you rate your satisfaction?"
     onScoreSubmit={({ value }) => {/* ... */}}
@@ -261,7 +256,7 @@ import 'react-feedback-surveys/index.css';
 | `children`   | `React.ReactNode`                                          | -        | -               | Content to render inside the popup (typically a survey component). |
 | `onClose`    | `() => void`                                               | -        | -               | Callback fired when the close button is clicked.                   |
 
-For more examples, check out the Storybook stories (e.g., `CSAT5Survey.stories.tsx`, `CSAT2Survey.stories.tsx`).
+For more examples, check out the Storybook stories under `widgets/Survey` (grouped by CSAT/NPS/CES in the sidebar).
 
 ### Surface
 
@@ -275,11 +270,13 @@ The Surface component provides:
 #### Usage
 
 ```tsx
-import { Surface, CSAT5Survey } from 'react-feedback-surveys';
+import { Surface, Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
 <Surface className="custom-surface">
-  <CSAT5Survey
+  <Survey
+    type="csat"
+    points={5}
     scaleStyle="stars"
     question="How would you rate your satisfaction?"
     onScoreSubmit={({ value }) => {/* ... */}}
@@ -298,7 +295,7 @@ The Surface component uses the `--ft-surface-padding`, `--ft-surface-padding-mob
 
 ## Props
 
-Most props are shared across all survey widgets. Each widget differs only in its `scaleStyle` values.
+Most props are shared across every survey format. `type` (and `points`, for CSAT) select the format; `scaleStyle` picks its visual style — see [Format Props](#format-props).
 
 ### Shared Props
 
@@ -409,7 +406,9 @@ When `collectContact` is `true` and no `userId` is provided, an optional email c
 - `email: string` — the email address entered by the respondent.
 
 ```tsx
-<CSAT5Survey
+<Survey
+  type="csat"
+  points={5}
   scaleStyle="numbers"
   question="How would you rate your satisfaction with our product?"
   responseType="text"
@@ -426,35 +425,25 @@ When `collectContact` is `true` and no `userId` is provided, an optional email c
 />
 ```
 
+### Format Props
+
+| Prop | Type | Required | Description |
+|------|------|----------|--------------|
+| `type` | `'csat'` \| `'nps'` \| `'ces'` | required | Survey methodology. Determines the scale range and which `scaleStyle`/`points` combinations are valid. |
+| `points` | `2` \| `5` | required for `type="csat"`; not used otherwise | Number of points on the scale. `nps` is a fixed 0–10 scale and `ces` a fixed 1–7 scale, so neither takes `points`. |
+
 ### Scale Style Options
 
-Each survey type supports specific scale styles for displaying the rating interface:
+Valid `scaleStyle` values depend on `type` (and `points`, for CSAT):
 
-#### CSAT2Survey
+| `type` | `points` | Scale range | Valid `scaleStyle` |
+|--------|----------|-------------|---------------------|
+| `csat` | `5` | 1–5 | `'emoji'` (5 emotion levels) \| `'numbers'` \| `'stars'` (1–5 stars) |
+| `csat` | `2` | 0–1 | `'emoji'` (happy/sad faces) \| `'thumbs'` (thumbs up/down) |
+| `ces`  | — | 1–7 | `'numbers'` |
+| `nps`  | — | 0–10 | `'numbers'` |
 
-| Prop                     | Type                    | Required | Description                                                                       |
-|--------------------------|-------------------------|----------|-----------------------------------------------------------------------------------|
-| `scaleStyle` | `'emoji'` \| `'thumbs'` | required | Emoji mood scale style (happy/sad faces) or thumbs up/down emoji scale style. |
-
-#### CSAT5Survey
-
-| Prop                     | Type                                  | Required | Description                                                                                                          |
-|--------------------------|---------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------|
-| `scaleStyle` | `'emoji'` \| `'numbers'` \| `'stars'` | required | Emoji scale style (5 emotion levels), numeric scale style (1–5), or star rating scale style (1–5 stars). |
-
-#### CES7Survey
-
-| Prop                     | Type        | Required | Description                        |
-|--------------------------|-------------|----------|------------------------------------|
-| `scaleStyle` | `'numbers'` | required | Numeric scale style (1–7). |
-
-#### NPS10Survey
-
-| Prop                     | Type        | Required | Description                         |
-|--------------------------|-------------|----------|-------------------------------------|
-| `scaleStyle` | `'numbers'` | required | Numeric scale style (0–10). |
-
-Note: The numeric ranges are defined by the widget (e.g., CSAT5 uses a 1–5 scale, NPS10 uses 0–10).
+Invalid combinations (e.g. `type="ces"` with `scaleStyle="stars"`) are rejected at the type level.
 
 ## Styling
 
@@ -559,7 +548,7 @@ Here's an example of dark theme colors that work well with the survey components
 **Implementation example with React:**
 
 ```tsx
-import { CSAT5Survey } from 'react-feedback-surveys';
+import { Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 import { useEffect } from 'react';
 
@@ -583,7 +572,9 @@ function App() {
   }, []);
 
   return (
-    <CSAT5Survey
+    <Survey
+      type="csat"
+      points={5}
       scaleStyle="emoji"
       question="How satisfied are you with our product?"
       onScoreSubmit={({ value }) => console.log('Score:', value)}
@@ -618,7 +609,7 @@ For deeper customization strategies, see the section below.
 
 ### Custom Classes
 
-All widgets accept a `classNames` prop with two optional groups: `base` (outer shell) and `scale` (the interactive
+`Survey` accepts a `classNames` prop with two optional groups: `base` (outer shell) and `scale` (the interactive
 rating UI). Pass your own class names to override styles without relying on internal selectors.
 
 When is this useful?
@@ -647,13 +638,13 @@ Reference: available keys
 | `scale.score`   | Number inside a scale button (for numeric variants)          |
 | `scale.labels`  | Left/Right labels displayed under the scale                  |
 
-Example: customizing a CSAT5Survey widget
+Example: customizing a `Survey` widget
 
 ```tsx
-import { CSAT5Survey } from 'react-feedback-surveys';
+import { Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
-<CSAT5Survey
+<Survey
   classNames={{
     base: {
       base: 'my-survey-base',
@@ -669,6 +660,8 @@ import 'react-feedback-surveys/index.css';
       labels: 'my-scale-labels',
     }
   }}
+  type="csat"
+  points={5}
   scaleStyle="numbers"
   question="How would you rate your satisfaction with our product?"
   minLabel="Very unsatisfied"
