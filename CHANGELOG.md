@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```
   There are no deprecated aliases — update all imports when upgrading. See the [README](README.md#survey-component) for the full format matrix.
 
+### Fixed
+
+- **Input and textarea font inheritance** - Set a system `font-family` on `:root`/`:host` (overridable via `--ft-font-family`), and reset `input`/`textarea`/`select` to inherit it, so form controls no longer fall back to the browser's default (often monospace) font.
+
 ## [1.7.0] - 2026-07-17
 
 ### Added
