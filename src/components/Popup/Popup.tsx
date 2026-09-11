@@ -12,6 +12,8 @@ export interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
     close?: string;
   }
   placement?: 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
+  /** Close button label, used for both its aria-label and title. @default 'Close survey' */
+  closeLabel?: string;
   onClose?: () => void;
 }
 
@@ -21,6 +23,7 @@ export const Popup: React.FC<PopupProps> = ({
   classNames,
   children,
   placement = 'bottomRight',
+  closeLabel = 'Close survey',
   onClose,
   ...props
 }) => {
@@ -33,9 +36,9 @@ export const Popup: React.FC<PopupProps> = ({
         {children}
 
         <button
-          aria-label="Close survey"
+          aria-label={closeLabel}
           className={cn(styles.close, classNames?.close)}
-          title="Close survey"
+          title={closeLabel}
           type="button"
           onClick={onClose}
         />

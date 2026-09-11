@@ -35,6 +35,8 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
     * [Surface](#surface)
 - [Props](#props)
     * [Shared Props](#shared-props)
+    * [Accessibility Labels](#accessibility-labels)
+    * [Attachments](#attachments)
     * [Format Props](#format-props)
     * [Scale Style Options](#scale-style-options)
 - [Styling](#styling)
@@ -59,17 +61,19 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
 - **Flexible placement** – embed inline or display as popup overlay
 - **Follow-up feedback** – optional text input or multiple choice responses
 - **Optional email collection** – close the loop by capturing a respondent's email when no user identity is known
+- **Optional screenshot attachments** – let respondents attach a screenshot, captured by a function you provide
 - **Fully customizable** – CSS variables and custom class names
 - **Zero dependencies**
 - **TypeScript support**
 
 ## Survey Types
 
-`Survey` covers three feedback methodologies, selected with the `type` prop. `CSAT` is the only one with a variable scale length, set via `points`:
+`Survey` covers four feedback methodologies, selected with the `type` prop. `CSAT` is the only one with a variable scale length, set via `points`:
 
 - **CSAT (Customer Satisfaction Score):** `type="csat"`, 2-point or 5-point scale (`points={2}` or `points={5}`)
 - **NPS (Net Promoter Score):** `type="nps"`, fixed 0–10 scale
 - **CES (Customer Effort Score):** `type="ces"`, fixed 7-point scale
+- **General (text feedback only):** `type="general"`, no rating scale — see [General](#general-text-feedback-only)
 
 ## Installation
 
@@ -211,6 +215,31 @@ import 'react-feedback-surveys/index.css';
 
 `scaleStyle`: `numbers`.
 
+### General (text feedback only)
+
+No rating scale — just text feedback and an optional screenshot. The text feedback step is shown immediately and is the whole survey; there's no `points`/`scaleStyle`/`minLabel`/`maxLabel`/`question` to set.
+
+**Example use cases:**
+- A general "Send feedback" or "Report a problem" trigger with no methodology attached.
+- Contexts where a numeric rating doesn't make sense.
+
+<img alt="General" src="docs/assets/general.png" width="368" />
+
+```tsx
+import { Survey } from 'react-feedback-surveys';
+import 'react-feedback-surveys/index.css';
+
+<Survey
+  type="general"
+  textQuestion="Got feedback? We'd love to hear it"
+  textButtonSendLabel="Send"
+  thankYouMessage="Thank you for your feedback!"
+  onFeedbackSubmit={({ text }) => {/* ... */}}
+/>
+```
+
+`responseType` defaults to `'text'` (also accepts `'choices'`) — it can't be unset, since the text feedback step is the only content the survey has. The step is mandatory: there's no Skip button (`textButtonSkipLabel` is ignored for `type="general"`), and Submit stays disabled until there's something to send.
+
 ## Layout Components
 
 ### Popup
@@ -254,9 +283,13 @@ import 'react-feedback-surveys/index.css';
 | `className`  | `string`                                                   | -        | -               | Additional CSS class name for the popup container.                 |
 | `classNames` | `{ base?: string; content?: string; close?: string }`      | -        | -               | Optional class names for internal popup elements.                  |
 | `children`   | `React.ReactNode`                                          | -        | -               | Content to render inside the popup (typically a survey component). |
+| `closeLabel` | `string`                                                    | -        | `'Close survey'` | Close button label, used for both its `aria-label` and `title`.   |
 | `onClose`    | `() => void`                                               | -        | -               | Callback fired when the close button is clicked.                   |
 
 For more examples, check out the Storybook stories under `widgets/Survey` (grouped by CSAT/NPS/CES in the sidebar).
+
+> **Note**
+> If the survey inside uses `dir="rtl"` on a page that's otherwise LTR (or vice versa), pass the same `dir` to `Popup` too — the close button's position resolves against the document direction, while the survey head's reserved offset resolves against the survey's own `dir`. Passing both keeps them aligned.
 
 ### Surface
 
@@ -303,14 +336,17 @@ Most props are shared across every survey format. `type` (and `points`, for CSAT
 |--------------------|-------------------------------|----------|------------------------------------------------------------------------------|
 | `classNames`       | `ClassNamesConfig` (see below)| -        | Optional class names to target internal parts.                               |
 | `dir`              | `'ltr' \| 'rtl' \| 'auto'`    | -        | Text direction for RTL/LTR language support.                                 |
-| `question`         | `string`                      | required | Main survey question displayed on the first screen.                          |
-| `minLabel`         | `string`                      | -        | Left label for the scale.                                                    |
-| `maxLabel`         | `string`                      | -        | Right label for the scale.                                                   |
-| `responseType`     | `null \| 'text' \| 'choices'` | -        | Enables optional follow-up feedback.                                         |
+| `strings`          | `SurveyStrings` (see below)   | -        | Overrides for the library's own aria-labels and other screen-reader-only text. See [Accessibility Labels](#accessibility-labels). |
+| `question`         | `string`                      | required (not used for `type="general"`) | Main survey question displayed on the first screen.       |
+| `minLabel`         | `string`                      | -        | Left label for the scale. Not used for `type="general"`.                     |
+| `maxLabel`         | `string`                      | -        | Right label for the scale. Not used for `type="general"`.                    |
+| `getScoreLabelSuffix` | `(label: string) => string` | -        | Builds the visible text appended after the first/last numbered scale button when it carries `minLabel`/`maxLabel`. Default `` (label) => ` - ${label}` ``. Applies to the `numbers` scale style (CSAT5, CES, NPS). |
+| `responseType`     | `null \| 'text' \| 'choices'` (`'text' \| 'choices'` for `type="general"`, defaults to `'text'`) | -        | Enables optional follow-up feedback.                     |
 | `textQuestion`     | `string`                      | -        | Follow-up question displayed when `responseType` is defined.                 |
 | `textButtonSendLabel`  | `string`                      | -        | Submit label for the feedback screen.                                        |
 | `textButtonSkipLabel`  | `string`                      | -        | Skip label for the feedback screen.                                          |
 | `choiceOptions`    | `string[] \| null`            | -        | Predefined choices (when `responseType === 'choices'`).                      |
+| `otherPlaceholder` | `string`                      | -        | Placeholder for the free-text input next to choice checkboxes. Default `'Other'`. |
 | `thankYouMessage`  | `string`                      | required | Message shown after submission.                                              |
 | `collectContact`     | `boolean`                     | -        | Enables an optional email collection step before the success screen.         |
 | `userId`           | `string`                      | -        | Existing user identity. When provided, the email collection step is skipped. |
@@ -318,6 +354,43 @@ Most props are shared across every survey format. `type` (and `points`, for CSAT
 | `contactSubtext`   | `string`                      | -        | Descriptive text shown above the email input.                                |
 | `contactButtonSendLabel` | `string`                      | -        | Submit label for the email collection screen.                                |
 | `contactButtonSkipLabel`  | `string`                      | -        | Skip label for the email collection screen.                                  |
+| `onCaptureScreenshot` | `() => string \| Blob \| Promise<string \| Blob>` | -        | Enables an optional screenshot-attachment control on the feedback step. Hidden unless provided — see [Attachments](#attachments). |
+| `screenshotButtonLabel` | `string`                    | -        | Label for the screenshot-attachment control.                                 |
+| `screenshotErrorMessage` | `string`                  | -        | Shown to the respondent when `onCaptureScreenshot` fails. Default `'Failed to capture screenshot'`. |
+| `maxAttachments`   | `number`                      | -        | Maximum number of attachments a respondent may confirm. Default `1`. See [Attachments](#attachments). |
+| `attachmentCaption` | `string`                     | -        | Visible caption under an attachment thumbnail, also used as its image alt text. Default `'Screenshot'`. |
+
+### Accessibility Labels
+
+A handful of internal aria-labels ship with an English default. These are never visible UI copy (that's `question`, `thankYouMessage`, `otherPlaceholder`, `attachmentCaption`, etc., always authored by you, listed alongside the rest of the shared props above) — every key in `strings` is announced to assistive tech only, useful to override if you're localizing a survey for a non-English audience.
+
+Pass a `strings` object with only the keys you want to change — each one merges over its own English default, so there's no need to repeat the rest:
+
+```tsx
+<Survey
+  /* ... */
+  strings={{
+    emailLabel: 'Adresse e-mail',
+    getScoreLabel: (score) => `Score ${score}`
+  }}
+/>
+```
+
+#### SurveyStrings Type
+
+| Key | Type | Default |
+|-----|------|---------|
+| `feedbackFormLabel` | `string` | `'Feedback form'` |
+| `additionalFeedbackLabel` | `string` | `'Additional feedback'` |
+| `yourFeedbackLabel` | `string` | `'Your feedback'` |
+| `contactFormLabel` | `string` | `'Contact form'` |
+| `emailLabel` | `string` | `'Email address'` |
+| `attachmentOpenLabel` | `string` | `'Open screenshot in a new tab'` |
+| `attachmentRemoveLabel` | `string` | `'Remove screenshot'` |
+| `getScoreLabel` | `(score: number) => string` | `(score) => \`Score ${score}\`` |
+| `getStarsLabel` | `(score: number) => string` | `(score) => \`${score} ${score > 1 ? 'stars' : 'star'}\`` |
+
+`getScoreLabel` applies to the `numbers` scale style (CSAT5, CES, NPS); `getStarsLabel` applies to CSAT5's `stars` style. Both are callbacks rather than templates so you can apply correct pluralization for your target language. `Popup`'s close button label lives on `Popup` itself, not in `strings` — see its own `closeLabel` prop in [Popup Props](#props).
 
 #### ClassNamesConfig Type
 
@@ -357,9 +430,12 @@ interface ClassNamesConfig {
 
 ```typescript
 type ScorePayload = { value: number };
-type FeedbackPayload = { value: number; text?: string | string[] };
+type FeedbackPayload = { value?: number; text?: string | string[]; attachments?: Attachment[] };
 type ContactPayload = { value?: number; text?: string | string[]; email: string };
+type Attachment = { kind: 'screenshot'; data: string | Blob; name?: string; mimeType?: string; size?: number };
 ```
+
+> See [Attachments](#attachments).
 
 > **Event behavior**
 
@@ -379,13 +455,14 @@ The actual `value` returned depends on the survey type:
 Invoked when the user completes the follow-up step and submits their feedback (only applies when `responseType` is `text` or `choices`).  
 This callback provides both the original score and the user's input.
 
-The feedback step is always optional: respondents can submit feedback or skip it via the `textButtonSkipLabel` button (or by submitting with empty input), and either action advances to the next screen. `onFeedbackSubmit` only fires when feedback text or choices are actually submitted; it is **not** called when the step is skipped.
+For surveys with a rating step, the feedback step is optional: respondents can submit feedback or skip it via the `textButtonSkipLabel` button (or by submitting with empty input), and either action advances to the next screen. For `type="general"`, the feedback step **is** the survey, so there's no Skip button — Submit stays disabled until there's something to send. `onFeedbackSubmit` only fires when feedback text or choices are actually submitted; it is **not** called when a rating-survey's step is skipped.
 
 **Arguments:**
-- `value: number` — the same score previously passed to `onScoreSubmit`
+- `value?: number` — the same score previously passed to `onScoreSubmit`; `undefined` for `type="general"`, which has no rating step
 - `text: string | string[]` — depends on `responseType`:
-    - `text`: a single text comment
-    - `choices`: an array of selected options (may include a free-text comment if enabled)
+    - `text`: a single text feedback string
+    - `choices`: an array of selected options (may include free-text feedback if enabled)
+- `attachments?: Attachment[]` — present when the respondent confirmed a screenshot; see [Attachments](#attachments)
 
 > **Important**  
 You should listen to **both** `onScoreSubmit` and `onFeedbackSubmit`.  
@@ -425,11 +502,59 @@ When `collectContact` is `true` and no `userId` is provided, an optional email c
 />
 ```
 
+### Attachments
+
+Respondents can attach a screenshot to their feedback, surfaced on submit as `attachments?: Attachment[]` (see the event payload types above). Each attachment renders as a thumbnail in the feedback step, with a caption and size underneath, click to open it in a new tab, click the "x" to remove it. Submit is disabled for the brief moment a capture is still in flight, so it can't be confirmed before the attachment actually lands in the list.
+
+Once an attachment is confirmed, the Skip button is disabled — an attached screenshot is never silently discarded. Remove the attachment to re-enable Skip, or fill in feedback and submit to keep it. An attachment on its own is never sufficient to submit, either: for `responseType="text"`, submitting with an attachment but no text flags the textarea instead of sending; for `responseType="choices"`, Submit stays disabled until a choice is picked or text is entered.
+
+By default a respondent can confirm a single attachment: once one is attached, the add control hides. Pass `maxAttachments` to raise (or lower) that cap. The add control stays visible (below the existing thumbnails) until the cap is reached:
+
+```tsx
+<Survey
+  /* ... */
+  onCaptureScreenshot={() => domToDataUrl(document.body)}
+  maxAttachments={3}
+/>
+```
+
+Pass `onCaptureScreenshot` to add an "Capture screenshot" control to the feedback step. Clicking it calls your function and attaches the result immediately. The control is off by default: it doesn't render at all unless `onCaptureScreenshot` is provided.
+
+Capturing a screenshot needs an actual DOM-to-image library (or a native bridge in a hybrid app) — real, non-trivial code that most consumers of this package won't want to pay for in bundle size if they don't use the feature. So react-feedback-surveys deliberately doesn't ship a capture implementation itself: bring your own function that returns the captured image (as a data URL string, a `Blob`, or a `Promise` of either). A drop-in recipe using [modern-screenshot](https://github.com/qq15725/modern-screenshot):
+
+```shell
+npm i modern-screenshot
+```
+
+```tsx
+import { Survey } from 'react-feedback-surveys';
+import { domToDataUrl } from 'modern-screenshot';
+import 'react-feedback-surveys/index.css';
+
+<Survey
+  type="csat"
+  points={5}
+  scaleStyle="numbers"
+  question="How would you rate your satisfaction with our product?"
+  responseType="text"
+  textQuestion="We'd love to hear your thoughts — what can we improve?"
+  thankYouMessage="Thanks for your feedback!"
+  onCaptureScreenshot={() => domToDataUrl(document.body)}
+  onScoreSubmit={({ value }) => {/* ... */}}
+  onFeedbackSubmit={({ value, text, attachments }) => {/* attachments?.[0]?.data holds the attached screenshot */}}
+/>
+```
+
+In a hybrid app, `onCaptureScreenshot` can just as well call into a native bridge (e.g. `WKWebView.takeSnapshot` on iOS) instead of a DOM-to-image library.
+
+> **Note**  
+> DOM-to-image capture is best-effort — fonts, cross-origin images, and some CSS effects may not render identically on every browser (particularly Safari/iOS). The respondent can open the attached thumbnail in a new tab to check it, and remove it with one click if the capture came out wrong.
+
 ### Format Props
 
 | Prop | Type | Required | Description |
 |------|------|----------|--------------|
-| `type` | `'csat'` \| `'nps'` \| `'ces'` | required | Survey methodology. Determines the scale range and which `scaleStyle`/`points` combinations are valid. |
+| `type` | `'csat'` \| `'nps'` \| `'ces'` \| `'general'` | required | Survey methodology. Determines the scale range and which `scaleStyle`/`points` combinations are valid. `'general'` has no scale at all — see [General](#general-text-feedback-only). |
 | `points` | `2` \| `5` | required for `type="csat"`; not used otherwise | Number of points on the scale. `nps` is a fixed 0–10 scale and `ces` a fixed 1–7 scale, so neither takes `points`. |
 
 ### Scale Style Options
@@ -471,6 +596,9 @@ You can override colors and fonts via CSS variables:
   /* Error color for validation messages */
   --ft-color-error: 32 95% 44%;
 
+  /* Error text color (attachment capture errors) — darker than --ft-color-error, tuned for text contrast rather than borders/outlines */
+  --ft-color-error-text: 32 95% 32%;
+
   /* Border color for inputs and containers */
   --ft-color-border: 214 14% 83%;
 
@@ -492,7 +620,7 @@ You can override colors and fonts via CSS variables:
   --ft-popup-head-offset: 0;
 
   /* Padding for Surface component container (desktop) */
-  --ft-surface-padding: 24px;
+  --ft-surface-padding: 20px;
 
   /* Padding for Surface component container on mobile devices (max-width: 400px) */
   --ft-surface-padding-mobile: 20px;
@@ -522,6 +650,7 @@ Here's an example of dark theme colors that work well with the survey components
   --ft-color-bg: 220 13% 13%;
   --ft-color-muted: 214 10% 60%;
   --ft-color-error: 14 90% 62%;
+  --ft-color-error-text: 14 85% 72%;
   --ft-color-border: 217 10% 28%;
   --ft-color-outline: 216 12% 45%;
   --ft-color-shadow: 0 0% 0%;

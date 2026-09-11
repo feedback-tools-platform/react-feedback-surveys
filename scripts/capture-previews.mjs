@@ -16,6 +16,7 @@ const PREVIEWS = [
   {id: 'widgets-survey-csat-5-points--preview-popup', file: 'csat5-popup.png'},
   {id: 'widgets-survey-nps--preview', file: 'nps10.png'},
   {id: 'widgets-survey-nps--preview-mobile', file: 'nps10-mobile.png', viewport: {width: 414, height: 896}},
+  {id: 'widgets-survey-general--preview', file: 'general.png'},
 ];
 
 async function isStorybookRunning() {

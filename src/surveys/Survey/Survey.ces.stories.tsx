@@ -80,6 +80,41 @@ export const NumbersSurface: Story = {
   }
 };
 
+const arabicProps: CesSurveyProps = {
+  ...commonProps,
+  dir: 'rtl',
+  question: 'ما مدى سهولة إنجاز مهمتك؟',
+  minLabel: 'صعب جدًا',
+  maxLabel: 'سهل جدًا',
+  textQuestion: 'نحب أن نسمع رأيك — ما الذي يمكننا تحسينه؟',
+  textButtonSendLabel: 'إرسال',
+  textButtonSkipLabel: 'تخطي',
+  responseType: 'text',
+  choiceOptions: null,
+  thankYouMessage: 'شكرًا لملاحظاتك',
+  strings: {
+    yourFeedbackLabel: 'ملاحظاتك'
+  }
+}
+
+export const NumbersRTL: Story = {
+  args: {
+    ...arabicProps
+  },
+  decorators: [
+    minHeightDecorator(240)
+  ],
+  name: 'Numbers (Arabic, RTL)',
+  render: (args) => (
+    <Surface>
+      <Survey {...args} />
+    </Surface>
+  ),
+  parameters: {
+    layout: 'centered',
+  }
+};
+
 export const NumbersPopup: Story = {
   args: {
     ...commonProps,

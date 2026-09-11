@@ -10,7 +10,7 @@
 .input {
   box-sizing: border-box;
   width: 100%;
-  padding: 4px 12px;
+  padding: 8px 12px;
   font-family: inherit;
   font-size: 16px;
   line-height: 1.5;
@@ -34,29 +34,22 @@
   }
 }
 
-.submit {
-  @include resetButton;
-  @include buttonStyle;
-
+.actions {
+  display: flex;
+  gap: 8px;
   margin-top: 16px;
-  width: 100%;
+}
+
+.submit {
+  @include buttonResetStyle;
+  @include buttonPrimaryStyle;
+
+  flex: 1;
 }
 
 .skip {
-  @include resetButton;
+  @include buttonResetStyle;
+  @include buttonSecondaryStyle;
 
-  margin-top: 8px;
-  display: block;
-  width: 100%;
-  padding: 4px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-  text-align: center;
-  color: hsl(var(--_color-muted) / 100%);
-  cursor: pointer;
-
-  &:hover {
-    color: hsl(var(--_color-text) / 100%);
-  }
+  flex: 1;
 }

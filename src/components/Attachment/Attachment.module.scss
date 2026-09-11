@@ -1,0 +1,86 @@
+.attachment {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  width: 100%;
+}
+
+.attachmentPreview {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  column-gap: 8px;
+  text-decoration: none;
+}
+
+.attachmentThumbnail {
+  display: block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border: 1px solid hsl(var(--_color-border) / 100%);
+  border-radius: 4px;
+}
+
+.attachmentCaption {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.attachmentName,
+.attachmentSize {
+  display: block;
+  overflow: hidden;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachmentName {
+  font-size: 13px;
+  color: hsl(var(--_color-text) / 100%);
+}
+
+.attachmentSize {
+  font-size: 11px;
+  color: hsl(var(--_color-muted) / 100%);
+}
+
+.attachmentRemove {
+  @include buttonResetStyle;
+  @include buttonSecondarySurface;
+
+  position: relative;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: hsl(var(--_color-text) / 100%);
+  border-radius: 50%;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: '';
+    background-color: currentcolor;
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+
+  &::before {
+    margin: -1px 0 0 -6px;
+    width: 12px;
+    height: 1.5px;
+  }
+
+  &::after {
+    margin: -6px 0 0 -1px;
+    width: 1.5px;
+    height: 12px;
+  }
+}

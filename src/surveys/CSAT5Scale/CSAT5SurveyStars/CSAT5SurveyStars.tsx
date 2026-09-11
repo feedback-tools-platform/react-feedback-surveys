@@ -15,12 +15,15 @@ export interface CSAT5SurveyStarsProps {
   classNames?: ScaleClassNames;
   minLabel?: string;
   maxLabel?: string;
+  /** Builds the aria-label for a star button. @default (score) => `${score} ${score > 1 ? 'stars' : 'star'}` */
+  getStarsLabel?: (score: number) => string;
   onChange: (value: number) => void;
 }
 
 export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
   minLabel,
   maxLabel,
+  getStarsLabel = (score) => `${score} ${score > 1 ? 'stars' : 'star'}`,
   onChange,
   classNames
 }) => {
@@ -52,7 +55,7 @@ export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
         {SCORES.map((score) => (
           <button
             key={score}
-            aria-label={`${score} ${score > 1 ? 'stars' : 'star'}`}
+            aria-label={getStarsLabel(score)}
             className={cn(styles.button, classNames?.button)}
             type="button"
             value={score}

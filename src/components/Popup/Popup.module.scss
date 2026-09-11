@@ -76,7 +76,7 @@
 }
 
 .close {
-  @include resetButton;
+  @include buttonResetStyle;
 
   position: absolute;
   top: var(--_surface-padding);

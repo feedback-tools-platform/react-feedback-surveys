@@ -4,13 +4,17 @@
   --_color-bg: var(--ft-color-bg, 0 0% 100%);
   --_color-muted: var(--ft-color-muted, 222 11% 46%);
   --_color-error: var(--ft-color-error, 32 95% 44%);
+
+  /* Darker than --_color-error on purpose — that one is tuned for borders/outlines, this one
+     is for text on --_color-bg and needs to clear WCAG AA contrast (4.5:1) on its own. */
+  --_color-error-text: var(--ft-color-error-text, 32 95% 32%);
   --_color-border: var(--ft-color-border, 214 14% 83%);
   --_color-outline: var(--ft-color-outline, 218 14% 65%);
   --_color-shadow: var(--ft-color-shadow, 0 0% 0%);
   --_color-control: var(--ft-color-control, 214 20% 96%);
   --_popup-z-index: var(--ft-popup-z-index, 49);
   --_popup-head-offset: var(--ft-popup-head-offset, 0);
-  --_surface-padding: var(--ft-surface-padding, 24px);
+  --_surface-padding: var(--ft-surface-padding, 20px);
   --_surface-padding-mobile: var(--ft-surface-padding-mobile, 20px);
   --_surface-radius: var(--ft-surface-radius, 8px);
   --_font-family: var(--ft-font-family, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);

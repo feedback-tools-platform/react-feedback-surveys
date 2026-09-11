@@ -12,6 +12,8 @@ export interface CSAT5SurveyNumbersProps {
   classNames?: ScaleClassNames;
   minLabel?: string;
   maxLabel?: string;
+  /** Builds the aria-label for a scale button. @default (score) => `Score ${score}` */
+  getScoreLabel?: (score: number) => string;
   onChange: (value: number) => void;
 }
 
@@ -19,6 +21,7 @@ export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
   classNames,
   minLabel,
   maxLabel,
+  getScoreLabel = (score) => `Score ${score}`,
   onChange,
 }) => {
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -31,7 +34,7 @@ export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
         {SCORES.map((score) => (
           <button
             key={score}
-            aria-label={`Score ${score}`}
+            aria-label={getScoreLabel(score)}
             className={cn(styles.button, classNames?.button)}
             type="button"
             value={score}

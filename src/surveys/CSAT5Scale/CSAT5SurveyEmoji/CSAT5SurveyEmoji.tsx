@@ -24,12 +24,15 @@ export interface CSAT5SurveyEmojiProps {
   classNames?: ScaleClassNames;
   minLabel?: string;
   maxLabel?: string;
+  /** Builds the aria-label for a scale button. @default (score) => `Score ${score}` */
+  getScoreLabel?: (score: number) => string;
   onChange: (value: number) => void;
 }
 
 export const CSAT5SurveyEmoji: React.FC<CSAT5SurveyEmojiProps> = ({
   minLabel,
   maxLabel,
+  getScoreLabel = (score) => `Score ${score}`,
   onChange,
   classNames
 }) => {
@@ -43,7 +46,7 @@ export const CSAT5SurveyEmoji: React.FC<CSAT5SurveyEmojiProps> = ({
         {LIST.map(([Icon, score]) => (
           <button
             key={score}
-            aria-label={`Score ${score}`}
+            aria-label={getScoreLabel(score)}
             className={cn(styles.button, classNames?.button)}
             type="button"
             value={score}

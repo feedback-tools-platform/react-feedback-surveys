@@ -12,7 +12,7 @@
 }
 
 .button {
-  @include resetButton;
+  @include buttonResetStyle;
 
   display: inline-block;
   width: 40px;

@@ -12,6 +12,10 @@ export interface CES7SurveyNumbersProps {
   classNames?: ScaleClassNames;
   minLabel?: string;
   maxLabel?: string;
+  /** Builds the aria-label for a scale button. @default (score) => `Score ${score}` */
+  getScoreLabel?: (score: number) => string;
+  /** Builds the text appended after the first/last button when it carries `minLabel`/`maxLabel`. @default (label) => ` - ${label}` */
+  getScoreLabelSuffix?: (label: string) => string;
   onChange: (value: number) => void;
 }
 
@@ -19,6 +23,8 @@ export const CES7SurveyNumbers: React.FC<CES7SurveyNumbersProps> = ({
   classNames,
   minLabel,
   maxLabel,
+  getScoreLabel = (score) => `Score ${score}`,
+  getScoreLabelSuffix = (label) => ` - ${label}`,
   onChange
 }) => {
   const onScoreChange = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -31,7 +37,7 @@ export const CES7SurveyNumbers: React.FC<CES7SurveyNumbersProps> = ({
         {SCORES.map((score) => (
           <button
             key={score}
-            aria-label={`Score ${score}`}
+            aria-label={getScoreLabel(score)}
             className={cn(styles.button, classNames?.button)}
             type="button"
             value={score}
@@ -46,7 +52,7 @@ export const CES7SurveyNumbers: React.FC<CES7SurveyNumbersProps> = ({
                 key="left"
                 className={styles.label}
               >
-                {` - ${minLabel}`}
+                {getScoreLabelSuffix(minLabel)}
               </span>
             )}
 
@@ -55,7 +61,7 @@ export const CES7SurveyNumbers: React.FC<CES7SurveyNumbersProps> = ({
                 key="right"
                 className={styles.label}
               >
-                {` - ${maxLabel}`}
+                {getScoreLabelSuffix(maxLabel)}
               </span>
             )}
           </button>

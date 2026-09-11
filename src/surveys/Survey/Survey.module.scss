@@ -77,3 +77,15 @@
     width: 100%;
   }
 }
+
+// --- General ---
+
+.feedbackGeneral,
+.contactGeneral,
+.successGeneral {
+  width: 280px;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 100%;
+  }
+}

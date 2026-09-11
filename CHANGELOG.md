@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **General survey type** - `type="general"` collects text feedback (and an optional screenshot) with no rating scale. See the [README](README.md#general-text-feedback-only).
+- **Screenshot attachments** - New `onCaptureScreenshot`, `maxAttachments`, `screenshotButtonLabel`, and `screenshotErrorMessage` props add an optional screenshot-attachment control to the feedback step. `attachmentCaption` overrides the caption shown under the thumbnail. Confirmed attachments are surfaced as `attachments?: Attachment[]` on the `onFeedbackSubmit` payload. See [Attachments](README.md#attachments).
+- **`strings` prop** - Overrides the library's built-in aria-labels and other screen-reader-only text (`SurveyStrings`), without touching visible copy. See [Accessibility Labels](README.md#accessibility-labels).
+- **`getScoreLabelSuffix` prop** - Customizes the text appended after the first/last numbered scale button when it carries `minLabel`/`maxLabel`.
+- **`otherPlaceholder` prop** - Placeholder for the free-text input shown alongside choice checkboxes.
+- **`Popup.closeLabel` prop** - Overrides the close button's `aria-label`/`title`.
+
+### Changed
+
+- **`--ft-surface-padding` default is now `20px`** (was `24px`).
+- **Screen region `aria-label`s replaced by `aria-labelledby`** - The rating/feedback/contact/success regions now derive their accessible name from each screen's own heading instead of a hardcoded `aria-label`. `Feedback`/`Contact` still expose overridable `feedbackFormLabel`/`contactFormLabel`. Consumer tests querying `getByRole('region', { name: 'Feedback form' })` (etc.) should update.
+- **Feedback step: Submit requires content** - Submitting fully empty input is no longer equivalent to Skip. For `responseType: 'text'`, an attachment alone unlocks Submit, but submitting without text flags the field (red border, `aria-invalid`) instead of sending. For `responseType: 'choices'`, an attachment alone doesn't unlock Submit at all — a selected choice or text is required.
+- **Feedback step: Skip is disabled while an attachment is confirmed** - Once a screenshot is attached, Skip is disabled until the attachment is removed, so an attachment can no longer be silently discarded.
+
 ## [1.8.0] - 2026-08-25
 
 ### Changed

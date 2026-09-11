@@ -66,14 +66,19 @@
   }
 }
 
+.fieldWrapper {
+  position: relative;
+  display: flex;
+}
+
 .input {
   margin-top: 8px;
-  padding: 4px 12px;
+  padding: 8px 12px;
 }
 
 .textarea {
   height: 120px;
-  padding: 8px 12px;
+  padding: 8px 12px 40px;
 }
 
 .input,
@@ -94,40 +99,78 @@
   &:focus {
     outline: 4px solid hsl(var(--_color-outline) / 14%);
   }
+
+  &.invalid {
+    border-color: hsl(var(--_color-error) / 100%);
+
+    &:focus {
+      outline-color: hsl(var(--_color-error) / 14%);
+    }
+  }
 }
 
-.submit {
-  @include resetButton;
-  @include buttonStyle;
-
-  margin-top: 16px;
-  width: 100%;
+.attachTriggers {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 6px;
 }
 
-.skip {
-  @include resetButton;
+.attachTrigger {
+  @include buttonResetStyle;
+  @include buttonSecondarySurface;
 
-  margin-top: 8px;
-  display: block;
-  width: 100%;
-  padding: 4px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
   color: hsl(var(--_color-muted) / 100%);
-  cursor: pointer;
+  border-radius: var(--_surface-radius);
+  transition: color 0.15s, background-color 0.15s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     color: hsl(var(--_color-text) / 100%);
   }
 }
 
-.success {
-  padding: 16px 0 32px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-  text-align: center;
+.attachments {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.attachmentList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.attachmentError {
+  font-size: 14px;
+  color: hsl(var(--_color-error-text) / 100%);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.submit {
+  @include buttonResetStyle;
+  @include buttonPrimaryStyle;
+
+  flex: 1;
+}
+
+.skip {
+  @include buttonResetStyle;
+  @include buttonSecondaryStyle;
+
+  flex: 1;
 }
 

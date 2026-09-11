@@ -11,7 +11,7 @@
 }
 
 .button {
-  @include resetButton;
+  @include buttonResetStyle;
 
   display: flex;
   align-items: center;
