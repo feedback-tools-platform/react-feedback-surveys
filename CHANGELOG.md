@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-09-30
+
+### Added
+
+- **Screenshot capture progress** - While `onCaptureScreenshot` is pending, the screenshot control shows a spinner and is marked `aria-busy`. Its aria-label comes from the new `strings.screenshotProcessingLabel` (default `'Capturing screenshot…'`). See [Attachments](README.md#attachments).
+- **Dismissible screenshot error** - A button next to the capture error hides it. Its aria-label/title comes from the new `strings.screenshotErrorDismissLabel` (default `'Dismiss error'`). The next capture attempt still clears the error on its own. See [Accessibility Labels](README.md#accessibility-labels).
+
+### Changed
+
+- **Screenshot errors always show `screenshotErrorMessage`** - When `onCaptureScreenshot` throws or rejects, the respondent now sees `screenshotErrorMessage`, as documented, instead of the thrown error's own `message`. Pass any custom failure text through `screenshotErrorMessage`.
+- **Pending screenshot control label** - The control's aria-label while a capture is pending changed from the hardcoded `'Processing…'` to `'Capturing screenshot…'` (overridable via `strings.screenshotProcessingLabel`). Consumer tests querying `getByRole('button', { name: 'Processing…' })` should update.
+
 ## [1.9.0] - 2026-09-11
 
 ### Added
