@@ -179,6 +179,8 @@ export const Survey: React.FC<SurveyProps> = (props) => {
       attachmentOpenLabel={strings?.attachmentOpenLabel}
       attachmentCaption={attachmentCaption}
       attachmentRemoveLabel={strings?.attachmentRemoveLabel}
+      screenshotProcessingLabel={strings?.screenshotProcessingLabel}
+      screenshotErrorDismissLabel={strings?.screenshotErrorDismissLabel}
       onFeedback={onFeedbackChange}
       onContact={onContactChange}
       onCaptureScreenshot={onCaptureScreenshot}

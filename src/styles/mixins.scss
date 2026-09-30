@@ -68,3 +68,28 @@
   border-width: 0;
   clip-path: inset(50%);
 }
+
+@mixin crossIcon($size: 12px) {
+  position: relative;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: '';
+    background-color: currentcolor;
+    border-radius: 1px;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::before {
+    width: $size;
+    height: 1.5px;
+  }
+
+  &::after {
+    width: 1.5px;
+    height: $size;
+  }
+}

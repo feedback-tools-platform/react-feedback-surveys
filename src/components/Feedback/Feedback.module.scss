@@ -134,6 +134,30 @@
   &:hover:not(:disabled) {
     color: hsl(var(--_color-text) / 100%);
   }
+
+  &[aria-busy='true'] {
+    opacity: 1;
+  }
+}
+
+.spinner {
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 2.4s;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .attachments {
@@ -150,8 +174,23 @@
 }
 
 .attachmentError {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   color: hsl(var(--_color-error-text) / 100%);
+}
+
+.attachmentErrorDismiss {
+  @include buttonResetStyle;
+  @include buttonSecondarySurface;
+  @include crossIcon(10px);
+
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: hsl(var(--_color-text) / 100%);
+  border-radius: 50%;
 }
 
 .actions {

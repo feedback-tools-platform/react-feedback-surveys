@@ -57,6 +57,10 @@ export interface SurveyRootProps {
   attachmentCaption?: SharedSurveyProps['attachmentCaption'];
   /** aria-label/title for removing an attachment */
   attachmentRemoveLabel?: string;
+  /** aria-label for the screenshot control while a capture is in progress */
+  screenshotProcessingLabel?: string;
+  /** aria-label/title for hiding the screenshot capture error */
+  screenshotErrorDismissLabel?: string;
   /** Maximum number of attachments a respondent may confirm, across every attachment source */
   maxAttachments?: SharedSurveyProps['maxAttachments'];
   /** Success message text */
@@ -105,6 +109,8 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   attachmentOpenLabel,
   attachmentCaption,
   attachmentRemoveLabel,
+  screenshotProcessingLabel,
+  screenshotErrorDismissLabel,
   maxAttachments,
   thankYouMessage,
   contactFormLabel = 'Contact form',
@@ -177,6 +183,8 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
             attachmentOpenLabel={attachmentOpenLabel}
             attachmentCaption={attachmentCaption}
             attachmentRemoveLabel={attachmentRemoveLabel}
+            screenshotProcessingLabel={screenshotProcessingLabel}
+            screenshotErrorDismissLabel={screenshotErrorDismissLabel}
             maxAttachments={maxAttachments}
             onSubmit={onFeedback}
           />

@@ -848,7 +848,7 @@ export const SubmitBlockedWhileScreenshotPending: Story = {
     const attachButton = await canvas.findByRole('button', { name: 'Capture screenshot' });
     await userEvent.click(attachButton);
 
-    await expect(await canvas.findByRole('button', { name: 'Processing…' })).toBeInTheDocument();
+    await expect(await canvas.findByRole('button', { name: 'Capturing screenshot…' })).toBeInTheDocument();
 
     // Submit is disabled for the entire pending window — clicking it is a no-op
     const submitButton = canvas.getByRole('button', { name: 'Submit' });
@@ -913,11 +913,90 @@ export const ScreenshotCaptureThrows: Story = {
     const attachButton = await canvas.findByRole('button', { name: 'Capture screenshot' });
     await userEvent.click(attachButton);
 
+    // The respondent sees screenshotErrorMessage, never the thrown error's own text
     const alert = await canvas.findByRole('alert');
-    await expect(alert).toHaveTextContent('Screenshot capture is not supported in this browser');
+    await expect(alert).toHaveTextContent('Failed to capture screenshot');
+    await expect(alert).not.toHaveTextContent('Screenshot capture is not supported in this browser');
 
     // Nothing was attached, and the control recovers so capture can be retried
     await expect(canvas.queryByAltText('Screenshot')).not.toBeInTheDocument();
     await expect(canvas.getByRole('button', { name: 'Capture screenshot' })).toBeEnabled();
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Dismiss error' }));
+    await expect(canvas.queryByRole('alert')).not.toBeInTheDocument();
+
+    // Leave the error on screen so the story's final state shows it
+    await userEvent.click(attachButton);
+    await expect(await canvas.findByRole('alert')).toHaveTextContent('Failed to capture screenshot');
+  },
+};
+
+const neverEndingScreenshotProps: Omit<CsatSurveyProps5, 'scaleStyle'> = {
+  ...commonProps,
+  responseType: 'text',
+  choiceOptions: [],
+  onCaptureScreenshot: () => new Promise<string | Blob>(() => {})
+}
+
+export const ScreenshotCaptureInProgress: Story = {
+  args: {
+    ...neverEndingScreenshotProps,
+    scaleStyle: 'numbers'
+  },
+  name: 'Numbers (screenshot capture in progress)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Score 4' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Capture screenshot' }));
+
+    await expect(await canvas.findByRole('button', { name: 'Capturing screenshot…' })).toBeDisabled();
+  },
+};
+
+let screenshotAttempts = 0;
+
+const failingOnceScreenshotProps: Omit<CsatSurveyProps5, 'scaleStyle'> = {
+  ...commonProps,
+  responseType: 'text',
+  choiceOptions: [],
+  onCaptureScreenshot: () => {
+    screenshotAttempts += 1;
+
+    if (screenshotAttempts === 1) {
+      throw new Error('First capture fails');
+    }
+
+    return domToDataUrl(document.body);
+  }
+}
+
+export const ScreenshotErrorClearsOnRetry: Story = {
+  args: {
+    ...failingOnceScreenshotProps,
+    scaleStyle: 'numbers'
+  },
+  name: 'Numbers (screenshot error clears on a successful retry)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement }) => {
+    screenshotAttempts = 0;
+
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Score 4' }));
+
+    const attachButton = await canvas.findByRole('button', { name: 'Capture screenshot' });
+    await userEvent.click(attachButton);
+    await expect(await canvas.findByRole('alert')).toHaveTextContent('Failed to capture screenshot');
+
+    await userEvent.click(attachButton);
+
+    await expect(await canvas.findByAltText('Screenshot')).toBeInTheDocument();
+    await expect(canvas.queryByRole('alert')).not.toBeInTheDocument();
   },
 };

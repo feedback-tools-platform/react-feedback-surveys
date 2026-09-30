@@ -130,6 +130,10 @@ export interface SurveyStrings {
   attachmentOpenLabel?: string;
   /** aria-label/title for removing an attachment. @default 'Remove screenshot' */
   attachmentRemoveLabel?: string;
+  /** aria-label for the screenshot control while a capture is in progress. @default 'Capturing screenshot…' */
+  screenshotProcessingLabel?: string;
+  /** aria-label/title for hiding the screenshot capture error. @default 'Dismiss error' */
+  screenshotErrorDismissLabel?: string;
   /** Builds the aria-label for a numbered scale button. @default (score) => `Score ${score}` */
   getScoreLabel?: (score: number) => string;
   /** Builds the aria-label for a star rating button. @default (score) => `${score} ${score > 1 ? 'stars' : 'star'}` */

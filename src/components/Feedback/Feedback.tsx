@@ -40,6 +40,10 @@ export interface FeedbackProps {
   attachmentCaption?: SharedSurveyProps['attachmentCaption'];
   /** aria-label/title for removing an attachment */
   attachmentRemoveLabel?: string;
+  /** aria-label for the screenshot control while a capture is in progress */
+  screenshotProcessingLabel?: string;
+  /** aria-label/title for hiding the screenshot capture error */
+  screenshotErrorDismissLabel?: string;
   /** Maximum number of attachments a respondent may confirm, across every attachment source */
   maxAttachments?: SharedSurveyProps['maxAttachments'];
   /** Enables an optional screenshot-attachment control */
@@ -65,6 +69,8 @@ export const Feedback: React.FC<FeedbackProps> = ({
   attachmentOpenLabel,
   attachmentCaption,
   attachmentRemoveLabel,
+  screenshotProcessingLabel = 'Capturing screenshot…',
+  screenshotErrorDismissLabel = 'Dismiss error',
   maxAttachments = 1,
   onSubmit
 }) => {
@@ -77,7 +83,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
   const { attachments, addAttachment, removeAttachment, toSurveyAttachments } = useAttachments();
   const [isProcessingAttachment, setIsProcessingAttachment] = useState<boolean>(false);
-  const [attachmentError, setAttachmentError] = useState<Error | null>(null);
+  const [hasAttachmentError, setHasAttachmentError] = useState<boolean>(false);
 
   const onTextKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     event.stopPropagation();
@@ -109,7 +115,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
     }
 
     setIsProcessingAttachment(true);
-    setAttachmentError(null);
+    setHasAttachmentError(false);
 
     try {
       const data = await onCaptureScreenshot();
@@ -119,12 +125,16 @@ export const Feedback: React.FC<FeedbackProps> = ({
       }
 
       addAttachment(data);
-    } catch (err) {
-      setAttachmentError(err instanceof Error ? err : new Error(screenshotErrorMessage));
+    } catch {
+      setHasAttachmentError(true);
     } finally {
       setIsProcessingAttachment(false);
     }
-  }, [onCaptureScreenshot, addAttachment, screenshotErrorMessage]);
+  }, [onCaptureScreenshot, addAttachment]);
+
+  const onAttachmentErrorDismiss = useCallback((): void => {
+    setHasAttachmentError(false);
+  }, []);
 
   const onAttachmentRemoveClick = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
     const { id } = event.currentTarget.dataset;
@@ -211,16 +221,24 @@ export const Feedback: React.FC<FeedbackProps> = ({
   const attachTriggers = !!onCaptureScreenshot && canAddAttachment && (
     <div className={styles.attachTriggers}>
       <button
-        aria-label={isProcessingAttachment ? 'Processing…' : screenshotButtonLabel}
+        aria-busy={isProcessingAttachment}
+        aria-label={isProcessingAttachment ? screenshotProcessingLabel : screenshotButtonLabel}
         className={styles.attachTrigger}
         disabled={isProcessingAttachment}
         type="button"
         onClick={onScreenshotCapture}
       >
-        <ScreenshotIcon
-          width={16}
-          height={16}
-        />
+        {isProcessingAttachment ? (
+          <span
+            aria-hidden="true"
+            className={styles.spinner}
+          />
+        ) : (
+          <ScreenshotIcon
+            width={16}
+            height={16}
+          />
+        )}
       </button>
     </div>
   );
@@ -315,7 +333,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
         </div>
       )}
 
-      {!!onCaptureScreenshot && (!!attachments.length || !!attachmentError) && (
+      {!!onCaptureScreenshot && (!!attachments.length || hasAttachmentError) && (
         <div className={styles.attachments}>
           {!!attachments.length && (
             <div className={styles.attachmentList}>
@@ -332,12 +350,19 @@ export const Feedback: React.FC<FeedbackProps> = ({
             </div>
           )}
 
-          {!!attachmentError && (
-            <div
-              className={styles.attachmentError}
-              role="alert"
-            >
-              {attachmentError.message}
+          {hasAttachmentError && (
+            <div className={styles.attachmentError}>
+              <span role="alert">
+                {screenshotErrorMessage}
+              </span>
+
+              <button
+                aria-label={screenshotErrorDismissLabel}
+                className={styles.attachmentErrorDismiss}
+                title={screenshotErrorDismissLabel}
+                type="button"
+                onClick={onAttachmentErrorDismiss}
+              />
             </div>
           )}
         </div>

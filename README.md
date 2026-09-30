@@ -356,7 +356,7 @@ Most props are shared across every survey format. `type` (and `points`, for CSAT
 | `contactButtonSkipLabel`  | `string`                      | -        | Skip label for the email collection screen.                                  |
 | `onCaptureScreenshot` | `() => string \| Blob \| Promise<string \| Blob>` | -        | Enables an optional screenshot-attachment control on the feedback step. Hidden unless provided — see [Attachments](#attachments). |
 | `screenshotButtonLabel` | `string`                    | -        | Label for the screenshot-attachment control.                                 |
-| `screenshotErrorMessage` | `string`                  | -        | Shown to the respondent when `onCaptureScreenshot` fails. Default `'Failed to capture screenshot'`. |
+| `screenshotErrorMessage` | `string`                  | -        | Shown to the respondent when `onCaptureScreenshot` fails, whatever it threw or rejected with. Default `'Failed to capture screenshot'`. |
 | `maxAttachments`   | `number`                      | -        | Maximum number of attachments a respondent may confirm. Default `1`. See [Attachments](#attachments). |
 | `attachmentCaption` | `string`                     | -        | Visible caption under an attachment thumbnail, also used as its image alt text. Default `'Screenshot'`. |
 
@@ -387,6 +387,8 @@ Pass a `strings` object with only the keys you want to change — each one merge
 | `emailLabel` | `string` | `'Email address'` |
 | `attachmentOpenLabel` | `string` | `'Open screenshot in a new tab'` |
 | `attachmentRemoveLabel` | `string` | `'Remove screenshot'` |
+| `screenshotProcessingLabel` | `string` | `'Capturing screenshot…'` |
+| `screenshotErrorDismissLabel` | `string` | `'Dismiss error'` |
 | `getScoreLabel` | `(score: number) => string` | `(score) => \`Score ${score}\`` |
 | `getStarsLabel` | `(score: number) => string` | `(score) => \`${score} ${score > 1 ? 'stars' : 'star'}\`` |
 
@@ -519,6 +521,8 @@ By default a respondent can confirm a single attachment: once one is attached, t
 ```
 
 Pass `onCaptureScreenshot` to add an "Capture screenshot" control to the feedback step. Clicking it calls your function and attaches the result immediately. The control is off by default: it doesn't render at all unless `onCaptureScreenshot` is provided.
+
+While the capture is pending, the control shows a spinner. If your function throws or rejects, nothing is attached and the respondent sees `screenshotErrorMessage` — never the error's own text — with a button to dismiss it; the next capture attempt clears it too. The library doesn't time out a pending capture, so put a time limit inside your function if it can hang.
 
 Capturing a screenshot needs an actual DOM-to-image library (or a native bridge in a hybrid app) — real, non-trivial code that most consumers of this package won't want to pay for in bundle size if they don't use the feature. So react-feedback-surveys deliberately doesn't ship a capture implementation itself: bring your own function that returns the captured image (as a data URL string, a `Blob`, or a `Promise` of either). A drop-in recipe using [modern-screenshot](https://github.com/qq15725/modern-screenshot):
 
