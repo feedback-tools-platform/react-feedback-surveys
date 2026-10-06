@@ -719,14 +719,12 @@ export const ScreenshotSkipDisabled: Story = {
   },
 };
 
-export const ScreenshotChoicesRequiresChoiceOrText: Story = {
+export const ScreenshotWithoutText: Story = {
   args: {
     ...screenshotProps,
-    scaleStyle: 'numbers',
-    responseType: 'choices',
-    choiceOptions: ['Very easy', 'Very difficult']
+    scaleStyle: 'numbers'
   },
-  name: 'Numbers (choices: attachment alone does not unlock submit)',
+  name: 'Numbers (screenshot without text)',
   parameters: {
     layout: 'centered',
   },
@@ -736,32 +734,66 @@ export const ScreenshotChoicesRequiresChoiceOrText: Story = {
     const scoreButton = canvas.getByRole('button', { name: 'Score 4' });
     await userEvent.click(scoreButton);
 
-    // Attach a screenshot without picking a choice or typing anything
     const attachButton = await canvas.findByRole('button', { name: 'Capture screenshot' });
     await userEvent.click(attachButton);
     await canvas.findByAltText('Screenshot');
 
-    // For choices, an attachment alone doesn't unlock Submit — unlike `text`, there's no
-    // invalid-state UI here, the button just stays disabled until a choice or text is added
     const submitButton = canvas.getByRole('button', { name: 'Submit' });
-    await expect(submitButton).toBeDisabled();
-
-    // Picking a choice unlocks it
-    const checkbox = canvas.getByRole('checkbox', { name: 'Very easy' });
-    await userEvent.click(checkbox);
     await expect(submitButton).toBeEnabled();
-
     await userEvent.click(submitButton);
 
     await expect(args.onFeedbackSubmit).toHaveBeenCalledWith(
       expect.objectContaining({
         value: 4,
-        text: ['Very easy'],
+        text: undefined,
         attachments: [
           expect.objectContaining({ kind: 'screenshot' })
         ]
       })
     );
+
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
+  },
+};
+
+export const ScreenshotChoicesWithoutChoiceOrText: Story = {
+  args: {
+    ...screenshotProps,
+    scaleStyle: 'numbers',
+    responseType: 'choices',
+    choiceOptions: ['Very easy', 'Very difficult']
+  },
+  name: 'Numbers (choices: screenshot without a choice or text)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    const scoreButton = canvas.getByRole('button', { name: 'Score 4' });
+    await userEvent.click(scoreButton);
+
+    const submitButton = await canvas.findByRole('button', { name: 'Submit' });
+    await expect(submitButton).toBeDisabled();
+
+    const attachButton = canvas.getByRole('button', { name: 'Capture screenshot' });
+    await userEvent.click(attachButton);
+    await canvas.findByAltText('Screenshot');
+
+    await expect(submitButton).toBeEnabled();
+    await userEvent.click(submitButton);
+
+    await expect(args.onFeedbackSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        value: 4,
+        text: undefined,
+        attachments: [
+          expect.objectContaining({ kind: 'screenshot' })
+        ]
+      })
+    );
+
+    await expect(canvas.getByText('Thank you for your feedback')).toBeInTheDocument();
   },
 };
 
@@ -798,7 +830,6 @@ export const ScreenshotMultiple: Story = {
     });
     await expect(canvas.queryByRole('button', { name: 'Capture screenshot' })).not.toBeInTheDocument();
 
-    // Attachments alone aren't enough to submit — text is still required
     const textarea = canvas.getByRole('textbox', { name: 'Your feedback' });
     await userEvent.type(textarea, 'Two screenshots attached');
 
@@ -862,22 +893,11 @@ export const SubmitBlockedWhileScreenshotPending: Story = {
     await expect(await canvas.findByAltText('Screenshot')).toBeInTheDocument();
     await waitFor(() => expect(submitButton).toBeEnabled());
 
-    // The attachment alone still isn't enough — submitting without text flags the field instead
-    // and moves focus into it
-    await userEvent.click(submitButton);
-    await expect(args.onFeedbackSubmit).not.toHaveBeenCalled();
-    const textarea = canvas.getByRole('textbox', { name: 'Your feedback' });
-    await expect(textarea).toHaveAttribute('aria-invalid', 'true');
-    await expect(textarea).toHaveFocus();
-
-    // Typing clears the invalid state and lets the submission through
-    await userEvent.type(textarea, 'Something looks broken here');
-    await expect(textarea).toHaveAttribute('aria-invalid', 'false');
     await userEvent.click(submitButton);
 
     await expect(args.onFeedbackSubmit).toHaveBeenCalledWith(
       expect.objectContaining({
-        text: 'Something looks broken here',
+        text: undefined,
         attachments: [
           expect.objectContaining({ kind: 'screenshot' })
         ]

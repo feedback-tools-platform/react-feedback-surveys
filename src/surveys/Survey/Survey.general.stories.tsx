@@ -204,6 +204,45 @@ export const ScreenshotAttach: Story = {
   },
 };
 
+export const ScreenshotRequiresText: Story = {
+  args: {
+    ...screenshotProps
+  },
+  name: 'Text feedback (screenshot alone flags the empty field)',
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    const attachButton = await canvas.findByRole('button', { name: 'Capture screenshot' });
+    await userEvent.click(attachButton);
+    await canvas.findByAltText('Screenshot');
+
+    // Without a rating step the response needs text, so a screenshot alone flags the field
+    const submitButton = canvas.getByRole('button', { name: 'Submit' });
+    await userEvent.click(submitButton);
+    await expect(args.onFeedbackSubmit).not.toHaveBeenCalled();
+
+    const textarea = canvas.getByRole('textbox', { name: 'Your feedback' });
+    await expect(textarea).toHaveAttribute('aria-invalid', 'true');
+    await expect(textarea).toHaveFocus();
+
+    await userEvent.type(textarea, 'Something looks broken here');
+    await expect(textarea).toHaveAttribute('aria-invalid', 'false');
+    await userEvent.click(submitButton);
+
+    await expect(args.onFeedbackSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        text: 'Something looks broken here',
+        attachments: [
+          expect.objectContaining({ kind: 'screenshot' })
+        ]
+      })
+    );
+  },
+};
+
 export const Preview: Story = {
   args: {
     ...screenshotProps

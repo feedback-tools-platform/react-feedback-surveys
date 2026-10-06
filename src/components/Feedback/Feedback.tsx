@@ -18,7 +18,7 @@ export interface FeedbackProps {
   formLabel?: string;
   /** Type of feedback collection */
   responseType?: SharedSurveyProps['responseType'];
-  /** Disables skipping and disables Send until there's something to submit. @default false */
+  /** Disables skipping and requires text or a choice — an attachment alone isn't enough. @default false */
   feedbackRequired?: boolean;
   /** Whether a previous submission is still pending. Disables Submit/Skip and ignores further submits. */
   isLoading?: boolean;
@@ -166,26 +166,27 @@ export const Feedback: React.FC<FeedbackProps> = ({
     }
 
     if (responseType === 'choices') {
-      // An attachment alone isn't feedback for `choices` — needs a selected option or text.
-      if (!selected.length && !textValue) {
+      if (feedbackRequired && !selected.length && !textValue) {
         return;
       }
 
-      onSubmit?.([...selected, textValue].filter(Boolean), surveyAttachments);
+      const choices = [...selected, textValue].filter(Boolean);
+
+      onSubmit?.(choices.length ? choices : undefined, surveyAttachments);
       return;
     }
 
-    // An attachment alone isn't feedback for `text` — flag the field instead of submitting.
-    if (!textValue) {
+    if (feedbackRequired && !textValue) {
       setIsTextInvalid(true);
       textareaRef.current?.focus();
       return;
     }
 
-    onSubmit?.(textValue, surveyAttachments);
+    onSubmit?.(textValue || undefined, surveyAttachments);
   }, [
     text,
     responseType,
+    feedbackRequired,
     isLoading,
     selected,
     toSurveyAttachments,
@@ -212,11 +213,9 @@ export const Feedback: React.FC<FeedbackProps> = ({
   const inputId = `${formId}-feedback-input`;
   const choicesId = `${formId}-feedback-choices`;
   const canAddAttachment = attachments.length < maxAttachments;
-  const hasChoiceOrTextContent = !!text.trim() || !!selected.length;
-  // For `choices`, an attachment alone never unlocks Submit — a choice or text is required, and
-  // the button just stays disabled. For `text`, an attachment alone does unlock it, but
-  // submitting without text is caught below and flags the field instead.
-  const hasContent = responseType === 'choices' ? hasChoiceOrTextContent : (hasChoiceOrTextContent || !!attachments.length);
+  // A required `text` step still unlocks Submit for an attachment alone, so the click can flag the empty field.
+  const attachmentUnlocksSubmit = !feedbackRequired || responseType === 'text';
+  const hasContent = !!text.trim() || !!selected.length || (attachmentUnlocksSubmit && !!attachments.length);
 
   const attachTriggers = !!onCaptureScreenshot && canAddAttachment && (
     <div className={styles.attachTriggers}>
