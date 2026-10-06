@@ -296,7 +296,7 @@ For more examples, check out the Storybook stories under `widgets/Survey` (group
 The `<Surface>` component is a basic container wrapper that provides consistent styling for survey content. It's used internally by the Popup component and can be used standalone to display surveys with a card-like appearance.
 
 The Surface component provides:
-- Background color with depth/elevation (box shadow)
+- Background color with depth/elevation (box shadow, controlled via `--ft-surface-shadow`)
 - Rounded corners (controlled via `--ft-surface-radius`)
 - Responsive padding that adapts to mobile devices
 
@@ -324,7 +324,7 @@ import 'react-feedback-surveys/index.css';
 | `className` | `string`          | -        | -       | Additional CSS class name for the surface container.|
 | `children`  | `React.ReactNode` | -        | -       | Content to render inside the surface.              |
 
-The Surface component uses the `--ft-surface-padding`, `--ft-surface-padding-mobile`, and `--ft-surface-radius` CSS variables for responsive padding and border radius.
+The Surface component uses the `--ft-surface-padding`, `--ft-surface-padding-mobile`, `--ft-surface-radius`, and `--ft-surface-shadow` CSS variables for responsive padding, border radius, and shadow. Inside `Popup` it uses `--ft-popup-shadow` instead.
 
 ## Props
 
@@ -609,7 +609,7 @@ You can override colors and fonts via CSS variables:
   /* Outline color for focused interactive elements */
   --ft-color-outline: 218 14% 65%;
 
-  /* Shadow color for depth and elevation effects */
+  /* Shadow color for the default --ft-surface-shadow and --ft-popup-shadow */
   --ft-color-shadow: 0 0% 0%;
 
   /* Background color for input controls and buttons */
@@ -617,6 +617,14 @@ You can override colors and fonts via CSS variables:
 
   /* Z-index for popup overlay positioning */
   --ft-popup-z-index: 49;
+
+  /* Box shadow of the Popup container; a custom value replaces all layers, `none` removes it */
+  /* The default is the Surface shadow plus a wider layer that lifts the popup above the page */
+  --ft-popup-shadow:
+    0 0 1px hsl(0 0% 0% / 12%),
+    0 1px 2px hsl(0 0% 0% / 6%),
+    0 2px 4px hsl(0 0% 0% / 4%),
+    0 16px 40px -12px hsl(0 0% 0% / 14%);
 
   /* Inline-end offset for survey head inside popups (right padding in LTR, left in RTL) */
   /* Automatically set to 32px inside Popup to prevent title overlap with close button */
@@ -631,12 +639,18 @@ You can override colors and fonts via CSS variables:
 
   /* Border radius for Surface container, inputs, and submit button */
   --ft-surface-radius: 8px;
+
+  /* Box shadow of the Surface container (inline surveys); a custom value replaces all layers, `none` removes it */
+  --ft-surface-shadow:
+    0 0 1px hsl(0 0% 0% / 12%),
+    0 1px 2px hsl(0 0% 0% / 6%),
+    0 2px 4px hsl(0 0% 0% / 4%);
 }
 
 /* Use with hsl() function: */
 /* color: hsl(var(--ft-color-text)); */
 /* background: hsl(var(--ft-color-bg)); */
-/* box-shadow: 0 0 10px hsl(var(--ft-color-shadow) / 20%); */
+/* box-shadow: 0 2px 4px hsl(var(--ft-color-shadow) / 4%); */
 ```
 
 #### Dark Theme Example
