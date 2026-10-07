@@ -15,14 +15,15 @@
   font-size: 16px;
   line-height: 1.5;
   color: hsl(var(--_color-text) / 100%);
-  background-color: hsl(var(--_color-bg) / 100%);
+  background-color: hsl(var(--_color-control) / 100%);
   border: 1px solid hsl(var(--_color-border) / 100%);
   border-radius: var(--_surface-radius);
   outline: 0 solid hsl(var(--_color-outline) / 14%);
   transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;
 
   &:focus {
-    outline: 4px solid hsl(var(--_color-outline) / 14%);
+    border-color: hsl(var(--_color-text) / 100%);
+    outline: 4px solid hsl(var(--_color-outline) / 20%);
   }
 
   &.invalid {
