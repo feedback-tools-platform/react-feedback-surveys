@@ -73,7 +73,12 @@
 }
 
 .input {
-  padding: 8px 12px;
+  padding: 7px 12px;
+
+  & ~ .attachTriggers {
+    right: 6px;
+    bottom: 6px;
+  }
 }
 
 .textarea {

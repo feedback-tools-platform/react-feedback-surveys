@@ -5,12 +5,13 @@
 .subtext {
   margin: 0 0 16px;
   line-height: 1.25;
+  color: hsl(var(--_color-muted) / 100%);
 }
 
 .input {
   box-sizing: border-box;
   width: 100%;
-  padding: 8px 12px;
+  padding: 7px 12px;
   font-family: inherit;
   font-size: 16px;
   line-height: 1.5;

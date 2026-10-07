@@ -15,14 +15,19 @@
 }
 
 @mixin buttonPrimaryStyle {
-  padding: 8px 32px;
+  padding: 10px 32px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
+  line-height: 20px;
   text-align: center;
   color: hsl(var(--_color-bg) / 100%);
   background-color: hsl(var(--_color-text) / 100%);
   border-radius: var(--_surface-radius);
   transition: opacity 0.2s;
+
+  // light-on-dark text renders heavier on macOS; thin it to match the secondary button
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   &:hover:not(:disabled) {
     opacity: 0.85;
@@ -49,9 +54,10 @@
 @mixin buttonSecondaryStyle {
   @include buttonSecondarySurface;
 
-  padding: 8px 32px;
+  padding: 10px 32px;
   font-size: 14px;
   font-weight: 500;
+  line-height: 20px;
   text-align: center;
   color: hsl(var(--_color-text) / 100%);
   border-radius: var(--_surface-radius);
