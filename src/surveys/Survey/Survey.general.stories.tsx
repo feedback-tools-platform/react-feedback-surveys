@@ -165,6 +165,36 @@ export const RequiredInteractions: Story = {
   },
 };
 
+export const CustomFont: Story = {
+  args: {
+    ...commonProps
+  },
+  name: 'Text feedback (custom font)',
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args) => (
+    <div style={{ '--ft-font-family': 'Georgia, serif' } as React.CSSProperties}>
+      <p>
+        Page text keeps the page font
+      </p>
+
+      <Surface>
+        <Survey {...args} />
+      </Surface>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const fontOf = (element: Element) => getComputedStyle(element).fontFamily;
+
+    await expect(fontOf(canvas.getByRole('heading'))).toContain('Georgia');
+    await expect(fontOf(canvas.getByRole('textbox', { name: 'Your feedback' }))).toContain('Georgia');
+    await expect(fontOf(canvas.getByRole('button', { name: 'Submit' }))).toContain('Georgia');
+    await expect(fontOf(canvas.getByText('Page text keeps the page font'))).not.toContain('Georgia');
+  },
+};
+
 const screenshotProps: GeneralSurveyProps = {
   ...commonProps,
   onCaptureScreenshot: () => domToDataUrl(document.body)

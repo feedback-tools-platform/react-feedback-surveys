@@ -645,6 +645,9 @@ You can override colors and fonts via CSS variables:
     0 0 1px hsl(0 0% 0% / 12%),
     0 1px 2px hsl(0 0% 0% / 6%),
     0 2px 4px hsl(0 0% 0% / 4%);
+
+  /* Font of all survey text, inputs, and buttons */
+  --ft-font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
 }
 
 /* Use with hsl() function: */

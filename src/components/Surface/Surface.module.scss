@@ -1,6 +1,8 @@
 @use '../../styles/variables' as *;
 
 .base {
+  @include themeVariables;
+
   position: relative;
   display: block;
   padding: var(--_surface-padding);

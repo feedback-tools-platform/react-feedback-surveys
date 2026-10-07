@@ -1,8 +1,9 @@
 @use '../../styles/variables' as *;
 
 .base {
+  @include themeVariables;
+
   --_popup-head-offset: 32px;
-  --_surface-shadow: var(--_popup-shadow);
 
   position: fixed;
   z-index: var(--_popup-z-index);
@@ -17,6 +18,10 @@
     max-width: calc(100vw - var(--_surface-padding-mobile) * 2);
     max-height: calc(100vh - var(--_surface-padding-mobile) * 2);
   }
+}
+
+.base > .content {
+  box-shadow: var(--_popup-shadow);
 }
 
 .animated {

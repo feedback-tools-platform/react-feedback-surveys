@@ -32,7 +32,7 @@ export const Popup: React.FC<PopupProps> = ({
       className={cn(styles.base, { [styles.animated]: animated }, styles[placement], className, classNames?.base)}
       {...props}
     >
-      <Surface className={classNames?.content}>
+      <Surface className={cn(styles.content, classNames?.content)}>
         {children}
 
         <button

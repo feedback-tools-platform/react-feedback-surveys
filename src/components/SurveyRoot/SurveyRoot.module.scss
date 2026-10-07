@@ -1,6 +1,8 @@
 .base {
+  @include themeVariables;
+
   padding: 0;
-  font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
+  font-family: var(--_font-family);
   color: hsl(var(--_color-text) / 100%);
 }
 
@@ -8,7 +10,7 @@
   display: flex;
   gap: 8px;
   padding-block: 0 12px;
-  padding-inline: 0 var(--_popup-head-offset);
+  padding-inline: 0 var(--_popup-head-offset, var(--ft-popup-head-offset, 0));
 }
 
 .title {
