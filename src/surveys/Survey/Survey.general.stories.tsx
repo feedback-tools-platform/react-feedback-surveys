@@ -165,6 +165,44 @@ export const RequiredInteractions: Story = {
   },
 };
 
+export const ChoiceAlignment: Story = {
+  name: 'Choice alignment',
+  args: {
+    ...commonProps,
+    responseType: 'choices',
+    choiceOptions: ['Very easy']
+  },
+  render: (args) => (
+    <>
+      {['normal', '1.5'].map((lineHeight) => (
+        <div
+          key={lineHeight}
+          style={{ lineHeight }}
+        >
+          <Survey
+            {...args}
+            strings={{ feedbackFormLabel: `Feedback form, line height ${lineHeight}` }}
+            textQuestion={`Line height ${lineHeight}`}
+          />
+        </div>
+      ))}
+    </>
+  ),
+  play: async ({ canvasElement }) => {
+    // the SDK sets line-height 1.5, a bare page leaves it normal: the box must sit on the text line in both
+    for (const checkbox of within(canvasElement).getAllByRole('checkbox')) {
+      const box = checkbox.nextElementSibling!.getBoundingClientRect();
+      const text = document.createRange();
+
+      text.selectNodeContents(checkbox.parentElement!.lastChild!);
+
+      const { top, height } = text.getBoundingClientRect();
+
+      await expect(Math.abs(box.top + box.height / 2 - (top + height / 2))).toBeLessThanOrEqual(0.5);
+    }
+  }
+};
+
 export const CustomFont: Story = {
   args: {
     ...commonProps

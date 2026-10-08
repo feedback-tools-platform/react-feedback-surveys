@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { Labels } from '../../../components/Labels';
-import type { ScaleClassNames } from '../../../types';
+import type { SurveyClassNames } from '../../../types';
 import { cn } from '../../../utils';
 
 import styles from './CSAT5SurveyNumbers.module.scss';
@@ -9,7 +9,7 @@ import styles from './CSAT5SurveyNumbers.module.scss';
 const SCORES = [1, 2, 3, 4, 5];
 
 export interface CSAT5SurveyNumbersProps {
-  classNames?: ScaleClassNames;
+  classNames?: SurveyClassNames;
   minLabel?: string;
   maxLabel?: string;
   /** Builds the aria-label for a scale button. @default (score) => `Score ${score}` */
@@ -29,18 +29,28 @@ export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
   }, [onChange]);
 
   return (
-    <div className={cn(styles.base, classNames?.base)}>
-      <div className={cn(styles.list, classNames?.list)}>
+    <div
+      className={cn(styles.base, classNames?.scale)}
+      part="scale"
+    >
+      <div
+        className={cn(styles.list, classNames?.points)}
+        part="points"
+      >
         {SCORES.map((score) => (
           <button
             key={score}
             aria-label={getScoreLabel(score)}
-            className={cn(styles.button, classNames?.button)}
+            className={cn(styles.button, classNames?.point)}
+            part="point"
             type="button"
             value={score}
             onClick={onScoreChange}
           >
-            <span className={cn(styles.score, classNames?.score)}>
+            <span
+              className={cn(styles.score, classNames?.pointScore)}
+              part="point-score"
+            >
               {score}
             </span>
           </button>
@@ -49,7 +59,7 @@ export const CSAT5SurveyNumbers: React.FC<CSAT5SurveyNumbersProps> = ({
 
       {!!minLabel && !!maxLabel && (
         <Labels
-          className={classNames?.labels}
+          className={classNames?.legend}
           minLabel={minLabel}
           maxLabel={maxLabel}
         />

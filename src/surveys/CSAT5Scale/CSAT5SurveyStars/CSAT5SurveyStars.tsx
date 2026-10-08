@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { Labels } from '../../../components/Labels';
-import type { ScaleClassNames } from '../../../types';
+import type { SurveyClassNames } from '../../../types';
 import { cn } from '../../../utils';
 
 import StarIcon from '../../../icons/star.svg';
@@ -12,7 +12,7 @@ import styles from './CSAT5SurveyStars.module.scss';
 const SCORES = [1, 2, 3, 4, 5];
 
 export interface CSAT5SurveyStarsProps {
-  classNames?: ScaleClassNames;
+  classNames?: SurveyClassNames;
   minLabel?: string;
   maxLabel?: string;
   /** Builds the aria-label for a star button. @default (score) => `${score} ${score > 1 ? 'stars' : 'star'}` */
@@ -46,9 +46,13 @@ export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
   }, [onChange]);
 
   return (
-    <div className={cn(styles.base, classNames?.base)}>
+    <div
+      className={cn(styles.base, classNames?.scale)}
+      part="scale"
+    >
       <div
-        className={cn(styles.list, classNames?.list)}
+        className={cn(styles.list, classNames?.points)}
+        part="points"
         onBlur={onBlur}
         onMouseLeave={onBlur}
       >
@@ -56,7 +60,8 @@ export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
           <button
             key={score}
             aria-label={getStarsLabel(score)}
-            className={cn(styles.button, classNames?.button)}
+            className={cn(styles.button, classNames?.point)}
+            part="point"
             type="button"
             value={score}
             onClick={onClick}
@@ -66,14 +71,16 @@ export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
             {(hovered !== null) && (score <= hovered) ? (
               <StarFilledIcon
                 aria-hidden="true"
-                className={cn(styles.icon, classNames?.icon)}
+                className={cn(styles.icon, styles.filled, classNames?.pointIcon, classNames?.pointIconFilled)}
+                part="point-icon filled"
                 width={40}
                 height={40}
               />
             ) : (
               <StarIcon
                 aria-hidden="true"
-                className={cn(styles.icon, classNames?.icon)}
+                className={cn(styles.icon, classNames?.pointIcon)}
+                part="point-icon"
                 width={40}
                 height={40}
               />
@@ -84,7 +91,7 @@ export const CSAT5SurveyStars: React.FC<CSAT5SurveyStarsProps> = ({
 
       {!!minLabel && !!maxLabel && (
         <Labels
-          className={classNames?.labels}
+          className={classNames?.legend}
           minLabel={minLabel}
           maxLabel={maxLabel}
         />

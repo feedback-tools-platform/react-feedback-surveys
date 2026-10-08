@@ -63,6 +63,23 @@ export const Emoji: Story = {
   }
 };
 
+export const EmojiKeyboardFocus: Story = {
+  ...Emoji,
+  name: 'Emoji (keyboard focus)',
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const [first, second] = canvas.getAllByRole('button');
+    const iconOf = (button: HTMLElement) => button.querySelector('[part="point-icon"]')!;
+
+    await userEvent.tab();
+    await expect(first).toHaveFocus();
+
+    // keyboard focus lifts the icon the same way the pointer does
+    await waitFor(() => expect(getComputedStyle(iconOf(first)).transform).toBe('matrix(1.15, 0, 0, 1.15, 0, 0)'));
+    await expect(getComputedStyle(iconOf(second)).transform).toBe('matrix(1, 0, 0, 1, 0, 0)');
+  }
+};
+
 export const EmojiSurface: Story = {
   args: {
     ...commonProps,
@@ -279,6 +296,33 @@ export const Stars: Story = {
   },
   parameters: {
     layout: 'centered',
+  }
+};
+
+export const StarsFilledState: Story = {
+  ...Stars,
+  name: 'Stars (filled state)',
+  args: {
+    ...Stars.args,
+    classNames: {
+      pointIconFilled: 'my-star-filled'
+    }
+  },
+  play: async ({ canvasElement }) => {
+    const [, second, third] = within(canvasElement).getAllByRole('button');
+    const iconOf = (button: HTMLElement) => button.querySelector('[part~="point-icon"]')!;
+
+    await userEvent.hover(second);
+
+    // the hovered star and the ones before it are filled; the class and the part name mark exactly those
+    await expect(iconOf(second)).toHaveClass('my-star-filled');
+    await expect(iconOf(second)).toHaveAttribute('part', 'point-icon filled');
+    await expect(iconOf(third)).not.toHaveClass('my-star-filled');
+    await expect(iconOf(third)).toHaveAttribute('part', 'point-icon');
+
+    // the fill color comes from --ft-color-star
+    canvasElement.style.setProperty('--ft-color-star', '0 100% 50%');
+    await expect(getComputedStyle(iconOf(second)).color).toBe('rgb(255, 0, 0)');
   }
 };
 

@@ -1,4 +1,4 @@
-.brutal-surface {
+.ftools-survey {
   --ft-color-text: 0 0% 0%;
   --ft-color-bg: 50 100% 97%;
   --ft-color-muted: 0 0% 25%;
@@ -8,11 +8,13 @@
   --ft-surface-radius: 0;
   --ft-surface-shadow: 6px 6px 0 #000;
   --ft-popup-shadow: 6px 6px 0 #000;
+}
 
+.ftools-survey::part(surface) {
   border: 3px solid #000;
 }
 
-.brutal-title {
+.ftools-survey::part(title) {
   font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
   font-size: 19px;
   font-weight: 900;
@@ -21,11 +23,11 @@
   text-transform: uppercase;
 }
 
-.brutal-close {
+.ftools-survey::part(close) {
   color: #000;
 }
 
-.brutal-scale-button {
+.ftools-survey::part(point) {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
@@ -34,59 +36,66 @@
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.brutal-scale-button:hover {
+.ftools-survey::part(point):hover {
   color: #000;
   box-shadow: 1px 1px 0 #000;
   transform: translate(2px, 2px);
 }
 
-.brutal-labels {
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.ftools-survey::part(legend) {
   font-weight: 700;
   color: #000;
 }
 
-.brutal-field {
+.ftools-survey::part(field) {
   background-color: #fff;
   border: 2px solid #000;
   border-radius: 0;
 }
 
-.brutal-field:focus {
+.ftools-survey::part(field):focus {
   border-color: #000;
   box-shadow: 3px 3px 0 #000;
   outline: none;
 }
 
-.brutal-field[aria-invalid='true'] {
+.ftools-survey::part(field invalid) {
   border-color: #d00000;
   box-shadow: 3px 3px 0 #d00000;
 }
 
-.brutal-check {
+.ftools-survey::part(checkbox) {
   background-color: #fff;
   border: 2px solid #000;
   border-radius: 0;
 }
 
-input:checked + .brutal-check {
+.ftools-survey::part(checkbox checked) {
   background-color: #ffd60a;
   border-color: #000;
 }
 
-input:checked + .brutal-check::after {
+.ftools-survey::part(checkbox checked)::after {
   border-color: transparent transparent #000 #000;
 }
 
-.brutal-attach-button,
-.brutal-attachment-remove {
+.ftools-survey::part(attach),
+.ftools-survey::part(remove) ,
+.ftools-survey::part(dismiss) {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
   border-radius: 0;
 }
 
-.brutal-submit,
-.brutal-skip {
+.ftools-survey::part(submit),
+.ftools-survey::part(skip) {
   font-weight: 800;
   text-transform: uppercase;
   color: #000;
@@ -96,16 +105,16 @@ input:checked + .brutal-check::after {
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.brutal-submit {
+.ftools-survey::part(submit) {
   background-color: #ffd60a;
 }
 
-.brutal-skip {
+.ftools-survey::part(skip) {
   background-color: #fff;
 }
 
-.brutal-submit:hover:not(:disabled),
-.brutal-skip:hover:not(:disabled) {
+.ftools-survey::part(submit):hover:not(:disabled),
+.ftools-survey::part(skip):hover:not(:disabled) {
   opacity: 1;
   box-shadow: 1px 1px 0 #000;
   transform: translate(2px, 2px);

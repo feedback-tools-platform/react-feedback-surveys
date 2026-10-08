@@ -1,4 +1,4 @@
-.soft-surface {
+.ftools-survey {
   --ft-color-text: 250 25% 20%;
   --ft-color-bg: 0 0% 100%;
   --ft-color-muted: 250 12% 42%;
@@ -8,23 +8,17 @@
   --ft-surface-radius: 18px;
   --ft-surface-shadow: 0 12px 32px -14px hsl(252deg 60% 40% / 25%);
   --ft-popup-shadow: 0 16px 40px -14px hsl(252deg 60% 40% / 35%);
+  --ft-color-accent: 252 100% 64.5%;
 }
 
-.soft-check {
+.ftools-survey::part(checkbox) {
   border-radius: 50%;
 }
 
-input:checked + .soft-check {
-  background-color: #6d4aff;
-  border-color: #6d4aff;
-}
-
-.soft-submit {
-  color: #fff;
-  background-color: #6d4aff;
+.ftools-survey::part(submit) {
   border-radius: 999px;
 }
 
-.soft-skip {
+.ftools-survey::part(skip) {
   border-radius: 999px;
 }

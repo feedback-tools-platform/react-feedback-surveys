@@ -6,6 +6,14 @@
 .icon {
   transition: transform 0.12s ease;
   transform: scale(1.0, 1.0);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.filled {
+  color: hsl(var(--_color-star) / 100%);
 }
 
 .button {
@@ -18,7 +26,7 @@
   height: 40px;
   color: hsl(var(--_color-outline) / 100%);
 
-  &:hover {
+  @include pointActive {
     .icon {
       transform: scale(1.1, 1.1);
     }

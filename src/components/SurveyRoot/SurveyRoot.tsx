@@ -1,10 +1,9 @@
 import { useId } from 'react';
 
 import type {
-  FormClassNames,
-  RootClassNames,
   SharedSurveyProps,
   SurveyAttachment,
+  SurveyClassNames,
   SurveyScreen
 } from '../../types';
 import { cn, getThemeClassName } from '../../utils';
@@ -21,9 +20,7 @@ export interface SurveyRootProps {
   /** Additional CSS class name */
   className?: string;
   /** Optional classNames to customize internal parts */
-  classNames?: RootClassNames;
-  /** Optional classNames to customize the feedback and contact step forms */
-  formClassNames?: FormClassNames;
+  classNames?: SurveyClassNames;
   /** Built-in color theme */
   theme?: SharedSurveyProps['theme'];
   /** Text direction for RTL/LTR support */
@@ -96,7 +93,6 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   children,
   className,
   classNames,
-  formClassNames,
   theme,
   dir,
   question,
@@ -139,16 +135,21 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         styles.base,
         getThemeClassName(theme),
         className,
-        classNames?.base,
+        classNames?.root,
         classNames?.[screen]
       )}
       dir={dir}
+      part={`root ${screen}`}
     >
-      <div className={cn(styles.head, classNames?.head)}>
+      <div
+        className={cn(styles.head, classNames?.head)}
+        part="head"
+      >
         <div
           aria-level={2}
           id={titleId}
           className={cn(styles.title, classNames?.title)}
+          part="title"
           role="heading"
         >
           {(screen === 'rating') && question}
@@ -162,6 +163,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         <div
           aria-labelledby={titleId}
           className={cn(styles.body, classNames?.body)}
+          part="body"
           role="region"
         >
           {children}
@@ -172,6 +174,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         <div
           aria-labelledby={titleId}
           className={cn(styles.body, classNames?.body)}
+          part="body"
           role="region"
         >
           <Feedback
@@ -194,7 +197,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
             screenshotProcessingLabel={screenshotProcessingLabel}
             screenshotErrorDismissLabel={screenshotErrorDismissLabel}
             maxAttachments={maxAttachments}
-            classNames={formClassNames}
+            classNames={classNames}
             onSubmit={onFeedback}
           />
         </div>
@@ -204,6 +207,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
         <div
           aria-labelledby={titleId}
           className={cn(styles.body, classNames?.body)}
+          part="body"
           role="region"
         >
           <Contact
@@ -213,7 +217,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
             emailLabel={emailLabel}
             subtext={contactSubtext}
             isLoading={isLoading}
-            classNames={formClassNames}
+            classNames={classNames}
             onSubmit={onContact}
           />
         </div>
@@ -225,6 +229,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           aria-live="polite"
           aria-labelledby={titleId}
           className={cn(styles.body, classNames?.body)}
+          part="body"
           tabIndex={-1}
           role="status"
         >

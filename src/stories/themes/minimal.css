@@ -1,0 +1,15 @@
+.ftools-survey {
+  --ft-surface-shadow: none;
+
+  font-family: inherit;
+}
+
+.ftools-survey::part(surface) {
+  background-color: transparent;
+  border: 1px solid hsl(214deg 14% 83%);
+}
+
+/* the page font reaches the survey through the host */
+.ftools-survey::part(root) {
+  font-family: inherit;
+}

@@ -13,6 +13,7 @@ export const Success: React.FC<SuccessProps> = ({ iconClassName }) => (
     <Popper
       aria-hidden="true"
       className={cn(styles.icon, iconClassName)}
+      part="success-icon"
       width={84}
       height={84}
     />

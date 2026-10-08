@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { Labels } from '../../../components/Labels';
-import type { ScaleClassNames } from '../../../types';
+import type { SurveyClassNames } from '../../../types';
 import { cn } from '../../../utils';
 
 import styles from './NPS10SurveyNumbers.module.scss';
@@ -9,7 +9,7 @@ import styles from './NPS10SurveyNumbers.module.scss';
 const SCORES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export interface NPS10SurveyNumbersProps {
-  classNames?: ScaleClassNames;
+  classNames?: SurveyClassNames;
   minLabel?: string;
   maxLabel?: string;
   /** Builds the aria-label for a scale button. @default (score) => `Score ${score}` */
@@ -32,18 +32,28 @@ export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
   }, [onChange]);
 
   return (
-    <div className={cn(styles.base, classNames?.base)}>
-      <div className={cn(styles.list, classNames?.list)}>
+    <div
+      className={cn(styles.base, classNames?.scale)}
+      part="scale"
+    >
+      <div
+        className={cn(styles.list, classNames?.points)}
+        part="points"
+      >
         {SCORES.map((score) => (
           <button
             key={score}
             aria-label={getScoreLabel(score)}
-            className={cn(styles.button, classNames?.button)}
+            className={cn(styles.button, classNames?.point)}
+            part="point"
             type="button"
             value={score}
             onClick={onScoreChange}
           >
-            <span className={cn(styles.score, classNames?.score)}>
+            <span
+              className={cn(styles.score, classNames?.pointScore)}
+              part="point-score"
+            >
               {score}
             </span>
 
@@ -70,7 +80,7 @@ export const NPS10SurveyNumbers: React.FC<NPS10SurveyNumbersProps> = ({
 
       {!!minLabel && !!maxLabel && (
         <Labels
-          className={cn(styles.labels, classNames?.labels)}
+          className={cn(styles.labels, classNames?.legend)}
           minLabel={minLabel}
           maxLabel={maxLabel}
         />

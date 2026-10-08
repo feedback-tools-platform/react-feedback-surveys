@@ -1,80 +1,216 @@
-.terminal-surface {
-  --ft-color-text: 135 100% 72%;
-  --ft-color-bg: 150 30% 4%;
-  --ft-color-muted: 135 45% 55%;
-  --ft-color-error: 0 85% 62%;
-  --ft-color-error-text: 0 90% 72%;
-  --ft-color-border: 135 60% 24%;
-  --ft-color-outline: 135 100% 45%;
-  --ft-color-shadow: 135 100% 45%;
-  --ft-color-control: 140 40% 8%;
-  --ft-surface-radius: 2px;
-  --ft-surface-shadow: 0 0 0 1px hsl(135deg 100% 45% / 35%), 0 0 32px hsl(135deg 100% 45% / 12%);
-  --ft-popup-shadow: 0 0 0 1px hsl(135deg 100% 45% / 35%), 0 0 32px hsl(135deg 100% 45% / 12%);
-  --ft-font-family: ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;
+.ftools-survey {
+  --ft-color-text: 210 29% 92%;
+  --ft-color-bg: 216 28% 7%;
+  --ft-color-muted: 212 9% 58%;
+  --ft-color-error: 3 93% 63%;
+  --ft-color-error-text: 3 100% 72%;
+  --ft-color-border: 212 12% 21%;
+  --ft-color-outline: 212 100% 67%;
+  --ft-color-shadow: 0 0% 0%;
+  --ft-color-control: 215 21% 11%;
+  --ft-surface-radius: 10px;
+  --ft-surface-shadow: 0 0 0 1px #30363d, 0 24px 48px -12px hsl(0deg 0% 0% / 60%);
+  --ft-popup-shadow: 0 0 0 1px #30363d, 0 24px 48px -12px hsl(0deg 0% 0% / 60%);
+  --ft-font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
 }
 
-.terminal-title {
+/* window title bar with the three window buttons */
+.ftools-survey::part(surface) {
+  padding-top: 48px;
+}
+
+.ftools-survey::part(surface)::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 28px;
+  content: '~/feedback — zsh' / '';
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+  color: #8b949e;
+  background:
+    radial-gradient(circle at 16px 50%, #ff5f57 5px, transparent 5.5px),
+    radial-gradient(circle at 34px 50%, #febc2e 5px, transparent 5.5px),
+    radial-gradient(circle at 52px 50%, #28c840 5px, transparent 5.5px),
+    #161b22;
+  border-bottom: 1px solid #30363d;
+}
+
+.ftools-survey::part(close) {
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  inset-inline-end: 8px;
+}
+
+/* a terminal redraws instantly: no fades, no zoom */
+.ftools-survey::part(point),
+.ftools-survey::part(point-icon),
+.ftools-survey::part(checkbox),
+.ftools-survey::part(field),
+.ftools-survey::part(attach),
+.ftools-survey::part(submit),
+.ftools-survey::part(skip) {
+  transition: none;
+}
+
+.ftools-survey::part(point-icon) {
+  transform: none;
+}
+
+.ftools-survey::part(root) {
   font-size: 14px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  line-height: 1.5;
+  text-shadow: 0 0 8px hsl(212deg 100% 75% / 18%);
 }
 
-.terminal-title::before {
-  content: '> ' / '';
-  color: hsl(135deg 45% 55%);
+/* prompt: ➜ ~/feedback question */
+.ftools-survey::part(head)::before {
+  content: '➜' / '';
+  text-shadow: 0 0 8px hsl(128deg 50% 49% / 50%);
+  color: #3fb950;
 }
 
-.terminal-scale-button {
+.ftools-survey::part(title) {
+  font-size: inherit;
   font-weight: 400;
-  color: hsl(135deg 100% 72%);
-  background-color: transparent;
-  border: 1px solid hsl(135deg 60% 24%);
-  border-radius: 2px;
+  line-height: inherit;
 }
 
-.terminal-scale-button:hover {
-  color: hsl(150deg 30% 4%);
-  background-color: hsl(135deg 100% 72%);
+.ftools-survey::part(title)::before {
+  content: '~/feedback' / '';
+  color: #39c5cf;
+  margin-inline-end: 1ch;
+}
+
+/* scale: [1] [2] [3], hover inverts colors like a terminal selection */
+.ftools-survey::part(point) {
+  font-size: inherit;
+  font-weight: 400;
+  color: #e6edf3;
+  background-color: transparent;
+  border-radius: 0;
   box-shadow: none;
 }
 
-.terminal-field {
-  border-radius: 2px;
-  caret-color: hsl(135deg 100% 72%);
+.ftools-survey::part(point):hover {
+  text-shadow: none;
+  color: #0d1117;
+  background-color: #e6edf3;
+  box-shadow: none;
 }
 
-.terminal-field:focus {
-  border-color: hsl(135deg 100% 72%);
-  box-shadow: 0 0 12px hsl(135deg 100% 45% / 30%);
-  outline: none;
+.ftools-survey::part(point-score)::before {
+  content: '[' / '';
 }
 
-.terminal-check {
+.ftools-survey::part(point-score)::after {
+  content: ']' / '';
+}
+
+.ftools-survey::part(point-icon),
+.ftools-survey::part(success-icon) {
+  filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(3);
+}
+
+.ftools-survey::part(legend) {
+  font-size: inherit;
+}
+
+/* checkboxes: [ ] and [x] */
+.ftools-survey::part(checkbox) {
+  margin-top: 0;
+  height: auto;
+  min-width: auto;
+  color: #8b949e;
+  background-color: transparent;
+  border: 0;
   border-radius: 0;
 }
 
-.terminal-attach-button {
-  border: 1px solid hsl(135deg 60% 24%);
-  border-radius: 2px;
+.ftools-survey::part(checkbox)::before {
+  content: '[ ]' / '';
+  white-space: pre;
 }
 
-.terminal-submit,
-.terminal-skip {
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 2px;
+.ftools-survey::part(checkbox checked) {
+  color: #3fb950;
+  background-color: transparent;
 }
 
-.terminal-submit::before {
+.ftools-survey::part(checkbox checked)::before {
+  content: '[x]' / '';
+}
+
+.ftools-survey::part(checkbox checked)::after {
+  content: none;
+}
+
+/* field: no box, a line on the left and a green caret */
+.ftools-survey::part(field) {
+  font-size: inherit;
+  line-height: inherit;
+  background-color: transparent;
+  border-width: 0 0 0 2px;
+  border-color: #30363d;
+  border-radius: 0;
+  caret-color: #3fb950;
+}
+
+.ftools-survey::part(field):focus {
+  border-color: #3fb950;
+  outline: none;
+}
+
+.ftools-survey::part(field invalid) {
+  border-color: #f85149;
+}
+
+.ftools-survey::part(attach) {
+  background-color: transparent;
+  border: 1px solid #30363d;
+  border-radius: 4px;
+}
+
+.ftools-survey::part(submit),
+.ftools-survey::part(skip) {
+  font-size: inherit;
+  font-weight: 400;
+  text-transform: lowercase;
+  border-radius: 4px;
+}
+
+.ftools-survey::part(submit) {
+  text-shadow: none;
+  color: #0d1117;
+  background-color: #3fb950;
+}
+
+.ftools-survey::part(submit)::before,
+.ftools-survey::part(skip)::before {
   content: '[ ' / '';
 }
 
-.terminal-submit::after {
+.ftools-survey::part(submit)::after,
+.ftools-survey::part(skip)::after {
   content: ' ]' / '';
 }
 
-.terminal-skip {
+.ftools-survey::part(submit):hover:not(:disabled) {
+  opacity: 1;
+  background-color: #56d364;
+}
+
+.ftools-survey::part(skip) {
+  color: #e6edf3;
   background-color: transparent;
-  border: 1px solid hsl(135deg 60% 24%);
+  border: 1px solid #30363d;
+}
+
+.ftools-survey::part(skip):hover:not(:disabled) {
+  text-shadow: none;
+  color: #0d1117;
+  background-color: #e6edf3;
 }

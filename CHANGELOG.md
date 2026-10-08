@@ -10,16 +10,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Built-in themes** - New `theme` prop (`'light' | 'dark' | 'auto'`) on `Survey`, `Surface`, and `Popup`. `dark` gives a ready dark palette with no CSS on your side; `auto` follows the visitor's system color scheme and switches when it changes. Default stays `'light'`. Custom `--ft-*` variables still override every built-in theme. See [Themes (Dark Mode)](README.md#themes-dark-mode).
-- **Form class names** - New `classNames.form` group (`base`, `subtext`, `choices`, `choice`, `check`, `field`, `attachButton`, `attachment`, `attachmentRemove`, `actions`, `submit`, `skip`) reaches the feedback and email collection steps, plus `classNames.base.successIcon`. See [Custom Classes](README.md#custom-classes).
-- **New exported types** - `SurveyTheme`, `SurveyClassNames`, `FormClassNames`.
+- **Class names for every part** - `classNames` now reaches the feedback and email steps (`form`, `subtext`, `choices`, `choice`, `checkbox`, `field`, `attach`, `attachment`, `remove`, `error`, `dismiss`, `actions`, `submit`, `skip`) and the success icon (`successIcon`). State keys `choiceChecked`, `checkboxChecked`, `fieldInvalid`, `attachBusy`, and `pointIconFilled` add a class to exactly one part while it is in that state, so no attribute selectors are needed and utility classes work. See [Custom Classes](README.md#custom-classes).
+- **New exported types** - `SurveyTheme`, `SurveyClassNames`.
+- **`--ft-color-accent` and `--ft-color-accent-text` CSS variables** - Color the primary action, the submit button and a checked checkbox, in your brand color with one variable. By default the accent follows `--ft-color-text` and its text follows `--ft-color-bg`, so nothing changes until you set them.
+- **`--ft-color-star` CSS variable** - Sets the fill of a highlighted star in the stars scale. It was a fixed yellow before; the default stays the same.
+- **`--ft-checkbox-size` CSS variable** - Sets the size of a choice checkbox. The box stays centered on the first line of its label at any size and line height.
+- **Shadow DOM parts** - Every part of the widget carries a `part` attribute named after its `classNames` key in kebab case (`submit`, `field`, `point-icon`, ...), with states as a second name (`checked`, `invalid`, `busy`, `filled`, current step). Page CSS styles a widget inside a shadow root through `::part()`. See [Shadow DOM Parts](README.md#shadow-dom-parts).
 
 ### Changed
 
+- **BREAKING: `classNames` is one flat object** - The `base`, `scale`, and `form` groups are gone: every key sits at the top level and some were renamed to short, consistent names. Rename your keys:
+
+  | Before | After |
+  |---|---|
+  | `base.base` | `root` |
+  | `base.head`, `base.title`, `base.body`, `base.rating`, `base.feedback`, `base.contact`, `base.success` | same name, top level |
+  | `base.close` | removed — it was never applied; use `Popup`'s `classNames.close` |
+  | `scale.base` | `scale` |
+  | `scale.list` | `points` |
+  | `scale.button` | `point` |
+  | `scale.icon` | `pointIcon` |
+  | `scale.score` | `pointScore` |
+  | `scale.labels` | `legend` |
+
+  The `RootClassNames` and `ScaleClassNames` types are replaced by `SurveyClassNames`.
+- **BREAKING: `Popup` `classNames`** - `content` is renamed to `surface`, and `base` is removed — use `className` for the popup itself.
+- **Scale highlight follows the keyboard** - A rating point focused from the keyboard now gets the same highlight as on hover: icons grow, numbers darken and get a ring. Hover effects apply only on devices with a real pointer, so a tapped point on a phone no longer stays highlighted. Icons don't animate when the visitor prefers reduced motion.
 - **Library styles moved into a cascade layer** - All styles now live in `@layer react-feedback-surveys`, so your CSS outside layers always wins over them, regardless of specificity or load order. Global page styles outside layers (resets like normalize or Bootstrap Reboot) now win too — inside a shadow root nothing changes. With Tailwind CSS v4, import the styles into the `components` layer. See [How Styles Combine](README.md#how-styles-combine).
 
 ### Removed
 
-- **BREAKING: `--ft-popup-head-offset` CSS variable** - Inside `Popup` the head always reserved 32px for the close button regardless of this variable, so it only affected inline surveys, which have no close button. To change the head padding, use `classNames.base.head`.
+- **BREAKING: `--ft-popup-head-offset` CSS variable** - Inside `Popup` the head always reserved 32px for the close button regardless of this variable, so it only affected inline surveys, which have no close button. To change the head padding, use `classNames.head`.
 
 ## [1.10.0] - 2026-09-30
 

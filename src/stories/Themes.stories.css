@@ -17,15 +17,15 @@
 }
 
 .themes-stage-terminal {
-  color: #7dff9b;
-  background-color: #020403;
+  color: #e6edf3;
+  background-color: #010409;
 }
 
 .themes-stage-soft {
   background-image: linear-gradient(135deg, #f3e8ff, #e0e7ff);
 }
 
-.themes-stage-inline {
+.themes-stage-minimal {
   font-family: Georgia, serif;
   background-color: #fff;
 }
@@ -62,8 +62,26 @@
   }
 }
 
-.themes-switcher {
+.themes-content {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.themes-toolbar {
   margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.themes-description {
+  margin: 0;
+  font-size: 15px;
+}
+
+.themes-switcher {
+  margin-bottom: 12px;
   display: inline-flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -120,6 +138,55 @@
   font-size: 13px;
 }
 
-.themes-tile-caption strong {
+.themes-tile-link {
   font-size: 18px;
+  font-weight: 700;
+  text-decoration: underline;
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentcolor 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.themes-tile-link::after {
+  display: inline-block;
+  opacity: 0.85;
+  width: 0.75em;
+  height: 0.75em;
+  vertical-align: -0.05em;
+  content: '';
+  background-color: currentcolor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: opacity 0.15s, transform 0.15s;
+  margin-inline-start: 6px;
+}
+
+.themes-tile-link:hover {
+  text-decoration-color: currentcolor;
+}
+
+.themes-tile-link:hover::after {
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
+
+.themes-copy {
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: #1f2328;
+  background-color: #fff;
+  border: 1px solid #d0d4da;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.themes-copy:hover {
+  border-color: #1f2328;
+}
+
+.themes-tile-caption .themes-copy {
+  margin-top: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
 }

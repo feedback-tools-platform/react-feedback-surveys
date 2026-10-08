@@ -19,7 +19,7 @@
   box-shadow: 0 0 0 0 hsl(var(--_color-control) / 100%);
   transition: color 0.12s ease, box-shadow 0.12s ease;
 
-  &:hover {
+  @include pointActive {
     color: hsl(var(--_color-text) / 100%);
     box-shadow: 0 0 0 2px hsl(var(--_color-control) / 100%);
   }

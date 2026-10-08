@@ -1,4 +1,4 @@
-.playful-surface {
+.ftools-survey {
   --ft-color-text: 215 28% 17%;
   --ft-color-bg: 0 0% 100%;
   --ft-color-muted: 215 16% 40%;
@@ -9,18 +9,20 @@
   --ft-surface-shadow: none;
   --ft-popup-shadow: 0 12px 32px -12px hsl(215deg 28% 17% / 25%);
   --ft-font-family: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'Nunito', 'Trebuchet MS', sans-serif;
+}
 
+.ftools-survey::part(surface) {
   border: 2px solid #e2e8f0;
   border-bottom-width: 5px;
   border-radius: 20px;
 }
 
-.playful-title {
+.ftools-survey::part(title) {
   font-size: 18px;
   font-weight: 800;
 }
 
-.playful-scale-button {
+.ftools-survey::part(point) {
   background-color: #fff;
   border: 2px solid #e2e8f0;
   border-bottom-width: 4px;
@@ -28,23 +30,29 @@
   transition: transform 0.08s, border-bottom-width 0.08s;
 }
 
-.playful-scale-button:hover {
+.ftools-survey::part(point):hover {
   color: #0369a1;
   background-color: #f0f9ff;
   border-color: #7dd3fc;
   box-shadow: none;
 }
 
-.playful-scale-button:active {
+.ftools-survey::part(point):active {
   border-bottom-width: 2px;
   transform: translateY(2px);
 }
 
-.playful-labels {
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.ftools-survey::part(legend) {
   font-weight: 700;
 }
 
-.playful-choice {
+.ftools-survey::part(choice) {
   box-sizing: border-box;
   width: 100%;
   padding: 8px 10px;
@@ -55,40 +63,40 @@
   border-radius: 14px;
 }
 
-.playful-choice:has(input:checked) {
+.ftools-survey::part(choice checked) {
   color: #0369a1;
   background-color: #f0f9ff;
   border-color: #7dd3fc;
 }
 
-.playful-check {
+.ftools-survey::part(checkbox) {
   border-width: 2px;
   border-radius: 7px;
 }
 
-input:checked + .playful-check {
+.ftools-survey::part(checkbox checked) {
   background-color: #0284c7;
   border-color: #0284c7;
 }
 
-.playful-field {
+.ftools-survey::part(field) {
   background-color: #f8fafc;
   border: 2px solid #e2e8f0;
   border-radius: 14px;
 }
 
-.playful-field:focus {
+.ftools-survey::part(field):focus {
   border-color: #0284c7;
   outline: 4px solid hsl(199deg 92% 44% / 20%);
 }
 
-.playful-attach-button {
+.ftools-survey::part(attach) {
   border: 2px solid #e2e8f0;
   border-radius: 10px;
 }
 
-.playful-submit,
-.playful-skip {
+.ftools-survey::part(submit),
+.ftools-survey::part(skip) {
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -97,27 +105,27 @@ input:checked + .playful-check {
   transition: transform 0.08s, border-bottom-width 0.08s;
 }
 
-.playful-submit {
+.ftools-survey::part(submit) {
   color: #fff;
   background-color: #15803d;
   border-bottom-color: #0f5c2c;
 }
 
-.playful-skip {
+.ftools-survey::part(skip) {
   color: #334155;
   background-color: #fff;
   border: 2px solid #e2e8f0;
   border-bottom-width: 4px;
 }
 
-.playful-submit:hover:not(:disabled),
-.playful-skip:hover:not(:disabled) {
+.ftools-survey::part(submit):hover:not(:disabled),
+.ftools-survey::part(skip):hover:not(:disabled) {
   opacity: 1;
   filter: brightness(1.06);
 }
 
-.playful-submit:active:not(:disabled),
-.playful-skip:active:not(:disabled) {
+.ftools-survey::part(submit):active:not(:disabled),
+.ftools-survey::part(skip):active:not(:disabled) {
   border-bottom-width: 2px;
   transform: translateY(2px);
 }

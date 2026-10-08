@@ -44,6 +44,7 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
     * [Themes (Dark Mode)](#themes-dark-mode)
     * [CSS Variables](#css-variables)
     * [Custom Classes](#custom-classes)
+    * [Shadow DOM Parts](#shadow-dom-parts)
 - [Demo](#demo)
 - [Contributing](#contributing)
     * [Local development (Storybook)](#local-development-storybook)
@@ -259,9 +260,9 @@ import 'react-feedback-surveys/index.css';
 
 <Popup
   animated
+  className="custom-popup"
   classNames={{
-    base: 'custom-popup-base',
-    content: 'custom-popup-content',
+    surface: 'custom-popup-surface',
     close: 'custom-popup-close'
   }}
   placement="bottomRight"
@@ -285,7 +286,7 @@ import 'react-feedback-surveys/index.css';
 | `animated`   | `boolean`                                                  | -        | `true`          | Enables a fade-in animation when the popup appears.                |
 | `theme`      | `'light' \| 'dark' \| 'auto'`                               | -        | `'light'`       | Built-in color theme, inherited by the survey inside. See [Themes](#themes-dark-mode). |
 | `className`  | `string`                                                   | -        | -               | Additional CSS class name for the popup container.                 |
-| `classNames` | `{ base?: string; content?: string; close?: string }`      | -        | -               | Optional class names for internal popup elements.                  |
+| `classNames` | `{ surface?: string; close?: string }`                     | -        | -               | Class names for the card inside the popup and its close button. `className` styles the popup itself. |
 | `children`   | `React.ReactNode`                                          | -        | -               | Content to render inside the popup (typically a survey component). |
 | `closeLabel` | `string`                                                    | -        | `'Close survey'` | Close button label, used for both its `aria-label` and `title`.   |
 | `onClose`    | `() => void`                                               | -        | -               | Callback fired when the close button is clicked.                   |
@@ -339,7 +340,7 @@ Most props are shared across every survey format. `type` (and `points`, for CSAT
 
 | Prop               | Type                          | Required | Description                                                                  |
 |--------------------|-------------------------------|----------|------------------------------------------------------------------------------|
-| `classNames`       | `ClassNamesConfig` (see below)| -        | Optional class names to target internal parts.                               |
+| `classNames`       | `SurveyClassNames` (see below)| -        | Optional class names to target internal parts.                               |
 | `theme`            | `'light' \| 'dark' \| 'auto'` | -       | Built-in color theme. Default `'light'`. Set it on the outermost component (`Popup` or `Surface`) — see [Themes](#themes-dark-mode). |
 | `dir`              | `'ltr' \| 'rtl' \| 'auto'`    | -        | Text direction for RTL/LTR language support.                                 |
 | `strings`          | `SurveyStrings` (see below)   | -        | Overrides for the library's own aria-labels and other screen-reader-only text. See [Accessibility Labels](#accessibility-labels). |
@@ -400,44 +401,46 @@ Pass a `strings` object with only the keys you want to change — each one merge
 
 `getScoreLabel` applies to the `numbers` scale style (CSAT5, CES, NPS); `getStarsLabel` applies to CSAT5's `stars` style. Both are callbacks rather than templates so you can apply correct pluralization for your target language. `Popup`'s close button label lives on `Popup` itself, not in `strings` — see its own `closeLabel` prop in [Popup Props](#props).
 
-#### ClassNamesConfig Type
+#### SurveyClassNames Type
+
+One flat object, one key per part. See [Custom Classes](#custom-classes) for what each key styles.
 
 ```typescript
-interface ClassNamesConfig {
-  base?: {
-    base?: string;       // The outer widget container
-    head?: string;       // Header row containing title and close button
-    title?: string;      // The heading that shows main/feedback/success text
-    body?: string;       // Main content region (rating scale, feedback form or success)
-    rating?: string;     // Additional class applied when rating screen is active
-    feedback?: string;   // Additional class applied when feedback screen is active
-    contact?: string;    // Additional class applied when email collection screen is active
-    success?: string;    // Additional class applied when success screen is active
-    successIcon?: string; // Icon on the success screen
-    close?: string;      // Close button
-  };
-  scale?: {
-    base?: string;       // Container around the scale style
-    list?: string;       // Wrapper for the interactive items (emoji/stars/numbers)
-    button?: string;     // Each clickable item in the scale
-    icon?: string;       // Icon inside a scale button (emoji, stars)
-    score?: string;      // Number inside a scale button (for numeric variants)
-    labels?: string;     // Left/Right labels displayed under the scale
-  };
-  form?: {               // Shared by the feedback and email collection steps
-    base?: string;       // The form element
-    subtext?: string;    // Text above the email input
-    choices?: string;    // List of predefined choices
-    choice?: string;     // A single choice (the clickable label)
-    check?: string;      // Visible checkbox square of a choice
-    field?: string;      // Every text field: feedback textarea, "Other" input, email input
-    attachButton?: string;     // Screenshot capture button
-    attachment?: string;       // A single attachment row
-    attachmentRemove?: string; // Remove-attachment and dismiss-error buttons
-    actions?: string;    // Wrapper for the submit and skip buttons
-    submit?: string;     // Submit button
-    skip?: string;       // Skip button
-  };
+interface SurveyClassNames {
+  root?: string;        // Survey wrapper
+  head?: string;        // Row with the title
+  title?: string;       // Question, step question or thank-you text
+  body?: string;        // Content under the head
+  rating?: string;      // Added to root on the rating step
+  feedback?: string;    // Added to root on the feedback step
+  contact?: string;     // Added to root on the email step
+  success?: string;     // Added to root on the success step
+  successIcon?: string; // Icon on the success step
+  scale?: string;       // Rating scale: the points and the legend
+  points?: string;      // Row of rating points
+  point?: string;       // Single rating point (button)
+  pointIcon?: string;   // Emoji, star or thumb inside a point
+  pointIconFilled?: string; // Added to pointIcon while the star is filled
+  pointScore?: string;  // Number inside a point
+  legend?: string;      // Min and max captions under the scale
+  form?: string;        // Form on the feedback and email steps
+  subtext?: string;     // Text above the email field
+  choices?: string;     // List of predefined choices
+  choice?: string;      // Single choice (the clickable label)
+  checkbox?: string;    // Visible checkbox square of a choice
+  field?: string;       // Every text field: feedback textarea, "Other" input, email input
+  attach?: string;      // Screenshot capture button
+  attachment?: string;  // Attached screenshot row
+  remove?: string;      // Button that removes an attachment
+  error?: string;       // Capture error row
+  dismiss?: string;     // Button that hides the capture error
+  actions?: string;     // Wrapper for the submit and skip buttons
+  submit?: string;      // Submit button
+  skip?: string;        // Skip button
+  choiceChecked?: string;   // Added to choice while it is checked
+  checkboxChecked?: string; // Added to checkbox while its choice is checked
+  fieldInvalid?: string;    // Added to field while it shows a validation error
+  attachBusy?: string;      // Added to attach while a screenshot is captured
 }
 ```
 
@@ -628,7 +631,7 @@ If your own CSS uses cascade layers, layer order decides instead of rule 1:
   @import "react-feedback-surveys/index.css";
   ```
 
-Inside a shadow root page styles don't reach the widget, so only the CSS you put in that root takes part.
+Inside a shadow root page styles don't reach the widget, so only the CSS you put in that root takes part. To style it from the page, use [Shadow DOM Parts](#shadow-dom-parts).
 
 ### Themes (Dark Mode)
 
@@ -672,13 +675,13 @@ A custom theme is a class that sets `--ft-*` variables, plus optional classes fo
 ```tsx
 <Surface className="brand-theme">
   <Survey
-    classNames={{ form: { submit: 'brand-submit' } }}
+    classNames={{ submit: 'brand-submit' }}
     /* ... */
   />
 </Surface>
 ```
 
-Storybook's `widgets/Themes` story shows the built-in themes and a catalog of custom ones (`src/stories/themes`), each paired with a use case.
+Storybook's `Themes` section shows the built-in themes and a catalog of custom ones (`src/stories/themes`), each paired with a use case. Catalog themes are written for a widget inside a shadow root, see [Shadow DOM Parts](#shadow-dom-parts). The `Styling` section demonstrates how the rules above combine.
 
 ### CSS Variables
 
@@ -741,6 +744,18 @@ You can override colors and fonts via CSS variables:
 
   /* Font of all survey text, inputs, and buttons */
   --ft-font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
+
+  /* Primary action: the submit button and a checked checkbox. Defaults to --ft-color-text */
+  --ft-color-accent: 30 8% 14%;
+
+  /* Text and check mark on top of the accent. Defaults to --ft-color-bg */
+  --ft-color-accent-text: 0 0% 100%;
+
+  /* Fill of a highlighted star in the stars scale */
+  --ft-color-star: 42 99% 64.5%;
+
+  /* Size of a choice checkbox; the box stays centered on the first text line at any size */
+  --ft-checkbox-size: 20px;
 }
 
 /* Use with hsl() function: */
@@ -751,61 +766,54 @@ You can override colors and fonts via CSS variables:
 
 ### Custom Classes
 
-`Survey` accepts a `classNames` prop with three optional groups: `base` (outer shell), `scale` (the interactive
-rating UI), and `form` (the feedback and email collection steps). Pass your own class names to override styles
-without relying on internal selectors. Your classes win over the library defaults — see [How Styles Combine](#how-styles-combine).
+`Survey` accepts a flat `classNames` object: one key per part. Your classes win over the library defaults — see [How Styles Combine](#how-styles-combine). Every part also carries a `part` attribute with the same name in kebab case, for styling it inside a shadow root — see [Shadow DOM Parts](#shadow-dom-parts).
 
-When is this useful?
+Names follow four rules: buttons are named by their action (`submit`, `skip`, `attach`, `remove`, `dismiss`), lists are plural and their items singular (`choices` → `choice`, `points` → `point`), a part inside another part takes its name as a prefix (`point-icon`, `success-icon`), and a state is the part's name plus an adjective (`checkboxChecked`, `fieldInvalid`), so each state class lands on exactly one part.
 
-- Apply your design system spacing, typography or colors
-- Adjust layout (e.g., make the scale full-width, change gaps)
-- Restyle scale items (buttons, icons, numbers) consistently
+| Key           | Part           | Applies to                                               |
+|---------------|----------------|----------------------------------------------------------|
+| `root`        | `root`         | Survey wrapper                                           |
+| `head`        | `head`         | Row with the title                                       |
+| `title`       | `title`        | Question, step question or thank-you text                |
+| `body`        | `body`         | Content under the head                                   |
+| `successIcon` | `success-icon` | Icon on the success step                                 |
+| `scale`       | `scale`        | Rating scale: the points and the legend                  |
+| `points`      | `points`       | Row of rating points                                     |
+| `point`       | `point`        | Single rating point (button)                             |
+| `pointIcon`   | `point-icon`   | Emoji, star or thumb inside a point                      |
+| `pointScore`  | `point-score`  | Number inside a point                                    |
+| `legend`      | `legend`       | Min and max captions under the scale                     |
+| `form`        | `form`         | Form on the feedback and email steps                     |
+| `subtext`     | `subtext`      | Text above the email field                               |
+| `choices`     | `choices`      | List of predefined choices                               |
+| `choice`      | `choice`       | Single choice (the clickable label)                      |
+| `checkbox`    | `checkbox`     | Visible checkbox square of a choice                      |
+| `field`       | `field`        | Every text field: feedback textarea, "Other" input, email input |
+| `attach`      | `attach`       | Screenshot capture button                                |
+| `attachment`  | `attachment`   | Attached screenshot row                                  |
+| `remove`      | `remove`       | Button that removes an attachment                        |
+| `error`       | `error`        | Capture error row                                        |
+| `dismiss`     | `dismiss`      | Button that hides the capture error                      |
+| `actions`     | `actions`      | Wrapper for the submit and skip buttons                  |
+| `submit`      | `submit`       | Submit button                                            |
+| `skip`        | `skip`         | Skip button                                              |
 
-Reference: available keys
+The layout components have their own: `Popup`'s `className` styles the popup (part `popup`), `Popup`'s `classNames.surface` and `Surface`'s `className` style the card (part `surface`), and `Popup`'s `classNames.close` styles the close button (part `close`).
 
-| Key             | Applies to                                                   |
-|-----------------|--------------------------------------------------------------|
-| `base.base`     | The outer widget container                                   |
-| `base.head`     | Header row containing title and close button                 |
-| `base.title`    | The heading that shows main/feedback/success text            |
-| `base.body`     | Main content region (rating scale, feedback form or success) |
-| `base.rating`   | Additional class applied when rating screen is active        |
-| `base.feedback` | Additional class applied when feedback screen is active      |
-| `base.contact`  | Additional class applied when email collection screen is active |
-| `base.success`  | Additional class applied when success screen is active       |
-| `base.close`    | Close button                                                 |
-| `scale.base`    | Container around the scale style                             |
-| `scale.list`    | Wrapper for the interactive items (emoji/stars/numbers)      |
-| `scale.button`  | Each clickable item in the scale                             |
-| `scale.icon`    | Icon inside a scale button (emoji, stars)                    |
-| `scale.score`   | Number inside a scale button (for numeric variants)          |
-| `scale.labels`  | Left/Right labels displayed under the scale                  |
-| `base.successIcon` | Icon on the success screen                                |
-| `form.base`     | The form element on the feedback and email collection steps   |
-| `form.subtext`  | Text above the email input                                   |
-| `form.choices`  | List of predefined choices                                   |
-| `form.choice`   | A single choice (the clickable label)                        |
-| `form.check`    | Visible checkbox square of a choice                          |
-| `form.field`    | Every text field: feedback textarea, "Other" input, email input |
-| `form.attachButton` | Screenshot capture button                                |
-| `form.attachment` | A single attachment row                                    |
-| `form.attachmentRemove` | Remove-attachment and dismiss-error buttons          |
-| `form.actions`  | Wrapper for the submit and skip buttons                      |
-| `form.submit`   | Submit button                                                |
-| `form.skip`     | Skip button                                                  |
+Form keys apply to both the feedback and the email step. To style one step only, scope the rule with a step key.
 
-`form` keys apply to both steps. To style one step only, scope the rule with `base.feedback` or `base.contact`.
+State and step keys add a class next to the part's own while it is in that state, so combine the two:
 
-Part states use standard selectors, so there are no extra keys for them:
+| Key                                         | Added to             | While                          |
+|---------------------------------------------|----------------------|--------------------------------|
+| `choiceChecked`                             | `choice`             | The choice is checked          |
+| `checkboxChecked`                           | `checkbox`           | Its choice is checked          |
+| `fieldInvalid`                              | `field`              | The field shows an error       |
+| `attachBusy`                                | `attach`             | A screenshot is being captured |
+| `pointIconFilled`                           | `pointIcon`          | The star is filled (stars scale only) |
+| `rating`, `feedback`, `contact`, `success` | `root`               | That step is shown             |
 
-| State                         | Selector                          |
-|-------------------------------|-----------------------------------|
-| Invalid text field            | `.your-field[aria-invalid="true"]` |
-| Checked choice                | `input:checked + .your-check`     |
-| Disabled button               | `.your-submit:disabled`           |
-| Screenshot capture in progress | `.your-attach-button[aria-busy="true"]` |
-
-Example: customizing a `Survey` widget
+A disabled button needs no key: use `.my-submit:disabled`.
 
 ```tsx
 import { Survey } from 'react-feedback-surveys';
@@ -813,19 +821,11 @@ import 'react-feedback-surveys/index.css';
 
 <Survey
   classNames={{
-    base: {
-      base: 'my-survey-base',
-      body: 'my-survey-body',
-      rating: 'my-rating-screen',
-      feedback: 'my-feedback-screen',
-      success: 'my-success-screen',
-    },
-    scale: {
-      list: 'my-scale-list',
-      button: 'my-scale-button',
-      score: 'my-scale-score',
-      labels: 'my-scale-labels',
-    }
+    point: 'my-point',
+    choice: 'my-choice',
+    checkbox: 'my-checkbox',
+    checkboxChecked: 'my-checkbox-checked',
+    submit: 'my-submit'
   }}
   type="csat"
   points={5}
@@ -838,7 +838,46 @@ import 'react-feedback-surveys/index.css';
 />
 ```
 
-You can then style these classes in your app stylesheet.
+```css
+.my-point { border-radius: 10px; }
+.my-checkbox-checked { background-color: #6d4aff; }
+.my-submit:disabled { opacity: 0.4; }
+```
+
+### Shadow DOM Parts
+
+When the widget renders inside a shadow root (as the Feedback Tools SDK does), page CSS can't reach its classes. Every part carries a [`part`](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) attribute instead, so page CSS styles it through the shadow host with `::part()`:
+
+```css
+.my-host {
+  --ft-color-bg: 250 70% 97%;
+  --ft-surface-radius: 18px;
+}
+
+.my-host::part(submit) {
+  color: #fff;
+  background-color: #6d4aff;
+  border-radius: 999px;
+}
+
+.my-host::part(choice checked) {
+  background-color: #ede9fe;
+}
+```
+
+Part names are the `classNames` keys in kebab case, plus `popup`, `surface`, and `close` from the layout components. The full list is in [Custom Classes](#custom-classes).
+
+States come as a second part name, because `::part()` can't look at attributes or neighbours:
+
+| State                           | Selector                       |
+|---------------------------------|--------------------------------|
+| Checked choice                  | `::part(choice checked)`, `::part(checkbox checked)` |
+| Invalid text field              | `::part(field invalid)`        |
+| Screenshot capture in progress  | `::part(attach busy)`          |
+| Filled star                     | `::part(point-icon filled)`    |
+| Current step                    | `::part(root rating)`, `feedback`, `contact`, `success` |
+
+Pseudo-classes and pseudo-elements of the part itself work: `:hover`, `:focus-visible`, `:disabled`, `::before`, `::after`, `::placeholder`. Selectors that look inside or around a part don't: no `:has()`, no `::part(a) .child`, no `::part(a) + ::part(b)`.
 
 ## Demo
 

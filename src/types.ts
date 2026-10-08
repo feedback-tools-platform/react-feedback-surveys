@@ -1,88 +1,76 @@
 /**
- * Class names for the root popup layout elements
+ * Class names for the survey's parts. Each key matches the part's `part` attribute in kebab case
+ * (`pointIcon` → `part="point-icon"`), so the same names style it inside and outside a shadow root.
  */
-export interface RootClassNames {
-  /** Wrapper container */
-  base?: string;
-  /** Survey head wrapper (title + close) */
+export interface SurveyClassNames {
+  /** Survey wrapper */
+  root?: string;
+  /** Row with the title */
   head?: string;
-  /** Survey main title text */
+  /** Question, step question or thank-you text */
   title?: string;
-  /** Survey content wrapper (scale or feedback screen) */
+  /** Content under the head: the scale, a form or the success icon */
   body?: string;
-  /** Rating screen wrapper */
+  /** Added to `root` on the rating step */
   rating?: string;
-  /** Feedback screen wrapper */
+  /** Added to `root` on the feedback step */
   feedback?: string;
-  /** Contact screen wrapper */
+  /** Added to `root` on the email step */
   contact?: string;
-  /** Success screen wrapper */
+  /** Added to `root` on the success step */
   success?: string;
-  /** Icon on the success screen */
+  /** Icon on the success step */
   successIcon?: string;
-  /** Close button element */
-  close?: string;
-}
-
-/**
- * Class names for rating scale components
- */
-export interface ScaleClassNames {
-  /** Rating scale wrapper */
-  base?: string;
-  /** List wrapper for rating buttons */
-  list?: string;
-  /** Single rating button */
-  button?: string;
-  /** Optional icon used inside button */
-  icon?: string;
-  /** Score text or number indicator */
-  score?: string;
-  /** Labels below scale (left/right limits) */
-  labels?: string;
-}
-
-/**
- * Class names for the feedback and contact step forms. Both steps share the same parts, so one
- * set covers both — scope a rule to one step via `RootClassNames.feedback`/`contact`.
- */
-export interface FormClassNames {
-  /** Form element */
-  base?: string;
-  /** Text above the email input on the contact step */
+  /** Rating scale: the points and the legend */
+  scale?: string;
+  /** Row of rating points */
+  points?: string;
+  /** Single rating point (button) */
+  point?: string;
+  /** Emoji, star or thumb inside a point */
+  pointIcon?: string;
+  /** Added to `pointIcon` while the star is filled (hovered or focused, together with the stars before it) */
+  pointIconFilled?: string;
+  /** Number inside a point */
+  pointScore?: string;
+  /** Min and max captions under the scale */
+  legend?: string;
+  /** Form on the feedback and email steps */
+  form?: string;
+  /** Text above the email field */
   subtext?: string;
-  /** List wrapper for predefined choices */
+  /** List of predefined choices */
   choices?: string;
   /** Single choice (the clickable label) */
   choice?: string;
-  /** Visible checkbox square of a choice. Checked state: `input:checked + .your-class` */
-  check?: string;
-  /** Every text field: the feedback textarea, the "Other" input and the email input. Error state: `[aria-invalid="true"]` */
+  /** Visible checkbox square of a choice */
+  checkbox?: string;
+  /** Every text field: the feedback textarea, the "Other" input and the email input */
   field?: string;
-  /** Screenshot capture button. Pending state: `[aria-busy="true"]` */
-  attachButton?: string;
-  /** Single attachment row */
+  /** Screenshot capture button */
+  attach?: string;
+  /** Attached screenshot row */
   attachment?: string;
-  /** Round buttons that remove an attachment or dismiss a capture error */
-  attachmentRemove?: string;
+  /** Button that removes an attachment */
+  remove?: string;
+  /** Capture error row */
+  error?: string;
+  /** Button that hides the capture error */
+  dismiss?: string;
   /** Wrapper for the submit and skip buttons */
   actions?: string;
   /** Submit button */
   submit?: string;
   /** Skip button */
   skip?: string;
-}
-
-/**
- * Class names for every customizable part of a survey
- */
-export interface SurveyClassNames {
-  /** Root layout parts: wrapper, head, title, screens, close */
-  base?: RootClassNames;
-  /** Rating scale parts */
-  scale?: ScaleClassNames;
-  /** Feedback and contact step parts */
-  form?: FormClassNames;
+  /** Added to `choice` while it is checked */
+  choiceChecked?: string;
+  /** Added to `checkbox` while its choice is checked */
+  checkboxChecked?: string;
+  /** Added to `field` while it shows a validation error */
+  fieldInvalid?: string;
+  /** Added to `attach` while a screenshot is being captured */
+  attachBusy?: string;
 }
 
 /**

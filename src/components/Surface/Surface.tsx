@@ -16,6 +16,7 @@ export const Surface: React.FC<SurfaceProps> = ({
 }) => (
   <div
     className={cn(styles.base, getThemeClassName(theme), className)}
+    part="surface"
     {...props}
   >
     {children}

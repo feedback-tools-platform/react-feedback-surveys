@@ -7,6 +7,10 @@
 .icon {
   transition: transform 0.12s ease;
   transform: scale(1.0, 1.0);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 .button {
@@ -20,7 +24,7 @@
   background-color: hsl(var(--_color-control) / 100%);
   border-radius: 50%;
 
-  &:hover {
+  @include pointActive {
     .icon {
       transform: scale(1.15, 1.15);
     }

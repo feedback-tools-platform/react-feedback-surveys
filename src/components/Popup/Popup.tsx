@@ -7,9 +7,9 @@ import styles from './Popup.module.scss';
 
 export interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
   animated?: boolean;
+  /** Class names for the card inside the popup and its close button; `className` styles the popup itself */
   classNames?: {
-    base?: string;
-    content?: string;
+    surface?: string;
     close?: string;
   }
   placement?: 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
@@ -38,17 +38,18 @@ export const Popup: React.FC<PopupProps> = ({
         { [styles.animated]: animated },
         styles[placement],
         getThemeClassName(theme),
-        className,
-        classNames?.base
+        className
       )}
+      part="popup"
       {...props}
     >
-      <Surface className={cn(styles.content, classNames?.content)}>
+      <Surface className={cn(styles.content, classNames?.surface)}>
         {children}
 
         <button
           aria-label={closeLabel}
           className={cn(styles.close, classNames?.close)}
+          part="close"
           title={closeLabel}
           type="button"
           onClick={onClose}

@@ -1,27 +1,48 @@
-.enterprise-surface {
+.ftools-survey {
   --ft-color-text: 0 0% 9%;
   --ft-color-muted: 0 0% 32%;
   --ft-color-border: 0 0% 55%;
   --ft-color-outline: 218 99% 53%;
   --ft-color-control: 0 0% 96%;
   --ft-surface-radius: 0;
-  --ft-surface-shadow: 0 2px 6px hsl(0deg 0% 0% / 20%);
-  --ft-popup-shadow: 0 2px 6px hsl(0deg 0% 0% / 20%);
+  --ft-surface-shadow: 0 0 0 1px #e0e0e0, 0 2px 6px hsl(0deg 0% 0% / 20%);
+  --ft-popup-shadow: 0 0 0 1px #e0e0e0, 0 2px 6px hsl(0deg 0% 0% / 20%);
   --ft-font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --ft-checkbox-size: 16px;
+}
 
+.ftools-survey::part(surface) {
   border-top: 3px solid #0f62fe;
 }
 
-.enterprise-title {
-  font-size: 16px;
-  font-weight: 600;
+.ftools-survey::part(head) {
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 4px;
+  padding-bottom: 16px;
 }
 
-.enterprise-scale-list {
+/* label above the title */
+.ftools-survey::part(head)::before {
+  flex-basis: 100%;
+  content: 'Product feedback' / '';
+  font-size: 12px;
+  letter-spacing: 0.32px;
+  color: #525252;
+}
+
+.ftools-survey::part(title) {
+  flex: 0 1 auto;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.ftools-survey::part(points) {
   gap: 2px;
 }
 
-.enterprise-scale-button {
+.ftools-survey::part(point) {
   font-size: 16px;
   font-weight: 400;
   color: #161616;
@@ -30,40 +51,53 @@
   transition: background-color 0.1s;
 }
 
-.enterprise-scale-button:hover {
+.ftools-survey::part(point):hover {
   color: #161616;
   background-color: #e0e0e0;
   box-shadow: none;
 }
 
-.enterprise-scale-button:focus-visible {
+.ftools-survey::part(point):focus-visible {
   outline: 2px solid #0f62fe;
   outline-offset: -2px;
 }
 
-.enterprise-labels {
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.ftools-survey::part(legend) {
   font-size: 12px;
   color: #525252;
 }
 
-.enterprise-choice {
+/* field label, as on every enterprise form */
+.ftools-survey::part(form)::before {
+  margin-bottom: 8px;
+  display: block;
+  content: 'Your answer (optional)' / '';
+  font-size: 12px;
+  letter-spacing: 0.32px;
+  color: #525252;
+}
+
+.ftools-survey::part(choice) {
   font-size: 14px;
 }
 
-.enterprise-check {
-  margin-top: 2px;
-  height: 16px;
-  min-width: 16px;
+.ftools-survey::part(checkbox) {
   background-color: transparent;
   border: 1px solid #161616;
-  border-radius: 0;
+  border-radius: 2px;
 }
 
-input:checked + .enterprise-check {
+.ftools-survey::part(checkbox checked) {
   background-color: #161616;
 }
 
-.enterprise-field {
+.ftools-survey::part(field) {
   font-size: 14px;
   background-color: #f4f4f4;
   border-width: 0 0 1px;
@@ -71,32 +105,33 @@ input:checked + .enterprise-check {
   border-radius: 0;
 }
 
-.enterprise-field:focus {
+.ftools-survey::part(field):focus {
   border-color: #8d8d8d;
   outline: 2px solid #0f62fe;
   outline-offset: -2px;
 }
 
-.enterprise-field[aria-invalid='true'] {
+.ftools-survey::part(field invalid) {
   outline: 2px solid #da1e28;
   outline-offset: -2px;
 }
 
-.enterprise-attach-button {
+.ftools-survey::part(attach) {
   border-radius: 0;
 }
 
-.enterprise-actions {
+/* modal footer: buttons span the full width at the bottom */
+.ftools-survey::part(actions) {
   margin-bottom: calc(var(--ft-surface-padding, 20px) * -1);
   gap: 1px;
   margin-inline: calc(var(--ft-surface-padding, 20px) * -1);
 }
 
-.enterprise-submit,
-.enterprise-skip {
+.ftools-survey::part(submit),
+.ftools-survey::part(skip) {
   display: flex;
   justify-content: space-between;
-  padding: 14px 16px;
+  padding: 14px var(--ft-surface-padding, 20px);
   font-size: 14px;
   font-weight: 400;
   text-align: start;
@@ -104,29 +139,48 @@ input:checked + .enterprise-check {
   border-radius: 0;
 }
 
-.enterprise-submit {
+/* the surface switches to its mobile padding below 400px, the bleed follows it */
+@media (max-width: 399px) {
+  .ftools-survey::part(actions) {
+    margin-bottom: calc(var(--ft-surface-padding-mobile, 20px) * -1);
+    margin-inline: calc(var(--ft-surface-padding-mobile, 20px) * -1);
+  }
+
+  .ftools-survey::part(submit),
+  .ftools-survey::part(skip) {
+    padding-inline: var(--ft-surface-padding-mobile, 20px);
+  }
+}
+
+.ftools-survey::part(submit) {
   background-color: #0f62fe;
 }
 
-.enterprise-submit::after {
+.ftools-survey::part(submit)::after {
   content: '→' / '';
 }
 
-.enterprise-skip {
+.ftools-survey::part(skip) {
   background-color: #393939;
 }
 
-.enterprise-submit:hover:not(:disabled) {
+.ftools-survey::part(submit):hover:not(:disabled) {
   opacity: 1;
   background-color: #0050e6;
 }
 
-.enterprise-skip:hover:not(:disabled) {
+.ftools-survey::part(submit):disabled {
+  opacity: 1;
+  color: #525252;
+  background-color: #c6c6c6;
+}
+
+.ftools-survey::part(skip):hover:not(:disabled) {
   background-color: #4c4c4c;
 }
 
-.enterprise-submit:focus-visible,
-.enterprise-skip:focus-visible {
+.ftools-survey::part(submit):focus-visible,
+.ftools-survey::part(skip):focus-visible {
   box-shadow: inset 0 0 0 2px #0f62fe;
   outline: 2px solid #fff;
   outline-offset: -4px;

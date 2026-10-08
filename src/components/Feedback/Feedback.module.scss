@@ -32,8 +32,11 @@
 }
 
 .check {
-  height: 20px;
-  min-width: 20px;
+  // centers the box on the first text line, whatever the line-height
+  margin-top: calc((1lh - var(--_checkbox-size)) / 2);
+  box-sizing: border-box;
+  height: var(--_checkbox-size);
+  min-width: var(--_checkbox-size);
   background-color: hsl(var(--_color-control) / 100%);
   border: 1px solid hsl(var(--_color-outline) / 100%);
   border-radius: 4px;
@@ -49,8 +52,8 @@
 
 .checkbox:checked + .check {
   position: relative;
-  background-color: hsl(var(--_color-text) / 100%);
-  border-color: hsl(var(--_color-text) / 100%);
+  background-color: hsl(var(--_color-accent) / 100%);
+  border-color: hsl(var(--_color-accent) / 100%);
 
   &::after {
     position: absolute;
@@ -60,7 +63,7 @@
     height: 4px;
     content: '';
     border: 2px solid;
-    border-color: transparent transparent hsl(var(--_color-bg) / 100%) hsl(var(--_color-bg) / 100%);
+    border-color: transparent transparent hsl(var(--_color-accent-text) / 100%) hsl(var(--_color-accent-text) / 100%);
     transform: translate(-45%, -75%) rotate(-45deg);
     pointer-events: none;
   }

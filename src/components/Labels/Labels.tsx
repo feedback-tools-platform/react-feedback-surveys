@@ -20,7 +20,10 @@ export const Labels: React.FC<LabelsProps> = ({
   maxLabel,
   placement = 'between',
 }) => (
-  <div className={cn(styles.base, styles[placement], classNames?.base, className)}>
+  <div
+    className={cn(styles.base, styles[placement], classNames?.base, className)}
+    part="legend"
+  >
     <div className={cn(styles.label, classNames?.label)}>
       <span className={styles.text}>
         {minLabel}

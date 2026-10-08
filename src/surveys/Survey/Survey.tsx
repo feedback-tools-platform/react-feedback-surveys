@@ -145,13 +145,12 @@ export const Survey: React.FC<SurveyProps> = (props) => {
     <SurveyRoot
       className={styles.base}
       classNames={{
-        ...classNames?.base,
-        rating: cn(styles[`rating${formatKey}`], classNames?.base?.rating),
-        feedback: cn(styles[`feedback${formatKey}`], classNames?.base?.feedback),
-        contact: cn(styles[`contact${formatKey}`], classNames?.base?.contact),
-        success: cn(styles[`success${formatKey}`], classNames?.base?.success)
+        ...classNames,
+        rating: cn(styles[`rating${formatKey}`], classNames?.rating),
+        feedback: cn(styles[`feedback${formatKey}`], classNames?.feedback),
+        contact: cn(styles[`contact${formatKey}`], classNames?.contact),
+        success: cn(styles[`success${formatKey}`], classNames?.success)
       }}
-      formClassNames={classNames?.form}
       theme={theme}
       dir={dir}
       screen={screen}
@@ -190,7 +189,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
     >
       {(props.type === 'csat' && props.points === 5 && props.scaleStyle === 'emoji') && (
         <CSAT5SurveyEmoji
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           getScoreLabel={strings?.getScoreLabel}
@@ -200,7 +199,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
 
       {(props.type === 'csat' && props.points === 5 && props.scaleStyle === 'numbers') && (
         <CSAT5SurveyNumbers
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           getScoreLabel={strings?.getScoreLabel}
@@ -210,7 +209,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
 
       {(props.type === 'csat' && props.points === 5 && props.scaleStyle === 'stars') && (
         <CSAT5SurveyStars
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           getStarsLabel={strings?.getStarsLabel}
@@ -220,7 +219,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
 
       {(props.type === 'csat' && props.points === 2 && props.scaleStyle === 'emoji') && (
         <CSAT2SurveyEmoji
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           onChange={onScoreChange}
@@ -229,7 +228,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
 
       {(props.type === 'csat' && props.points === 2 && props.scaleStyle === 'thumbs') && (
         <CSAT2SurveyThumbs
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           onChange={onScoreChange}
@@ -238,7 +237,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
 
       {(props.type === 'ces' && props.scaleStyle === 'numbers') && (
         <CES7SurveyNumbers
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           getScoreLabel={strings?.getScoreLabel}
@@ -249,7 +248,7 @@ export const Survey: React.FC<SurveyProps> = (props) => {
 
       {(props.type === 'nps' && props.scaleStyle === 'numbers') && (
         <NPS10SurveyNumbers
-          classNames={classNames?.scale}
+          classNames={classNames}
           minLabel={minLabel}
           maxLabel={maxLabel}
           getScoreLabel={strings?.getScoreLabel}

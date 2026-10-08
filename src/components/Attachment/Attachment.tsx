@@ -28,7 +28,10 @@ export const Attachment: React.FC<AttachmentProps> = ({
   removeClassName,
   onRemove
 }) => (
-  <div className={cn(styles.attachment, className)}>
+  <div
+    className={cn(styles.attachment, className)}
+    part="attachment"
+  >
     <a
       aria-label={openLabel}
       className={styles.attachmentPreview}
@@ -58,6 +61,7 @@ export const Attachment: React.FC<AttachmentProps> = ({
     <button
       aria-label={removeLabel}
       className={cn(styles.attachmentRemove, removeClassName)}
+      part="remove"
       data-id={attachment.id}
       title={removeLabel}
       type="button"

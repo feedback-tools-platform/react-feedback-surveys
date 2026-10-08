@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { Labels } from '../../../components/Labels';
 import { cn } from '../../../utils';
-import type { ScaleClassNames } from '../../../types';
+import type { SurveyClassNames } from '../../../types';
 
 import AngryFaceIcon from '../../../icons/angry_face.svg';
 import HeartEyesFaceIcon from '../../../icons/heart_eyes_face.svg';
@@ -21,7 +21,7 @@ const LIST: [React.ElementType, number][] = [
 ];
 
 export interface CSAT5SurveyEmojiProps {
-  classNames?: ScaleClassNames;
+  classNames?: SurveyClassNames;
   minLabel?: string;
   maxLabel?: string;
   /** Builds the aria-label for a scale button. @default (score) => `Score ${score}` */
@@ -41,20 +41,28 @@ export const CSAT5SurveyEmoji: React.FC<CSAT5SurveyEmojiProps> = ({
   }, [onChange]);
 
   return (
-    <div className={cn(styles.base, classNames?.base)}>
-      <div className={cn(styles.list, classNames?.list)}>
+    <div
+      className={cn(styles.base, classNames?.scale)}
+      part="scale"
+    >
+      <div
+        className={cn(styles.list, classNames?.points)}
+        part="points"
+      >
         {LIST.map(([Icon, score]) => (
           <button
             key={score}
             aria-label={getScoreLabel(score)}
-            className={cn(styles.button, classNames?.button)}
+            className={cn(styles.button, classNames?.point)}
+            part="point"
             type="button"
             value={score}
             onClick={onScoreChange}
           >
             <Icon
               aria-hidden="true"
-              className={cn(styles.icon, classNames?.icon)}
+              className={cn(styles.icon, classNames?.pointIcon)}
+              part="point-icon"
               width={32}
               height={32}
             />
@@ -64,7 +72,7 @@ export const CSAT5SurveyEmoji: React.FC<CSAT5SurveyEmojiProps> = ({
 
       {!!minLabel && !!maxLabel && (
         <Labels
-          className={classNames?.labels}
+          className={classNames?.legend}
           minLabel={minLabel}
           maxLabel={maxLabel}
         />

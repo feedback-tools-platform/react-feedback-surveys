@@ -20,8 +20,8 @@
   font-weight: 500;
   line-height: 20px;
   text-align: center;
-  color: hsl(var(--_color-bg) / 100%);
-  background-color: hsl(var(--_color-text) / 100%);
+  color: hsl(var(--_color-accent-text) / 100%);
+  background-color: hsl(var(--_color-accent) / 100%);
   border-radius: var(--_surface-radius);
   transition: opacity 0.2s;
 
@@ -75,6 +75,19 @@
   clip-path: inset(50%);
 }
 
+// keyboard focus gets the same highlight as the pointer; touch-only screens skip hover, so a tapped point doesn't stay lit
+@mixin pointActive {
+  &:focus-visible {
+    @content;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
 @mixin crossIcon($size: 12px) {
   position: relative;
 
@@ -119,6 +132,11 @@ $surface-shadow:
   --_color-outline: var(--ft-color-outline, var(--_theme-color-outline, 218 14% 65%));
   --_color-shadow: var(--ft-color-shadow, var(--_theme-color-shadow, 0 0% 0%));
   --_color-control: var(--ft-color-control, var(--_theme-color-control, 214 20% 96%));
+  --_color-star: var(--ft-color-star, 42 99% 64.5%);
+
+  // the primary action follows the text color unless a brand accent is set
+  --_color-accent: var(--ft-color-accent, var(--_color-text));
+  --_color-accent-text: var(--ft-color-accent-text, var(--_color-bg));
   --_popup-z-index: var(--ft-popup-z-index, 49);
   --_surface-padding: var(--ft-surface-padding, 20px);
   --_surface-padding-mobile: var(--ft-surface-padding-mobile, 20px);
@@ -126,4 +144,5 @@ $surface-shadow:
   --_surface-shadow: var(--ft-surface-shadow, #{$surface-shadow});
   --_popup-shadow: var(--ft-popup-shadow, #{$surface-shadow}, 0 16px 40px -12px hsl(var(--_color-shadow) / 14%));
   --_font-family: var(--ft-font-family, 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif);
+  --_checkbox-size: var(--ft-checkbox-size, 20px);
 }
