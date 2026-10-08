@@ -71,7 +71,7 @@ export const NumbersSurface: Story = {
     minHeightDecorator(240)
   ],
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -106,7 +106,7 @@ export const NumbersRTL: Story = {
   ],
   name: 'Numbers (Arabic, RTL)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -129,7 +129,7 @@ export const NumbersPopup: Story = {
     minHeightDecorator(240)
   ],
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -186,7 +186,7 @@ export const Preview: Story = {
         backgroundColor: '#5fe7d0'
       }}
     >
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>

@@ -1,0 +1,112 @@
+.brutal-surface {
+  --ft-color-text: 0 0% 0%;
+  --ft-color-bg: 50 100% 97%;
+  --ft-color-muted: 0 0% 25%;
+  --ft-color-border: 0 0% 0%;
+  --ft-color-outline: 0 0% 0%;
+  --ft-color-control: 0 0% 100%;
+  --ft-surface-radius: 0;
+  --ft-surface-shadow: 6px 6px 0 #000;
+  --ft-popup-shadow: 6px 6px 0 #000;
+
+  border: 3px solid #000;
+}
+
+.brutal-title {
+  font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.brutal-close {
+  color: #000;
+}
+
+.brutal-scale-button {
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #000;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.brutal-scale-button:hover {
+  color: #000;
+  box-shadow: 1px 1px 0 #000;
+  transform: translate(2px, 2px);
+}
+
+.brutal-labels {
+  font-weight: 700;
+  color: #000;
+}
+
+.brutal-field {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+.brutal-field:focus {
+  border-color: #000;
+  box-shadow: 3px 3px 0 #000;
+  outline: none;
+}
+
+.brutal-field[aria-invalid='true'] {
+  border-color: #d00000;
+  box-shadow: 3px 3px 0 #d00000;
+}
+
+.brutal-check {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+input:checked + .brutal-check {
+  background-color: #ffd60a;
+  border-color: #000;
+}
+
+input:checked + .brutal-check::after {
+  border-color: transparent transparent #000 #000;
+}
+
+.brutal-attach-button,
+.brutal-attachment-remove {
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+.brutal-submit,
+.brutal-skip {
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #000;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.brutal-submit {
+  background-color: #ffd60a;
+}
+
+.brutal-skip {
+  background-color: #fff;
+}
+
+.brutal-submit:hover:not(:disabled),
+.brutal-skip:hover:not(:disabled) {
+  opacity: 1;
+  box-shadow: 1px 1px 0 #000;
+  transform: translate(2px, 2px);
+}

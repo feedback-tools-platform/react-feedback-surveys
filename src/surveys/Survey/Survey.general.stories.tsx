@@ -55,7 +55,7 @@ export const TextFeedbackSurface: Story = {
   ],
   name: 'Text feedback (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -87,7 +87,7 @@ export const TextFeedbackRTL: Story = {
   ],
   name: 'Text feedback (Arabic, RTL)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -105,7 +105,7 @@ export const TextFeedbackPopup: Story = {
   ],
   name: 'Text feedback (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -179,7 +179,7 @@ export const CustomFont: Story = {
         Page text keeps the page font
       </p>
 
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>
@@ -192,6 +192,32 @@ export const CustomFont: Story = {
     await expect(fontOf(canvas.getByRole('textbox', { name: 'Your feedback' }))).toContain('Georgia');
     await expect(fontOf(canvas.getByRole('button', { name: 'Submit' }))).toContain('Georgia');
     await expect(fontOf(canvas.getByText('Page text keeps the page font'))).not.toContain('Georgia');
+  },
+};
+
+export const ToolbarTheme: Story = {
+  args: {
+    ...commonProps
+  },
+  globals: {
+    theme: 'dark'
+  },
+  name: 'Text feedback (toolbar dark theme)',
+  render: (args) => (
+    <Surface
+      id="toolbar-surface"
+      theme={args.theme}
+    >
+      <Survey {...args} />
+    </Surface>
+  ),
+  parameters: {
+    layout: 'centered',
+  },
+  play: async ({ canvasElement }) => {
+    const surface = canvasElement.querySelector('#toolbar-surface')!;
+
+    await expect(getComputedStyle(surface).backgroundColor).not.toBe('rgb(255, 255, 255)');
   },
 };
 
@@ -289,7 +315,7 @@ export const Preview: Story = {
         background: '#5fe7d0'
       }}
     >
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>

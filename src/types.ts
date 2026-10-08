@@ -18,6 +18,8 @@ export interface RootClassNames {
   contact?: string;
   /** Success screen wrapper */
   success?: string;
+  /** Icon on the success screen */
+  successIcon?: string;
   /** Close button element */
   close?: string;
 }
@@ -39,6 +41,55 @@ export interface ScaleClassNames {
   /** Labels below scale (left/right limits) */
   labels?: string;
 }
+
+/**
+ * Class names for the feedback and contact step forms. Both steps share the same parts, so one
+ * set covers both — scope a rule to one step via `RootClassNames.feedback`/`contact`.
+ */
+export interface FormClassNames {
+  /** Form element */
+  base?: string;
+  /** Text above the email input on the contact step */
+  subtext?: string;
+  /** List wrapper for predefined choices */
+  choices?: string;
+  /** Single choice (the clickable label) */
+  choice?: string;
+  /** Visible checkbox square of a choice. Checked state: `input:checked + .your-class` */
+  check?: string;
+  /** Every text field: the feedback textarea, the "Other" input and the email input. Error state: `[aria-invalid="true"]` */
+  field?: string;
+  /** Screenshot capture button. Pending state: `[aria-busy="true"]` */
+  attachButton?: string;
+  /** Single attachment row */
+  attachment?: string;
+  /** Round buttons that remove an attachment or dismiss a capture error */
+  attachmentRemove?: string;
+  /** Wrapper for the submit and skip buttons */
+  actions?: string;
+  /** Submit button */
+  submit?: string;
+  /** Skip button */
+  skip?: string;
+}
+
+/**
+ * Class names for every customizable part of a survey
+ */
+export interface SurveyClassNames {
+  /** Root layout parts: wrapper, head, title, screens, close */
+  base?: RootClassNames;
+  /** Rating scale parts */
+  scale?: ScaleClassNames;
+  /** Feedback and contact step parts */
+  form?: FormClassNames;
+}
+
+/**
+ * Built-in color theme. `auto` follows the visitor's system color scheme. Custom `--ft-*`
+ * variables still override every built-in theme.
+ */
+export type SurveyTheme = 'light' | 'dark' | 'auto';
 
 /**
  * Available screens in survey flow
@@ -145,10 +196,9 @@ export interface SurveyStrings {
  */
 export interface SharedSurveyProps {
   /** Optional classNames to customize internal parts */
-  classNames?: {
-    base?: RootClassNames;
-    scale?: ScaleClassNames;
-  };
+  classNames?: SurveyClassNames;
+  /** Built-in color theme. Set it on the outermost widget component (`Popup` or `Surface`) — nested components inherit it. @default 'light' */
+  theme?: SurveyTheme;
   /** Text direction for RTL/LTR support */
   dir?: 'ltr' | 'rtl' | 'auto';
   /** Overrides for the library's own aria-labels and other screen-reader-only text. See `SurveyStrings`. */

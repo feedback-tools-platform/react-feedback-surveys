@@ -1,0 +1,118 @@
+.receipt-surface {
+  --ft-color-text: 0 0% 13%;
+  --ft-color-bg: 45 33% 98%;
+  --ft-color-muted: 0 0% 33%;
+  --ft-color-border: 0 0% 13%;
+  --ft-color-outline: 0 0% 13%;
+  --ft-color-control: 45 33% 98%;
+  --ft-surface-radius: 0;
+  --ft-surface-shadow: none;
+  --ft-popup-shadow: none;
+  --ft-font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+
+  padding-bottom: 28px;
+  font-size: 14px;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+}
+
+/* barcode under the survey */
+.receipt-surface::after {
+  margin-top: 20px;
+  display: block;
+  height: 34px;
+  content: '';
+  background: repeating-linear-gradient(
+    90deg,
+    #222 0 2px,
+    transparent 2px 4px,
+    #222 4px 5px,
+    transparent 5px 8px,
+    #222 8px 11px,
+    transparent 11px 12px,
+    #222 12px 13px,
+    transparent 13px 16px
+  );
+}
+
+.receipt-head {
+  margin-bottom: 16px;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed #222;
+}
+
+.receipt-head::before {
+  content: '*** ORDER #4821 ***' / '';
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #555;
+}
+
+.receipt-title {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.receipt-scale-button {
+  font-weight: 400;
+  color: #222;
+  background-color: transparent;
+  border: 1px dashed #222;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.receipt-scale-button:hover {
+  color: #fbfaf5;
+  background-color: #222;
+  box-shadow: none;
+}
+
+.receipt-labels {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.receipt-check {
+  border: 1px solid #222;
+  border-radius: 0;
+}
+
+.receipt-field {
+  background-color: transparent;
+  border: 1px dashed #222;
+  border-radius: 0;
+}
+
+.receipt-field:focus {
+  border-style: solid;
+  outline: 2px solid #222;
+  outline-offset: 2px;
+}
+
+.receipt-attach-button {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.receipt-actions {
+  padding-top: 14px;
+  border-top: 1px dashed #222;
+}
+
+.receipt-submit,
+.receipt-skip {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+.receipt-skip {
+  background-color: transparent;
+  border: 1px dashed #222;
+}

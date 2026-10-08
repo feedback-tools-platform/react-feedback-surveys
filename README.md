@@ -40,6 +40,8 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
     * [Format Props](#format-props)
     * [Scale Style Options](#scale-style-options)
 - [Styling](#styling)
+    * [How Styles Combine](#how-styles-combine)
+    * [Themes (Dark Mode)](#themes-dark-mode)
     * [CSS Variables](#css-variables)
     * [Custom Classes](#custom-classes)
 - [Demo](#demo)
@@ -62,7 +64,8 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
 - **Follow-up feedback** – optional text input or multiple choice responses
 - **Optional email collection** – close the loop by capturing a respondent's email when no user identity is known
 - **Optional screenshot attachments** – let respondents attach a screenshot, captured by a function you provide
-- **Fully customizable** – CSS variables and custom class names
+- **Built-in themes** – light, dark, and auto (follows the system color scheme)
+- **Fully customizable** – CSS variables and custom class names that always win over the defaults
 - **Zero dependencies**
 - **TypeScript support**
 
@@ -280,6 +283,7 @@ import 'react-feedback-surveys/index.css';
 |--------------|------------------------------------------------------------|----------|-----------------|--------------------------------------------------------------------|
 | `placement`  | `'topLeft' \| 'topRight' \| 'bottomRight' \| 'bottomLeft'` | -        | `'bottomRight'` | Position of the popup relative to the screen edges.                |
 | `animated`   | `boolean`                                                  | -        | `true`          | Enables a fade-in animation when the popup appears.                |
+| `theme`      | `'light' \| 'dark' \| 'auto'`                               | -        | `'light'`       | Built-in color theme, inherited by the survey inside. See [Themes](#themes-dark-mode). |
 | `className`  | `string`                                                   | -        | -               | Additional CSS class name for the popup container.                 |
 | `classNames` | `{ base?: string; content?: string; close?: string }`      | -        | -               | Optional class names for internal popup elements.                  |
 | `children`   | `React.ReactNode`                                          | -        | -               | Content to render inside the popup (typically a survey component). |
@@ -322,6 +326,7 @@ import 'react-feedback-surveys/index.css';
 | Prop        | Type              | Required | Default | Description                                        |
 |-------------|-------------------|----------|---------|----------------------------------------------------|
 | `className` | `string`          | -        | -       | Additional CSS class name for the surface container.|
+| `theme`     | `'light' \| 'dark' \| 'auto'` | - | `'light'` | Built-in color theme, inherited by the survey inside. See [Themes](#themes-dark-mode). |
 | `children`  | `React.ReactNode` | -        | -       | Content to render inside the surface.              |
 
 The Surface component uses the `--ft-surface-padding`, `--ft-surface-padding-mobile`, `--ft-surface-radius`, and `--ft-surface-shadow` CSS variables for responsive padding, border radius, and shadow. Inside `Popup` it uses `--ft-popup-shadow` instead.
@@ -335,6 +340,7 @@ Most props are shared across every survey format. `type` (and `points`, for CSAT
 | Prop               | Type                          | Required | Description                                                                  |
 |--------------------|-------------------------------|----------|------------------------------------------------------------------------------|
 | `classNames`       | `ClassNamesConfig` (see below)| -        | Optional class names to target internal parts.                               |
+| `theme`            | `'light' \| 'dark' \| 'auto'` | -       | Built-in color theme. Default `'light'`. Set it on the outermost component (`Popup` or `Surface`) — see [Themes](#themes-dark-mode). |
 | `dir`              | `'ltr' \| 'rtl' \| 'auto'`    | -        | Text direction for RTL/LTR language support.                                 |
 | `strings`          | `SurveyStrings` (see below)   | -        | Overrides for the library's own aria-labels and other screen-reader-only text. See [Accessibility Labels](#accessibility-labels). |
 | `question`         | `string`                      | required (not used for `type="general"`) | Main survey question displayed on the first screen.       |
@@ -407,6 +413,7 @@ interface ClassNamesConfig {
     feedback?: string;   // Additional class applied when feedback screen is active
     contact?: string;    // Additional class applied when email collection screen is active
     success?: string;    // Additional class applied when success screen is active
+    successIcon?: string; // Icon on the success screen
     close?: string;      // Close button
   };
   scale?: {
@@ -416,6 +423,20 @@ interface ClassNamesConfig {
     icon?: string;       // Icon inside a scale button (emoji, stars)
     score?: string;      // Number inside a scale button (for numeric variants)
     labels?: string;     // Left/Right labels displayed under the scale
+  };
+  form?: {               // Shared by the feedback and email collection steps
+    base?: string;       // The form element
+    subtext?: string;    // Text above the email input
+    choices?: string;    // List of predefined choices
+    choice?: string;     // A single choice (the clickable label)
+    check?: string;      // Visible checkbox square of a choice
+    field?: string;      // Every text field: feedback textarea, "Other" input, email input
+    attachButton?: string;     // Screenshot capture button
+    attachment?: string;       // A single attachment row
+    attachmentRemove?: string; // Remove-attachment and dismiss-error buttons
+    actions?: string;    // Wrapper for the submit and skip buttons
+    submit?: string;     // Submit button
+    skip?: string;       // Skip button
   };
 }
 ```
@@ -582,6 +603,83 @@ The package ships with minimal default styles. To use them:
 import 'react-feedback-surveys/index.css';
 ```
 
+### How Styles Combine
+
+Three rules define every override:
+
+1. **Library styles are defaults.** All of them live in one CSS cascade layer, `@layer react-feedback-surveys`. Any CSS of yours outside a layer wins over them, whatever its specificity and load order. A plain `.my-button` beats the library's `.button:hover:not(:disabled)`.
+2. **Values flow through variables.** Colors, radius, shadows, and font come from CSS variables. From weakest to strongest: library defaults → the `theme` prop → your `--ft-*` variables. `--ft-*` set on any ancestor reach the widget, also across a shadow DOM boundary.
+3. **Rules come from classes.** `className` and `classNames` attach your classes to specific parts. A class that sets a color itself owns that color in every theme — the built-in theme does not adjust it.
+
+If your own CSS uses cascade layers, layer order decides instead of rule 1:
+
+- **Tailwind CSS v4** — import the styles into the `components` layer from your CSS entry instead of JavaScript, so they beat Preflight and utilities beat them:
+
+  ```css
+  @import "tailwindcss";
+  @import "react-feedback-surveys/index.css" layer(components);
+  ```
+
+- **A global reset outside layers** (normalize, Bootstrap Reboot, `* { margin: 0 }`) also wins over the defaults, the same as your classes do. Move it into a layer declared before the library's. Layer order is fixed by first appearance, so import the library styles from this same file, not from JavaScript:
+
+  ```css
+  @layer reset, react-feedback-surveys;
+  @import "bootstrap/dist/css/bootstrap-reboot.css" layer(reset);
+  @import "react-feedback-surveys/index.css";
+  ```
+
+Inside a shadow root page styles don't reach the widget, so only the CSS you put in that root takes part.
+
+### Themes (Dark Mode)
+
+The `theme` prop switches the built-in color palette. No CSS is needed on your side.
+
+| Value     | Result                                                                  |
+|-----------|-------------------------------------------------------------------------|
+| `'light'` | Default palette. Same as leaving the prop out.                          |
+| `'dark'`  | Ready dark palette.                                                     |
+| `'auto'`  | Follows the visitor's system color scheme and switches when it changes. |
+
+```tsx
+<Popup theme="auto">
+  <Survey /* ... */ />
+</Popup>
+```
+
+- **Set it on the outermost component** — `Popup` or `Surface`. Components inside inherit the theme. A `theme` on `Survey` alone doesn't recolor the `Surface` around it.
+- **The nearest `theme` wins.** `theme="light"` inside a `theme="dark"` component restores the light palette.
+- **`auto` is pure CSS** (`prefers-color-scheme`), so there's no flash of the wrong theme with server rendering.
+- **Your `--ft-*` variables always win over the built-in theme**, wherever you set them.
+
+To toggle the theme from your own switcher, pass its state to the prop: `<Popup theme={isDark ? 'dark' : 'light'}>`.
+
+#### Custom Themes
+
+A custom theme is a class that sets `--ft-*` variables, plus optional classes for single parts:
+
+```css
+.brand-theme {
+  --ft-color-text: 250 60% 20%;
+  --ft-color-bg: 250 100% 98%;
+  --ft-surface-radius: 0;
+}
+
+.brand-submit {
+  text-transform: uppercase;
+}
+```
+
+```tsx
+<Surface className="brand-theme">
+  <Survey
+    classNames={{ form: { submit: 'brand-submit' } }}
+    /* ... */
+  />
+</Surface>
+```
+
+Storybook's `widgets/Themes` story shows the built-in themes and a catalog of custom ones (`src/stories/themes`), each paired with a use case.
+
 ### CSS Variables
 
 You can override colors and fonts via CSS variables:
@@ -626,11 +724,6 @@ You can override colors and fonts via CSS variables:
     0 2px 4px hsl(0 0% 0% / 4%),
     0 16px 40px -12px hsl(0 0% 0% / 14%);
 
-  /* Inline-end offset for survey head inside popups (right padding in LTR, left in RTL) */
-  /* Automatically set to 32px inside Popup to prevent title overlap with close button */
-  /* Set to 0 by default for inline surveys */
-  --ft-popup-head-offset: 0;
-
   /* Padding for Surface component container (desktop) */
   --ft-surface-padding: 20px;
 
@@ -656,111 +749,11 @@ You can override colors and fonts via CSS variables:
 /* box-shadow: 0 2px 4px hsl(var(--ft-color-shadow) / 4%); */
 ```
 
-#### Dark Theme Example
-
-The library uses CSS variables for all colors, making it easy to implement custom themes including dark mode. The library itself is theme-agnostic - you control how to override the variables.
-
-**Example dark theme color palette:**
-
-Here's an example of dark theme colors that work well with the survey components:
-
-```css
-/* Example: Class-based dark theme */
-.dark {
-  --ft-color-text: 210 11% 88%;
-  --ft-color-bg: 220 13% 13%;
-  --ft-color-muted: 214 10% 60%;
-  --ft-color-error: 14 90% 62%;
-  --ft-color-error-text: 14 85% 72%;
-  --ft-color-border: 217 10% 28%;
-  --ft-color-outline: 216 12% 45%;
-  --ft-color-shadow: 0 0% 0%;
-  --ft-color-control: 218 12% 19%;
-}
-
-/* Alternative: Using media query */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ft-color-text: 210 11% 88%;
-    --ft-color-bg: 220 13% 13%;
-    /* ... other variables */
-  }
-}
-
-/* Alternative: Data attribute based */
-[data-theme="dark"] {
-  --ft-color-text: 210 11% 88%;
-  --ft-color-bg: 220 13% 13%;
-  /* ... other variables */
-}
-```
-
-**Implementation example with React:**
-
-```tsx
-import { Survey } from 'react-feedback-surveys';
-import 'react-feedback-surveys/index.css';
-import { useEffect } from 'react';
-
-function App() {
-  useEffect(() => {
-    // Example: Apply theme based on system preference
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
-
-    // Listen for system preference changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      document.documentElement.classList.toggle('dark', e.matches);
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  return (
-    <Survey
-      type="csat"
-      points={5}
-      scaleStyle="emoji"
-      question="How satisfied are you with our product?"
-      onScoreSubmit={({ value }) => console.log('Score:', value)}
-    />
-  );
-}
-```
-
-**Manual theme toggle:**
-
-```typescript
-// Toggle between light and dark
-function toggleTheme() {
-  document.documentElement.classList.toggle('dark');
-}
-
-// Set specific theme
-function setTheme(theme: 'light' | 'dark') {
-  document.documentElement.classList.toggle('dark', theme === 'dark');
-}
-```
-
-**Notes:**
-- The library only uses CSS variables - how you define them is up to you
-- Choose any approach: class-based, data attributes, media queries, or CSS-in-JS
-- The example colors provide WCAG AA compliant contrast ratios
-- Emoji and icon colors remain unchanged regardless of theme
-
-Or wrap the survey in your own class and target the generated markup.
-
-For deeper customization strategies, see the section below.
-
 ### Custom Classes
 
-`Survey` accepts a `classNames` prop with two optional groups: `base` (outer shell) and `scale` (the interactive
-rating UI). Pass your own class names to override styles without relying on internal selectors.
+`Survey` accepts a `classNames` prop with three optional groups: `base` (outer shell), `scale` (the interactive
+rating UI), and `form` (the feedback and email collection steps). Pass your own class names to override styles
+without relying on internal selectors. Your classes win over the library defaults — see [How Styles Combine](#how-styles-combine).
 
 When is this useful?
 
@@ -787,6 +780,30 @@ Reference: available keys
 | `scale.icon`    | Icon inside a scale button (emoji, stars)                    |
 | `scale.score`   | Number inside a scale button (for numeric variants)          |
 | `scale.labels`  | Left/Right labels displayed under the scale                  |
+| `base.successIcon` | Icon on the success screen                                |
+| `form.base`     | The form element on the feedback and email collection steps   |
+| `form.subtext`  | Text above the email input                                   |
+| `form.choices`  | List of predefined choices                                   |
+| `form.choice`   | A single choice (the clickable label)                        |
+| `form.check`    | Visible checkbox square of a choice                          |
+| `form.field`    | Every text field: feedback textarea, "Other" input, email input |
+| `form.attachButton` | Screenshot capture button                                |
+| `form.attachment` | A single attachment row                                    |
+| `form.attachmentRemove` | Remove-attachment and dismiss-error buttons          |
+| `form.actions`  | Wrapper for the submit and skip buttons                      |
+| `form.submit`   | Submit button                                                |
+| `form.skip`     | Skip button                                                  |
+
+`form` keys apply to both steps. To style one step only, scope the rule with `base.feedback` or `base.contact`.
+
+Part states use standard selectors, so there are no extra keys for them:
+
+| State                         | Selector                          |
+|-------------------------------|-----------------------------------|
+| Invalid text field            | `.your-field[aria-invalid="true"]` |
+| Checked choice                | `input:checked + .your-check`     |
+| Disabled button               | `.your-submit:disabled`           |
+| Screenshot capture in progress | `.your-attach-button[aria-busy="true"]` |
 
 Example: customizing a `Survey` widget
 

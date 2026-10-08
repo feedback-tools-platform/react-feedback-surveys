@@ -1,16 +1,21 @@
-import { cn } from '../../utils';
+import type { SurveyTheme } from '../../types';
+import { cn, getThemeClassName } from '../../utils';
 
 import styles from './Surface.module.scss';
 
-export type SurfaceProps = React.HTMLAttributes<HTMLDivElement>
+export interface SurfaceProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Built-in color theme, inherited by the survey inside. @default 'light' */
+  theme?: SurveyTheme;
+}
 
 export const Surface: React.FC<SurfaceProps> = ({
   className,
   children,
+  theme,
   ...props
 }) => (
   <div
-    className={cn(styles.base, className)}
+    className={cn(styles.base, getThemeClassName(theme), className)}
     {...props}
   >
     {children}

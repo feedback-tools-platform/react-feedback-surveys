@@ -1,0 +1,30 @@
+.soft-surface {
+  --ft-color-text: 250 25% 20%;
+  --ft-color-bg: 0 0% 100%;
+  --ft-color-muted: 250 12% 42%;
+  --ft-color-border: 250 60% 94%;
+  --ft-color-outline: 252 80% 65%;
+  --ft-color-control: 250 70% 97%;
+  --ft-surface-radius: 18px;
+  --ft-surface-shadow: 0 12px 32px -14px hsl(252deg 60% 40% / 25%);
+  --ft-popup-shadow: 0 16px 40px -14px hsl(252deg 60% 40% / 35%);
+}
+
+.soft-check {
+  border-radius: 50%;
+}
+
+input:checked + .soft-check {
+  background-color: #6d4aff;
+  border-color: #6d4aff;
+}
+
+.soft-submit {
+  color: #fff;
+  background-color: #6d4aff;
+  border-radius: 999px;
+}
+
+.soft-skip {
+  border-radius: 999px;
+}

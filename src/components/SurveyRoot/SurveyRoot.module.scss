@@ -10,7 +10,7 @@
   display: flex;
   gap: 8px;
   padding-block: 0 12px;
-  padding-inline: 0 var(--_popup-head-offset, var(--ft-popup-head-offset, 0));
+  padding-inline: 0 var(--_popup-head-offset, 0);
 }
 
 .title {

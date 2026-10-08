@@ -23,6 +23,24 @@ export default defineConfig({
     })
   ],
   css: {
+    postcss: {
+      plugins: [{
+        // library styles live in a cascade layer, so any unlayered consumer CSS wins over them
+        postcssPlugin: 'wrap-in-layer',
+        OnceExit(root, { AtRule }) {
+          if (!root.source?.input.file?.endsWith('.module.scss')) {
+            return;
+          }
+
+          const layer = new AtRule({ name: 'layer', params: 'react-feedback-surveys' });
+          const nodes = root.nodes.slice();
+
+          root.removeAll();
+          layer.append(nodes);
+          root.append(layer);
+        }
+      }]
+    },
     preprocessorOptions: {
       scss: {
         additionalData: `

@@ -1,4 +1,5 @@
-import { cn } from '../../utils';
+import type { SurveyTheme } from '../../types';
+import { cn, getThemeClassName } from '../../utils';
 
 import { Surface } from '../Surface';
 
@@ -12,6 +13,8 @@ export interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
     close?: string;
   }
   placement?: 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
+  /** Built-in color theme, inherited by the survey inside. @default 'light' */
+  theme?: SurveyTheme;
   /** Close button label, used for both its aria-label and title. @default 'Close survey' */
   closeLabel?: string;
   onClose?: () => void;
@@ -23,13 +26,21 @@ export const Popup: React.FC<PopupProps> = ({
   classNames,
   children,
   placement = 'bottomRight',
+  theme,
   closeLabel = 'Close survey',
   onClose,
   ...props
 }) => {
   return (
     <div
-      className={cn(styles.base, { [styles.animated]: animated }, styles[placement], className, classNames?.base)}
+      className={cn(
+        styles.base,
+        { [styles.animated]: animated },
+        styles[placement],
+        getThemeClassName(theme),
+        className,
+        classNames?.base
+      )}
       {...props}
     >
       <Surface className={cn(styles.content, classNames?.content)}>

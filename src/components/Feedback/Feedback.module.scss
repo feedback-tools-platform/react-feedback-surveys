@@ -1,13 +1,12 @@
 .choices {
+  display: flex;
+  flex-direction: column;
   margin: 0 0 12px;
+  gap: 12px;
 }
 
 .choice {
   display: flex;
-
-  & + .choice {
-    margin-top: 12px;
-  }
 }
 
 .label {

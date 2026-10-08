@@ -1,0 +1,125 @@
+.themes-stage {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, sans-serif;
+  color: #1f2328;
+  background-color: #f4f5f7;
+}
+
+.themes-stage-dark {
+  color: #e2e5e9;
+  background-color: hsl(220deg 13% 9%);
+}
+
+.themes-stage-brutal {
+  background-color: #ff90e8;
+}
+
+.themes-stage-terminal {
+  color: #7dff9b;
+  background-color: #020403;
+}
+
+.themes-stage-soft {
+  background-image: linear-gradient(135deg, #f3e8ff, #e0e7ff);
+}
+
+.themes-stage-inline {
+  font-family: Georgia, serif;
+  background-color: #fff;
+}
+
+.themes-stage-playful {
+  background-color: #e0f2fe;
+}
+
+.themes-stage-chat {
+  background-color: #e8edf4;
+}
+
+.themes-stage-editorial {
+  background-color: #e9e1d0;
+}
+
+.themes-stage-enterprise {
+  background-color: #e0e0e0;
+}
+
+.themes-stage-receipt {
+  background-color: #d9d4ca;
+}
+
+.themes-stage-retro-os {
+  color: #fff;
+  background-color: #008080;
+}
+
+@media (prefers-color-scheme: dark) {
+  .themes-stage-auto {
+    color: #e2e5e9;
+    background-color: hsl(220deg 13% 9%);
+  }
+}
+
+.themes-switcher {
+  margin-bottom: 32px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  background-color: #fff;
+  border: 1px solid #d0d4da;
+  border-radius: 10px;
+}
+
+.themes-switcher button {
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: #1f2328;
+  background-color: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.themes-switcher button[aria-pressed='true'] {
+  color: #fff;
+  background-color: #1f2328;
+}
+
+.themes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.themes-catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  font-family: Inter, sans-serif;
+  color: #1f2328;
+}
+
+.themes-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-height: 420px;
+  padding: 48px 24px 32px;
+}
+
+.themes-tile-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.themes-tile-caption strong {
+  font-size: 18px;
+}

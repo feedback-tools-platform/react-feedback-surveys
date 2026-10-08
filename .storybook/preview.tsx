@@ -1,5 +1,7 @@
-import type { Preview } from '@storybook/react-vite';
+import type { Decorator, Preview } from '@storybook/react-vite';
 import { withThemeByClassName } from '@storybook/addon-themes';
+
+import type { SurveyTheme } from '../src/types';
 
 import './preview.css';
 
@@ -31,6 +33,23 @@ const MY_VIEWPORTS = {
   desktopLarge: { name: 'Desktop Large - 1920', styles: { height: '1080px', width: '1920px' }, type: 'desktop' }
 };
 
+const TOOLBAR_THEMES: SurveyTheme[] = ['light', 'dark', 'auto'];
+
+// the toolbar picks the page background; this hands the same theme to the widget unless a story sets its own
+const withSurveyTheme: Decorator = (Story, context) => {
+  const theme = context.globals.theme;
+
+  if (context.args.theme !== undefined || !TOOLBAR_THEMES.includes(theme)) {
+    return (
+      <Story />
+    );
+  }
+
+  return (
+    <Story args={{ ...context.args, theme }} />
+  );
+};
+
 const preview: Preview = {
   parameters: {
     backgrounds: {
@@ -60,10 +79,12 @@ const preview: Preview = {
     }
   },
   decorators: [
+    withSurveyTheme,
     withThemeByClassName({
       themes: {
         light: '',
         dark: 'dark',
+        auto: 'auto'
       },
       defaultTheme: 'light',
       parentSelector: 'html',

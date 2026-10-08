@@ -1,0 +1,42 @@
+// themes set only --_theme-*, so consumer --ft-* still win from any ancestor
+
+@mixin darkPalette {
+  --_theme-color-text: 210 11% 88%;
+  --_theme-color-bg: 220 13% 13%;
+  --_theme-color-muted: 214 10% 64%;
+  --_theme-color-error: 14 90% 62%;
+  --_theme-color-error-text: 14 85% 72%;
+  --_theme-color-border: 217 10% 28%;
+  --_theme-color-outline: 216 12% 52%;
+  --_theme-color-shadow: 0 0% 0%;
+  --_theme-color-control: 218 12% 19%;
+}
+
+// `initial` drops an inherited dark palette, so the built-in light defaults apply again
+@mixin lightPalette {
+  --_theme-color-text: initial;
+  --_theme-color-bg: initial;
+  --_theme-color-muted: initial;
+  --_theme-color-error: initial;
+  --_theme-color-error-text: initial;
+  --_theme-color-border: initial;
+  --_theme-color-outline: initial;
+  --_theme-color-shadow: initial;
+  --_theme-color-control: initial;
+}
+
+.light {
+  @include lightPalette;
+}
+
+.dark {
+  @include darkPalette;
+}
+
+.auto {
+  @include lightPalette;
+
+  @media (prefers-color-scheme: dark) {
+    @include darkPalette;
+  }
+}

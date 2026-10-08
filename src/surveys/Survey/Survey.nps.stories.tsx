@@ -64,7 +64,7 @@ export const NumbersSurface: Story = {
   ],
   name: 'Numbers (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -98,7 +98,7 @@ export const NumbersRTL: Story = {
   ],
   name: 'Numbers (Arabic, RTL)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -116,7 +116,7 @@ export const NumbersPopup: Story = {
   ],
   name: 'Numbers (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -195,7 +195,7 @@ export const Preview: Story = {
         background: '#5fe7d0'
       }}
     >
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>
@@ -225,7 +225,7 @@ export const PreviewMobile: Story = {
         background: '#5fe7d0'
       }}
     >
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>

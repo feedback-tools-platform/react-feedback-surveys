@@ -12,26 +12,19 @@ body {
   background-color: hsl(0deg 0% 99%);
 }
 
-/* Dark theme example for Storybook demo */
-.dark {
-  --ft-color-text: 210 11% 88%;
-  --ft-color-bg: 220 13% 13%;
-  --ft-color-muted: 214 10% 60%;
-  --ft-color-error: 14 90% 62%;
-  --ft-color-border: 217 10% 28%;
-  --ft-color-outline: 216 12% 45%;
-  --ft-color-shadow: 0 0% 0%;
-  --ft-color-control: 218 12% 19%;
-}
-
-.dark body {
-  background-color: hsl(220deg 13% 9%);
-}
-
-/* Dark theme backgrounds for stories */
+/* Page backgrounds for the toolbar theme; the widget itself gets the `theme` prop */
+.dark body,
 .dark .sbdocs-preview,
 .dark .docs-story {
   background-color: hsl(220deg 13% 9%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .auto body,
+  .auto .sbdocs-preview,
+  .auto .docs-story {
+    background-color: hsl(220deg 13% 9%);
+  }
 }
 
 .sb-show-main.sb-main-centered #storybook-root {

@@ -22,3 +22,5 @@ export function cn(...args: ClassArg[]): string {
   args.forEach(process);
   return classes.join(' ');
 }
+
+export { getThemeClassName } from './getThemeClassName';

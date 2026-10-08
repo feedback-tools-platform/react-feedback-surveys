@@ -1,7 +1,8 @@
 import { useCallback, useId, useRef, useState } from 'react';
 
 import useAttachments from '../../hooks/useAttachments';
-import { type SharedSurveyProps, type SurveyAttachment } from '../../types';
+import { type FormClassNames, type SharedSurveyProps, type SurveyAttachment } from '../../types';
+import { cn } from '../../utils';
 
 import ScreenshotIcon from '../../icons/screenshot.svg';
 
@@ -48,6 +49,8 @@ export interface FeedbackProps {
   maxAttachments?: SharedSurveyProps['maxAttachments'];
   /** Enables an optional screenshot-attachment control */
   onCaptureScreenshot?: SharedSurveyProps['onCaptureScreenshot'];
+  /** Optional classNames to customize form parts */
+  classNames?: FormClassNames;
   /** Callback when feedback is submitted (omitted when skipped) */
   onSubmit?: (text?: string | string[], attachments?: SurveyAttachment[]) => void;
 }
@@ -72,6 +75,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
   screenshotProcessingLabel = 'Capturing screenshot…',
   screenshotErrorDismissLabel = 'Dismiss error',
   maxAttachments = 1,
+  classNames,
   onSubmit
 }) => {
   const formId = useId();
@@ -222,7 +226,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
       <button
         aria-busy={isProcessingAttachment}
         aria-label={isProcessingAttachment ? screenshotProcessingLabel : screenshotButtonLabel}
-        className={styles.attachTrigger}
+        className={cn(styles.attachTrigger, classNames?.attachButton)}
         disabled={isProcessingAttachment}
         type="button"
         onClick={onScreenshotCapture}
@@ -245,13 +249,13 @@ export const Feedback: React.FC<FeedbackProps> = ({
   return (
     <form
       aria-label={formLabel}
-      className={styles.base}
+      className={cn(styles.base, classNames?.base)}
       noValidate
       onSubmit={onFormSubmit}
     >
       {(responseType === 'choices') && (
         <div
-          className={styles.choices}
+          className={cn(styles.choices, classNames?.choices)}
           id={choicesId}
         >
           {choiceOptions?.map((choice) => (
@@ -259,7 +263,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
               key={choice}
               className={styles.choice}
             >
-              <label className={styles.label}>
+              <label className={cn(styles.label, classNames?.choice)}>
                 <input
                   aria-label={choice}
                   className={styles.checkbox}
@@ -271,7 +275,10 @@ export const Feedback: React.FC<FeedbackProps> = ({
                   onKeyDown={onTextKeyDown}
                 />
 
-                <span className={styles.check} aria-hidden="true" />
+                <span
+                  aria-hidden="true"
+                  className={cn(styles.check, classNames?.check)}
+                />
 
                 {choice}
               </label>
@@ -292,7 +299,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
           <input
             aria-label={additionalFeedbackLabel}
             aria-describedby={choicesId}
-            className={styles.input}
+            className={cn(styles.input, classNames?.field)}
             id={inputId}
             maxLength={1000}
             name="feedback"
@@ -318,7 +325,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
             ref={textareaRef}
             aria-label={yourFeedbackLabel}
             aria-invalid={isTextInvalid}
-            className={`${styles.textarea} ${isTextInvalid ? styles.invalid : ''}`}
+            className={cn(styles.textarea, isTextInvalid && styles.invalid, classNames?.field)}
             id={textareaId}
             maxLength={1000}
             name="feedback"
@@ -343,6 +350,8 @@ export const Feedback: React.FC<FeedbackProps> = ({
                   caption={attachmentCaption}
                   openLabel={attachmentOpenLabel}
                   removeLabel={attachmentRemoveLabel}
+                  className={classNames?.attachment}
+                  removeClassName={classNames?.attachmentRemove}
                   onRemove={onAttachmentRemoveClick}
                 />
               ))}
@@ -357,7 +366,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
 
               <button
                 aria-label={screenshotErrorDismissLabel}
-                className={styles.attachmentErrorDismiss}
+                className={cn(styles.attachmentErrorDismiss, classNames?.attachmentRemove)}
                 title={screenshotErrorDismissLabel}
                 type="button"
                 onClick={onAttachmentErrorDismiss}
@@ -367,10 +376,10 @@ export const Feedback: React.FC<FeedbackProps> = ({
         </div>
       )}
 
-      <div className={styles.actions}>
+      <div className={cn(styles.actions, classNames?.actions)}>
         {!feedbackRequired && (
           <button
-            className={styles.skip}
+            className={cn(styles.skip, classNames?.skip)}
             // An attachment must be explicitly submitted or removed — never silently discarded via Skip.
             disabled={isLoading || !!attachments.length}
             type="button"
@@ -381,7 +390,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
         )}
 
         <button
-          className={styles.submit}
+          className={cn(styles.submit, classNames?.submit)}
           disabled={isLoading || isProcessingAttachment || !hasContent}
           type="submit"
         >

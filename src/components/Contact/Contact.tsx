@@ -1,5 +1,8 @@
 import { useCallback, useId, useRef, useState } from 'react';
 
+import type { FormClassNames } from '../../types';
+import { cn } from '../../utils';
+
 import styles from './Contact.module.scss';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -17,6 +20,8 @@ export interface ContactProps {
   emailLabel?: string;
   /** Whether a previous submission is still pending. Disables Submit/Skip and ignores further submits. */
   isLoading?: boolean;
+  /** Optional classNames to customize form parts */
+  classNames?: FormClassNames;
   /** Callback when the email is submitted (omitted when skipped) */
   onSubmit?: (email?: string) => void;
 }
@@ -28,6 +33,7 @@ export const Contact: React.FC<ContactProps> = ({
   formLabel = 'Contact form',
   emailLabel = 'Email address',
   isLoading,
+  classNames,
   onSubmit
 }) => {
   const formId = useId();
@@ -86,7 +92,7 @@ export const Contact: React.FC<ContactProps> = ({
   return (
     <form
       aria-label={formLabel}
-      className={styles.base}
+      className={cn(styles.base, classNames?.base)}
       noValidate
       onSubmit={onFormSubmit}
     >
@@ -98,7 +104,7 @@ export const Contact: React.FC<ContactProps> = ({
       </label>
 
       {!!subtext && (
-        <div className={styles.subtext}>
+        <div className={cn(styles.subtext, classNames?.subtext)}>
           {subtext}
         </div>
       )}
@@ -107,7 +113,7 @@ export const Contact: React.FC<ContactProps> = ({
         ref={emailInputRef}
         aria-label={emailLabel}
         aria-invalid={isInvalid}
-        className={`${styles.input} ${isInvalid ? styles.invalid : ''}`}
+        className={cn(styles.input, isInvalid && styles.invalid, classNames?.field)}
         id={inputId}
         maxLength={254}
         name="email"
@@ -118,9 +124,9 @@ export const Contact: React.FC<ContactProps> = ({
         onKeyDown={onEmailKeyDown}
       />
 
-      <div className={styles.actions}>
+      <div className={cn(styles.actions, classNames?.actions)}>
         <button
-          className={styles.skip}
+          className={cn(styles.skip, classNames?.skip)}
           disabled={isLoading}
           type="button"
           onClick={onSkip}
@@ -129,7 +135,7 @@ export const Contact: React.FC<ContactProps> = ({
         </button>
 
         <button
-          className={styles.submit}
+          className={cn(styles.submit, classNames?.submit)}
           disabled={isLoading}
           type="submit"
         >

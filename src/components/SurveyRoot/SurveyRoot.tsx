@@ -1,12 +1,13 @@
 import { useId } from 'react';
 
 import type {
+  FormClassNames,
   RootClassNames,
   SharedSurveyProps,
   SurveyAttachment,
   SurveyScreen
 } from '../../types';
-import { cn } from '../../utils';
+import { cn, getThemeClassName } from '../../utils';
 
 import { Contact } from '../Contact';
 import { Feedback } from '../Feedback';
@@ -21,6 +22,10 @@ export interface SurveyRootProps {
   className?: string;
   /** Optional classNames to customize internal parts */
   classNames?: RootClassNames;
+  /** Optional classNames to customize the feedback and contact step forms */
+  formClassNames?: FormClassNames;
+  /** Built-in color theme */
+  theme?: SharedSurveyProps['theme'];
   /** Text direction for RTL/LTR support */
   dir?: SharedSurveyProps['dir'];
   /** Main survey question */
@@ -91,6 +96,8 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
   children,
   className,
   classNames,
+  formClassNames,
+  theme,
   dir,
   question,
   textQuestion,
@@ -130,6 +137,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
     <div
       className={cn(
         styles.base,
+        getThemeClassName(theme),
         className,
         classNames?.base,
         classNames?.[screen]
@@ -186,6 +194,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
             screenshotProcessingLabel={screenshotProcessingLabel}
             screenshotErrorDismissLabel={screenshotErrorDismissLabel}
             maxAttachments={maxAttachments}
+            classNames={formClassNames}
             onSubmit={onFeedback}
           />
         </div>
@@ -204,6 +213,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
             emailLabel={emailLabel}
             subtext={contactSubtext}
             isLoading={isLoading}
+            classNames={formClassNames}
             onSubmit={onContact}
           />
         </div>
@@ -218,7 +228,7 @@ export const SurveyRoot: React.FC<SurveyRootProps> = ({
           tabIndex={-1}
           role="status"
         >
-          <Success />
+          <Success iconClassName={classNames?.successIcon} />
         </div>
       )}
     </div>

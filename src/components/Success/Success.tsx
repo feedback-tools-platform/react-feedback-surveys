@@ -1,12 +1,18 @@
 import Popper from '../../icons/popper.svg';
+import { cn } from '../../utils';
 
 import styles from './Success.module.scss';
 
-export const Success: React.FC = () => (
+export interface SuccessProps {
+  /** Additional class name for the icon */
+  iconClassName?: string;
+}
+
+export const Success: React.FC<SuccessProps> = ({ iconClassName }) => (
   <div className={styles.base}>
     <Popper
       aria-hidden="true"
-      className={styles.icon}
+      className={cn(styles.icon, iconClassName)}
       width={84}
       height={84}
     />

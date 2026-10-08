@@ -75,7 +75,7 @@ export const EmojiSurface: Story = {
   ],
   name: 'Emoji (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -98,7 +98,7 @@ export const EmojiPopup: Story = {
   ],
   name: 'Emoji (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -188,7 +188,7 @@ export const ThumbsRTL: Story = {
   ],
   name: 'Thumbs (Arabic, RTL)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -221,7 +221,7 @@ export const ThumbsSurface: Story = {
   ],
   name: 'Thumbs (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -243,7 +243,7 @@ export const ThumbsPopup: Story = {
   ],
   name: 'Thumbs (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -324,7 +324,7 @@ export const Preview: Story = {
         background: '#5fe7d0'
       }}
     >
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>

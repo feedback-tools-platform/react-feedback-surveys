@@ -1,4 +1,5 @@
 import type { AttachmentItem } from '../../hooks/useAttachments';
+import { cn } from '../../utils';
 import { formatFileSize } from '../../utils/formatFileSize';
 
 import styles from './Attachment.module.scss';
@@ -11,6 +12,10 @@ export interface AttachmentProps {
   caption?: string;
   /** aria-label/title for the remove button. @default 'Remove screenshot' */
   removeLabel?: string;
+  /** Additional class name for the attachment row */
+  className?: string;
+  /** Additional class name for the remove button */
+  removeClassName?: string;
   onRemove: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -19,9 +24,11 @@ export const Attachment: React.FC<AttachmentProps> = ({
   openLabel = 'Open screenshot in a new tab',
   caption = 'Screenshot',
   removeLabel = 'Remove screenshot',
+  className,
+  removeClassName,
   onRemove
 }) => (
-  <div className={styles.attachment}>
+  <div className={cn(styles.attachment, className)}>
     <a
       aria-label={openLabel}
       className={styles.attachmentPreview}
@@ -50,7 +57,7 @@ export const Attachment: React.FC<AttachmentProps> = ({
 
     <button
       aria-label={removeLabel}
-      className={styles.attachmentRemove}
+      className={cn(styles.attachmentRemove, removeClassName)}
       data-id={attachment.id}
       title={removeLabel}
       type="button"

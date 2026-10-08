@@ -1,0 +1,123 @@
+.playful-surface {
+  --ft-color-text: 215 28% 17%;
+  --ft-color-bg: 0 0% 100%;
+  --ft-color-muted: 215 16% 40%;
+  --ft-color-border: 210 18% 87%;
+  --ft-color-outline: 199 92% 44%;
+  --ft-color-control: 210 40% 97%;
+  --ft-surface-radius: 16px;
+  --ft-surface-shadow: none;
+  --ft-popup-shadow: 0 12px 32px -12px hsl(215deg 28% 17% / 25%);
+  --ft-font-family: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'Nunito', 'Trebuchet MS', sans-serif;
+
+  border: 2px solid #e2e8f0;
+  border-bottom-width: 5px;
+  border-radius: 20px;
+}
+
+.playful-title {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.playful-scale-button {
+  background-color: #fff;
+  border: 2px solid #e2e8f0;
+  border-bottom-width: 4px;
+  border-radius: 14px;
+  transition: transform 0.08s, border-bottom-width 0.08s;
+}
+
+.playful-scale-button:hover {
+  color: #0369a1;
+  background-color: #f0f9ff;
+  border-color: #7dd3fc;
+  box-shadow: none;
+}
+
+.playful-scale-button:active {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}
+
+.playful-labels {
+  font-weight: 700;
+}
+
+.playful-choice {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px;
+  font-weight: 700;
+  line-height: 1.5;
+  border: 2px solid #e2e8f0;
+  border-bottom-width: 4px;
+  border-radius: 14px;
+}
+
+.playful-choice:has(input:checked) {
+  color: #0369a1;
+  background-color: #f0f9ff;
+  border-color: #7dd3fc;
+}
+
+.playful-check {
+  border-width: 2px;
+  border-radius: 7px;
+}
+
+input:checked + .playful-check {
+  background-color: #0284c7;
+  border-color: #0284c7;
+}
+
+.playful-field {
+  background-color: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.playful-field:focus {
+  border-color: #0284c7;
+  outline: 4px solid hsl(199deg 92% 44% / 20%);
+}
+
+.playful-attach-button {
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.playful-submit,
+.playful-skip {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 4px solid;
+  border-radius: 14px;
+  transition: transform 0.08s, border-bottom-width 0.08s;
+}
+
+.playful-submit {
+  color: #fff;
+  background-color: #15803d;
+  border-bottom-color: #0f5c2c;
+}
+
+.playful-skip {
+  color: #334155;
+  background-color: #fff;
+  border: 2px solid #e2e8f0;
+  border-bottom-width: 4px;
+}
+
+.playful-submit:hover:not(:disabled),
+.playful-skip:hover:not(:disabled) {
+  opacity: 1;
+  filter: brightness(1.06);
+}
+
+.playful-submit:active:not(:disabled),
+.playful-skip:active:not(:disabled) {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}

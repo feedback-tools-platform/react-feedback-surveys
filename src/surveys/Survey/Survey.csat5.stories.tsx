@@ -75,7 +75,7 @@ export const EmojiSurface: Story = {
   ],
   name: 'Emoji (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -111,7 +111,7 @@ export const NumbersRTL: Story = {
   ],
   name: 'Numbers (Arabic, RTL)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -132,7 +132,7 @@ export const EmojiPopup: Story = {
   ],
   name: 'Emoji (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -180,7 +180,7 @@ export const NumbersSurface: Story = {
   ],
   name: 'Numbers (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -201,7 +201,7 @@ export const NumbersPopup: Story = {
   ],
   name: 'Numbers (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -294,7 +294,7 @@ export const StarsSurface: Story = {
   ],
   name: 'Stars (surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -315,7 +315,7 @@ export const StarsPopup: Story = {
   ],
   name: 'Stars (popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -407,7 +407,7 @@ export const EmailStepSurface: Story = {
   ],
   name: 'Numbers (email step, surface)',
   render: (args) => (
-    <Surface>
+    <Surface theme={args.theme}>
       <Survey {...args} />
     </Surface>
   ),
@@ -420,7 +420,7 @@ export const EmailStepPopup: Story = {
   ],
   name: 'Numbers (email step, popup)',
   render: (args) => (
-    <Popup>
+    <Popup theme={args.theme}>
       <Survey {...args} />
     </Popup>
   ),
@@ -559,7 +559,7 @@ export const Preview: Story = {
         background: '#5fe7d0'
       }}
     >
-      <Surface>
+      <Surface theme={args.theme}>
         <Survey {...args} />
       </Surface>
     </div>
@@ -583,7 +583,10 @@ export const PreviewPopup: Story = {
         background: '#5fe7d0'
       }}
     >
-      <Popup style={{ position: 'static' }}>
+      <Popup
+        style={{ position: 'static' }}
+        theme={args.theme}
+      >
         <Survey {...args} />
       </Popup>
     </div>

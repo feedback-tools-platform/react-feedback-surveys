@@ -87,6 +87,7 @@ const getFormatKey = (props: SurveyProps): keyof typeof FORMAT_KEYS => {
 export const Survey: React.FC<SurveyProps> = (props) => {
   const {
     classNames,
+    theme,
     dir,
     strings,
     question,
@@ -150,6 +151,8 @@ export const Survey: React.FC<SurveyProps> = (props) => {
         contact: cn(styles[`contact${formatKey}`], classNames?.base?.contact),
         success: cn(styles[`success${formatKey}`], classNames?.base?.success)
       }}
+      formClassNames={classNames?.form}
+      theme={theme}
       dir={dir}
       screen={screen}
       isLoading={isLoading}

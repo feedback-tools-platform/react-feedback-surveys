@@ -1,0 +1,80 @@
+.terminal-surface {
+  --ft-color-text: 135 100% 72%;
+  --ft-color-bg: 150 30% 4%;
+  --ft-color-muted: 135 45% 55%;
+  --ft-color-error: 0 85% 62%;
+  --ft-color-error-text: 0 90% 72%;
+  --ft-color-border: 135 60% 24%;
+  --ft-color-outline: 135 100% 45%;
+  --ft-color-shadow: 135 100% 45%;
+  --ft-color-control: 140 40% 8%;
+  --ft-surface-radius: 2px;
+  --ft-surface-shadow: 0 0 0 1px hsl(135deg 100% 45% / 35%), 0 0 32px hsl(135deg 100% 45% / 12%);
+  --ft-popup-shadow: 0 0 0 1px hsl(135deg 100% 45% / 35%), 0 0 32px hsl(135deg 100% 45% / 12%);
+  --ft-font-family: ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.terminal-title {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.terminal-title::before {
+  content: '> ' / '';
+  color: hsl(135deg 45% 55%);
+}
+
+.terminal-scale-button {
+  font-weight: 400;
+  color: hsl(135deg 100% 72%);
+  background-color: transparent;
+  border: 1px solid hsl(135deg 60% 24%);
+  border-radius: 2px;
+}
+
+.terminal-scale-button:hover {
+  color: hsl(150deg 30% 4%);
+  background-color: hsl(135deg 100% 72%);
+  box-shadow: none;
+}
+
+.terminal-field {
+  border-radius: 2px;
+  caret-color: hsl(135deg 100% 72%);
+}
+
+.terminal-field:focus {
+  border-color: hsl(135deg 100% 72%);
+  box-shadow: 0 0 12px hsl(135deg 100% 45% / 30%);
+  outline: none;
+}
+
+.terminal-check {
+  border-radius: 0;
+}
+
+.terminal-attach-button {
+  border: 1px solid hsl(135deg 60% 24%);
+  border-radius: 2px;
+}
+
+.terminal-submit,
+.terminal-skip {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+.terminal-submit::before {
+  content: '[ ' / '';
+}
+
+.terminal-submit::after {
+  content: ' ]' / '';
+}
+
+.terminal-skip {
+  background-color: transparent;
+  border: 1px solid hsl(135deg 60% 24%);
+}

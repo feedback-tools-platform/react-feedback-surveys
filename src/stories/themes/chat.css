@@ -1,0 +1,115 @@
+.chat-surface {
+  --ft-color-text: 222 47% 11%;
+  --ft-color-muted: 215 16% 40%;
+  --ft-color-border: 214 32% 91%;
+  --ft-color-outline: 221 83% 53%;
+  --ft-color-control: 220 25% 96%;
+  --ft-surface-radius: 20px;
+  --ft-surface-shadow: 0 1px 2px hsl(222deg 47% 11% / 6%), 0 12px 40px -8px hsl(222deg 47% 11% / 18%);
+  --ft-popup-shadow: 0 1px 2px hsl(222deg 47% 11% / 6%), 0 20px 48px -12px hsl(222deg 47% 11% / 28%);
+  --ft-font-family: system-ui, -apple-system, 'Segoe UI', roboto, sans-serif;
+}
+
+.chat-head {
+  align-items: flex-end;
+}
+
+.chat-head::before {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  content: '';
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  border-radius: 50%;
+}
+
+.chat-title {
+  flex: 0 1 auto;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 400;
+  background-color: #f1f4f9;
+  border-radius: 18px 18px 18px 4px;
+}
+
+.chat-scale-list {
+  flex-wrap: wrap;
+}
+
+.chat-scale-button {
+  color: #1d4ed8;
+  background-color: #fff;
+  border: 1px solid #93b4f5;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+.chat-scale-button:hover {
+  color: #fff;
+  background-color: #2563eb;
+  border-color: #2563eb;
+  box-shadow: none;
+}
+
+.chat-choices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.chat-choice {
+  padding: 7px 14px;
+  font-size: 14px;
+  color: #1d4ed8;
+  border: 1px solid #93b4f5;
+  border-radius: 999px;
+}
+
+.chat-choice:has(input:checked) {
+  color: #fff;
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.chat-choice:has(input:focus-visible) {
+  outline: 3px solid hsl(221deg 83% 53% / 35%);
+}
+
+.chat-check {
+  display: none;
+}
+
+.chat-field {
+  background-color: #f1f4f9;
+  border-color: transparent;
+  border-radius: 20px;
+}
+
+.chat-field:focus {
+  background-color: #fff;
+  border-color: #2563eb;
+  outline: 4px solid hsl(221deg 83% 53% / 15%);
+}
+
+.chat-attach-button {
+  border-radius: 50%;
+}
+
+.chat-submit {
+  color: #fff;
+  background-color: #2563eb;
+  border-radius: 999px;
+}
+
+.chat-submit::after {
+  content: '➤' / '';
+  margin-inline-start: 6px;
+}
+
+.chat-skip {
+  color: #1d4ed8;
+  background-color: transparent;
+  border-radius: 999px;
+}

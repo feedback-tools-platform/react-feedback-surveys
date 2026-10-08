@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Built-in themes** - New `theme` prop (`'light' | 'dark' | 'auto'`) on `Survey`, `Surface`, and `Popup`. `dark` gives a ready dark palette with no CSS on your side; `auto` follows the visitor's system color scheme and switches when it changes. Default stays `'light'`. Custom `--ft-*` variables still override every built-in theme. See [Themes (Dark Mode)](README.md#themes-dark-mode).
+- **Form class names** - New `classNames.form` group (`base`, `subtext`, `choices`, `choice`, `check`, `field`, `attachButton`, `attachment`, `attachmentRemove`, `actions`, `submit`, `skip`) reaches the feedback and email collection steps, plus `classNames.base.successIcon`. See [Custom Classes](README.md#custom-classes).
+- **New exported types** - `SurveyTheme`, `SurveyClassNames`, `FormClassNames`.
+
+### Changed
+
+- **Library styles moved into a cascade layer** - All styles now live in `@layer react-feedback-surveys`, so your CSS outside layers always wins over them, regardless of specificity or load order. Global page styles outside layers (resets like normalize or Bootstrap Reboot) now win too — inside a shadow root nothing changes. With Tailwind CSS v4, import the styles into the `components` layer. See [How Styles Combine](README.md#how-styles-combine).
+
+### Removed
+
+- **BREAKING: `--ft-popup-head-offset` CSS variable** - Inside `Popup` the head always reserved 32px for the close button regardless of this variable, so it only affected inline surveys, which have no close button. To change the head padding, use `classNames.base.head`.
+
 ## [1.10.0] - 2026-09-30
 
 ### Added
@@ -184,7 +200,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **RTL/LTR bidirectional support** - Full right-to-left text support for Arabic, Hebrew, and other RTL languages. Entire layout flips automatically when `dir="rtl"` is set, including icons and button positioning.
-- **Dark theme** - Automatic dark mode that respects system color scheme preferences. Customize colors with CSS variables to match your brand identity.
+- **Dark theme example** - A documented dark palette for the `--ft-*` CSS variables. The library had no built-in dark mode until the `theme` prop (see Unreleased).
 
 ### Changed
 
