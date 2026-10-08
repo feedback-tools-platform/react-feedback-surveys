@@ -1,0 +1,217 @@
+.ftools-survey.blueprint {
+  --ft-color-text: hsl(0deg 0% 100%);
+  --ft-color-bg: hsl(207deg 78% 30%);
+  --ft-color-muted: hsl(210deg 80% 88%);
+  --ft-color-error: hsl(12deg 100% 78%);
+  --ft-color-error-text: hsl(12deg 100% 85%);
+  --ft-color-border: hsl(210deg 80% 88% / 80%);
+  --ft-color-outline: hsl(0deg 0% 100%);
+  --ft-color-control: hsl(209deg 85% 19%);
+  --ft-color-accent: hsl(0deg 0% 100%);
+  --ft-color-accent-text: hsl(207deg 78% 30%);
+  --ft-color-star: hsl(0deg 0% 100%);
+  --ft-surface-radius: 2px;
+  --ft-surface-shadow: 0 0 0 1px hsl(209deg 85% 17%), 0 18px 40px -20px hsl(213deg 80% 12% / 60%);
+  --ft-popup-shadow: 0 0 0 1px hsl(209deg 85% 17%), 0 24px 48px -20px hsl(213deg 80% 12% / 70%);
+  --ft-font-family: 'DIN Alternate', bahnschrift, 'Arial Narrow', 'Helvetica Neue', arial, sans-serif;
+  --ft-checkbox-size: 16px;
+}
+
+/* drafting grid over the whole sheet: a major line every 80px, a minor one every 16px */
+.ftools-survey.blueprint::part(surface) {
+  background-image:
+    linear-gradient(hsl(210deg 80% 88% / 9%) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(210deg 80% 88% / 9%) 1px, transparent 1px),
+    linear-gradient(hsl(210deg 80% 88% / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(210deg 80% 88% / 4%) 1px, transparent 1px);
+  background-position: -1px -1px;
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+
+  /* the sheet border a drawing has a few millimetres inside the paper edge */
+  outline: 1px solid var(--ft-color-border);
+  outline-offset: -7px;
+}
+
+/* the head is the drawing's title block, closed off by a rule */
+.ftools-survey.blueprint::part(head) {
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  row-gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ft-color-border);
+}
+
+/* sheet label above the title, as in a drawing's title block */
+.ftools-survey.blueprint::part(head)::before {
+  flex-basis: 100%;
+  content: 'Dwg FB-01 · Sheet 1 of 1' / '';
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ft-color-muted);
+}
+
+.ftools-survey.blueprint::part(title) {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ftools-survey.blueprint::part(close) {
+  color: var(--ft-color-muted);
+}
+
+.ftools-survey.blueprint::part(close):hover {
+  color: var(--ft-color-text);
+}
+
+.ftools-survey.blueprint::part(point) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-control);
+  border: 1px solid var(--ft-color-border);
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color 0.12s, background-color 0.12s;
+}
+
+.ftools-survey.blueprint::part(point):hover,
+.ftools-survey.blueprint::part(point):focus-visible {
+  color: var(--ft-color-text);
+  background-color: color-mix(in srgb, var(--ft-color-text) 16%, var(--ft-color-control));
+  border-color: var(--ft-color-text);
+  box-shadow: none;
+}
+
+.ftools-survey.blueprint::part(point):focus-visible {
+  outline: 1px dashed var(--ft-color-text);
+  outline-offset: 3px;
+}
+
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey.blueprint::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+/* icons drawn in white ink; an empty star stays faint so it doesn't read as filled */
+.ftools-survey.blueprint::part(point-icon),
+.ftools-survey.blueprint::part(success-icon) {
+  filter: grayscale(1) brightness(1.8);
+}
+
+.ftools-survey.blueprint::part(point-icon) {
+  color: color-mix(in srgb, currentcolor 45%, transparent);
+}
+
+.ftools-survey.blueprint::part(point-icon filled) {
+  color: var(--ft-color-star);
+}
+
+/* the legend is a dimension line: a rule with a tick at each end */
+.ftools-survey.blueprint::part(legend) {
+  position: relative;
+  padding-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--ft-color-border);
+}
+
+.ftools-survey.blueprint::part(legend)::before,
+.ftools-survey.blueprint::part(legend)::after {
+  position: absolute;
+  top: -5px;
+  width: 1px;
+  height: 9px;
+  content: '';
+  background-color: var(--ft-color-muted);
+}
+
+.ftools-survey.blueprint::part(legend)::before {
+  left: 0;
+}
+
+.ftools-survey.blueprint::part(legend)::after {
+  right: 0;
+}
+
+/* controls are darker solid sheets, so they stand out from the grid and it doesn't run through the text */
+.ftools-survey.blueprint::part(field) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-control);
+  border: 1px solid var(--ft-color-border);
+  border-radius: 0;
+}
+
+.ftools-survey.blueprint::part(field)::placeholder {
+  opacity: 1;
+  color: color-mix(in srgb, var(--ft-color-muted) 75%, transparent);
+}
+
+.ftools-survey.blueprint::part(field):focus {
+  border-color: var(--ft-color-text);
+  outline: 1px dashed var(--ft-color-text);
+  outline-offset: 3px;
+}
+
+.ftools-survey.blueprint::part(field invalid) {
+  border-color: var(--ft-color-error);
+  outline: 1px dashed var(--ft-color-error);
+  outline-offset: 3px;
+}
+
+.ftools-survey.blueprint::part(checkbox) {
+  background-color: var(--ft-color-control);
+  border: 1px solid var(--ft-color-text);
+  border-radius: 0;
+}
+
+/* the rule above beats the library's checked fill, so the checked box brings it back */
+.ftools-survey.blueprint::part(checkbox checked) {
+  background-color: var(--ft-color-accent);
+  border-color: var(--ft-color-accent);
+}
+
+.ftools-survey.blueprint::part(attach),
+.ftools-survey.blueprint::part(remove),
+.ftools-survey.blueprint::part(dismiss) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-control);
+  border: 1px solid var(--ft-color-border);
+  border-radius: 0;
+}
+
+.ftools-survey.blueprint::part(attach):hover:not(:disabled),
+.ftools-survey.blueprint::part(remove):hover,
+.ftools-survey.blueprint::part(dismiss):hover {
+  background-color: color-mix(in srgb, var(--ft-color-text) 16%, var(--ft-color-control));
+  border-color: var(--ft-color-text);
+}
+
+/* buttons are outlines in white ink; the primary one is drawn solid */
+.ftools-survey.blueprint::part(submit),
+.ftools-survey.blueprint::part(skip) {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--ft-color-text);
+  border-radius: 0;
+}
+
+.ftools-survey.blueprint::part(skip) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-control);
+  border-style: dashed;
+}
+
+.ftools-survey.blueprint::part(skip):hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--ft-color-text) 16%, var(--ft-color-control));
+}
+
+.ftools-survey.blueprint::part(submit):disabled {
+  opacity: 1;
+  color: var(--ft-color-muted);
+  background-color: var(--ft-color-control);
+  border-color: var(--ft-color-border);
+}

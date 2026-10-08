@@ -1,0 +1,83 @@
+.ftools-survey.helpful {
+  font-family: inherit;
+}
+
+/* embedded, it is a line in the page, not a card: only a rule above separates it from the article */
+.ftools-survey.helpful.ftools-embed {
+  --ft-surface-shadow: none;
+  --ft-surface-padding: 0;
+  --ft-surface-padding-mobile: 0;
+}
+
+.ftools-survey.helpful.ftools-embed::part(surface) {
+  padding-top: 16px;
+  background-color: transparent;
+  border-top: 1px solid color-mix(in srgb, currentcolor 18%, transparent);
+  border-radius: 0;
+}
+
+.ftools-survey.helpful::part(root) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: inherit;
+}
+
+/* the rating step sits on one line with its question; later steps stack as usual */
+.ftools-survey.helpful::part(root rating) {
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 8px 16px;
+  width: auto;
+}
+
+.ftools-survey.helpful::part(head) {
+  padding: 0;
+}
+
+/* a popup stays a card; its close button keeps clear of both the title and the thumbs on the same line */
+.ftools-survey.helpful.ftools-popup::part(root) {
+  padding-inline-end: 32px;
+}
+
+.ftools-survey.helpful::part(title) {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ftools-survey.helpful::part(points) {
+  gap: 8px;
+}
+
+.ftools-survey.helpful::part(point) {
+  width: 36px;
+  height: 36px;
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, currentcolor 20%, transparent);
+  border-radius: 8px;
+}
+
+@media (any-hover: hover) {
+  .ftools-survey.helpful::part(point):hover {
+    background-color: color-mix(in srgb, currentcolor 6%, transparent);
+    border-color: currentcolor;
+  }
+}
+
+.ftools-survey.helpful::part(point-icon) {
+  width: 20px;
+  height: 20px;
+}
+
+.ftools-survey.helpful::part(legend) {
+  display: none;
+}
+
+/* thanks in one line: the big success icon would outgrow a footer line */
+.ftools-survey.helpful::part(success-icon) {
+  display: none;
+}
+
+.ftools-survey.helpful::part(root success) {
+  gap: 0;
+}

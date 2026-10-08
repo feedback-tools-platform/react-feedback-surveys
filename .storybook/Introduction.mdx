@@ -34,9 +34,9 @@
   marginTop: '2em'
 }}>
   <div>
-    <strong>📊 Ready-to-use widgets</strong>
+    <strong>📊 Ready-to-use formats</strong>
     <p style={{ color: 'var(--color-text-secondary, #666)' }}>
-      CSAT (2 or 5 points), CES (7 points), NPS (0–10)
+      CSAT (2 or 5 points), CES (7 points), NPS (0–10), general text feedback
     </p>
   </div>
   <div>
@@ -54,13 +54,19 @@
   <div>
     <strong>💬 Follow-up feedback</strong>
     <p style={{ color: 'var(--color-text-secondary, #666)' }}>
-      Optional text input or multiple choice responses
+      Text or multiple choice, optional email collection and screenshot attachments
     </p>
   </div>
   <div>
-    <strong>🎯 Fully customizable</strong>
+    <strong>🌗 Built-in themes</strong>
     <p style={{ color: 'var(--color-text-secondary, #666)' }}>
-      CSS variables and custom class names
+      Light, dark, and auto that follows the system color scheme
+    </p>
+  </div>
+  <div>
+    <strong>🎯 Deep visual customization</strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      Colors, shapes, fonts, and every part restyle from your CSS. See the <a href="./?path=/story/style-catalog--catalog" target="_top">style catalog</a>
     </p>
   </div>
   <div>
@@ -81,39 +87,81 @@ npm i react-feedback-surveys
 yarn add react-feedback-surveys
 ```
 
-Import styles and use a survey component:
+Import styles and render a survey:
 
 ```tsx
-import { CSAT5Survey } from 'react-feedback-surveys';
+import { Surface, Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
 function App() {
   return (
-    <CSAT5Survey
-      scaleStyle="emoji"
-      question="How satisfied are you with our product?"
-      minLabel="Very unsatisfied"
-      maxLabel="Very satisfied"
-      thankYouMessage="Thanks for your feedback!"
-      onScoreSubmit={({ value }) => console.log('Score:', value)}
-    />
+    <Surface theme="auto">
+      <Survey
+        type="csat"
+        points={5}
+        scaleStyle="emoji"
+        question="How satisfied are you with our product?"
+        minLabel="Very unsatisfied"
+        maxLabel="Very satisfied"
+        thankYouMessage="Thanks for your feedback!"
+        onScoreSubmit={({ value }) => console.log('Score:', value)}
+      />
+    </Surface>
   );
 }
 ```
 
-## Survey Components
+## Survey Formats
 
-Explore the available survey widgets in the sidebar:
+One `Survey` component covers every format, picked with the `type` prop:
 
-- **CSAT5Survey** - Customer Satisfaction Score (5-point scale)
-- **CSAT2Survey** - Customer Satisfaction Score (2-point scale)
-- **NPS10Survey** - Net Promoter Score (0–10 scale)
-- **CES7Survey** - Customer Effort Score (7-point scale)
+- **`type="csat"`** - Customer Satisfaction Score, 2 or 5 points (`points={2}` or `points={5}`)
+- **`type="nps"`** - Net Promoter Score, 0–10 scale
+- **`type="ces"`** - Customer Effort Score, 7-point scale
+- **`type="general"`** - text feedback only, no rating scale
 
 ## Layout Components
 
 - **Popup** - Fixed overlay wrapper with positioning and animations
-- **Surface** - Basic container with consistent styling
+- **Surface** - Inline container for embedding a survey in the page
+
+Both take a `theme` prop: `light` (default), `dark`, or `auto`.
+
+## Customization
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1em',
+  marginTop: '1em'
+}}>
+  <div>
+    <strong>
+      <a
+        href="./?path=/story/style-catalog--catalog"
+        target="_top"
+      >
+        Style Catalog
+      </a>
+    </strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      Ready-made looks, each with a use case and a button that copies its CSS for your stylesheet
+    </p>
+  </div>
+  <div>
+    <strong>
+      <a
+        href="./?path=/story/styling-cases--cascade"
+        target="_top"
+      >
+        Styling Cases
+      </a>
+    </strong>
+    <p style={{ color: 'var(--color-text-secondary, #666)' }}>
+      How CSS variables, the built-in theme, your classes, and state class names combine
+    </p>
+  </div>
+</div>
 
 ## Resources
 
@@ -202,7 +250,7 @@ Explore the available survey widgets in the sidebar:
   borderRadius: '8px'
 }}>
   <p style={{ margin: 0, fontSize: '0.95em' }}>
-    <strong>💡 Getting Started:</strong> Browse the survey components in the sidebar to see live examples and interactive demos. Each story includes controls to customize the component properties in real-time.
+    <strong>💡 Getting Started:</strong> Browse <code>widgets</code> in the sidebar for every survey format with live controls, <code>Style Catalog</code> for ready-made looks, and <code>Styling Cases</code> for how the styling rules combine.
   </p>
 </div>
 

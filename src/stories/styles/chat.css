@@ -1,0 +1,139 @@
+.ftools-survey.chat {
+  --ft-color-outline: hsl(221deg 83% 53%);
+  --ft-surface-radius: 20px;
+  --ft-surface-shadow: 0 1px 2px hsl(222deg 47% 11% / 6%), 0 12px 40px -8px hsl(222deg 47% 11% / 18%);
+  --ft-popup-shadow: 0 1px 2px hsl(222deg 47% 11% / 6%), 0 20px 48px -12px hsl(222deg 47% 11% / 28%);
+  --ft-font-family: system-ui, -apple-system, 'Segoe UI', roboto, sans-serif;
+  --ft-color-accent: hsl(221deg 83% 53%);
+  --ft-color-accent-text: #fff;
+
+  /* blue ink mixed with the theme's text color: darker on light, lighter on dark */
+  --chat-ink: color-mix(in srgb, #2563eb 70%, currentcolor);
+}
+
+.ftools-survey.chat::part(head) {
+  align-items: flex-end;
+}
+
+.ftools-survey.chat::part(head)::before {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  content: '';
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  border-radius: 50%;
+}
+
+.ftools-survey.chat::part(title) {
+  flex: 0 1 auto;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 400;
+  background-color: color-mix(in srgb, #2563eb 10%, transparent);
+  border-radius: 18px 18px 18px 4px;
+}
+
+.ftools-survey.chat::part(points) {
+  flex-wrap: wrap;
+}
+
+.ftools-survey.chat::part(point) {
+  color: var(--chat-ink);
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, #2563eb 45%, transparent);
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+.ftools-survey.chat::part(point):hover,
+.ftools-survey.chat::part(point):focus-visible {
+  color: var(--chat-ink);
+  background-color: color-mix(in srgb, #2563eb 12%, transparent);
+  border-color: #2563eb;
+  box-shadow: none;
+}
+
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey.chat::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+  color: color-mix(in srgb, #2563eb 40%, transparent);
+}
+
+/* a filled star keeps the star color; the rule above would turn it pale too */
+.ftools-survey.chat::part(point-icon filled) {
+  color: var(--ft-color-star, hsl(42deg 99% 64.5%));
+}
+
+.ftools-survey.chat::part(choices) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.ftools-survey.chat::part(choice) {
+  padding: 7px 14px;
+  font-size: 14px;
+  color: var(--chat-ink);
+  border: 1px solid color-mix(in srgb, #2563eb 45%, transparent);
+  border-radius: 999px;
+}
+
+.ftools-survey.chat::part(choice checked) {
+  color: #fff;
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+@media (any-hover: hover) {
+  .ftools-survey.chat::part(choice):hover {
+    background-color: color-mix(in srgb, #2563eb 12%, transparent);
+    border-color: #2563eb;
+  }
+
+  .ftools-survey.chat::part(choice checked):hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+}
+
+.ftools-survey.chat::part(choice):focus-within {
+  outline: 3px solid hsl(221deg 83% 53% / 35%);
+}
+
+.ftools-survey.chat::part(checkbox) {
+  display: none;
+}
+
+.ftools-survey.chat::part(field) {
+  background-color: color-mix(in srgb, currentcolor 6%, transparent);
+  border-color: transparent;
+  border-radius: 20px;
+}
+
+.ftools-survey.chat::part(field):focus {
+  background-color: transparent;
+  border-color: #2563eb;
+  outline: 4px solid hsl(221deg 83% 53% / 15%);
+}
+
+.ftools-survey.chat::part(attach) {
+  border-radius: 50%;
+}
+
+.ftools-survey.chat::part(submit) {
+  border-radius: 999px;
+}
+
+.ftools-survey.chat::part(submit)::after {
+  content: '➤' / '';
+  margin-inline-start: 6px;
+}
+
+.ftools-survey.chat::part(skip) {
+  color: var(--chat-ink);
+  background-color: transparent;
+  border-radius: 999px;
+}

@@ -321,7 +321,7 @@ export const StarsFilledState: Story = {
     await expect(iconOf(third)).toHaveAttribute('part', 'point-icon');
 
     // the fill color comes from --ft-color-star
-    canvasElement.style.setProperty('--ft-color-star', '0 100% 50%');
+    canvasElement.style.setProperty('--ft-color-star', 'red');
     await expect(getComputedStyle(iconOf(second)).color).toBe('rgb(255, 0, 0)');
   }
 };

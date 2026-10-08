@@ -30,18 +30,21 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
     * [CSAT (Customer Satisfaction Score)](#csat-customer-satisfaction-score)
     * [NPS (Net Promoter Score)](#nps-net-promoter-score)
     * [CES (Customer Effort Score)](#ces-customer-effort-score)
+    * [General (text feedback only)](#general-text-feedback-only)
 - [Layout Components](#layout-components)
     * [Popup](#popup)
     * [Surface](#surface)
 - [Props](#props)
     * [Shared Props](#shared-props)
     * [Accessibility Labels](#accessibility-labels)
+    * [Shared Events](#shared-events)
     * [Attachments](#attachments)
     * [Format Props](#format-props)
     * [Scale Style Options](#scale-style-options)
 - [Styling](#styling)
     * [How Styles Combine](#how-styles-combine)
     * [Themes (Dark Mode)](#themes-dark-mode)
+    * [Custom Styles](#custom-styles)
     * [CSS Variables](#css-variables)
     * [Custom Classes](#custom-classes)
     * [Shadow DOM Parts](#shadow-dom-parts)
@@ -50,6 +53,7 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
     * [Local development (Storybook)](#local-development-storybook)
     * [Library build (watch mode)](#library-build-watch-mode)
     * [Production build](#production-build)
+    * [Checks](#checks)
 - [Roadmap](#roadmap)
 - [Changelog](#changelog)
 - [Credits](#credits)
@@ -59,14 +63,14 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
 ## Features
 
 - **A single `Survey` component** – the format (methodology, scale length, visual style) is configuration, not a different import
-- **Ready-to-use survey formats** – CSAT (2 or 5 points), CES (7 points), NPS (0–10)
+- **Ready-to-use survey formats** – CSAT (2 or 5 points), CES (7 points), NPS (0–10), and general text feedback
 - **Multiple scale styles** – emoji, stars, numbers, thumbs
 - **Flexible placement** – embed inline or display as popup overlay
 - **Follow-up feedback** – optional text input or multiple choice responses
 - **Optional email collection** – close the loop by capturing a respondent's email when no user identity is known
 - **Optional screenshot attachments** – let respondents attach a screenshot, captured by a function you provide
 - **Built-in themes** – light, dark, and auto (follows the system color scheme)
-- **Fully customizable** – CSS variables and custom class names that always win over the defaults
+- **Deep visual customization** – colors, shapes, fonts, and every single part restyle from your CSS: variables, class names, and `::part()` always win over the defaults. See over a dozen ready-made looks in the [style catalog](https://feedback.tools/react-feedback-surveys/storybook/?path=/story/style-catalog--catalog)
 - **Zero dependencies**
 - **TypeScript support**
 
@@ -248,7 +252,7 @@ import 'react-feedback-surveys/index.css';
 
 ### Popup
 
-The `<Popup>` component wraps survey widgets in a fixed overlay that slides in from the screen edge. It includes positioning, animations, and a close button for easy dismissal.
+The `<Popup>` component wraps survey widgets in a fixed overlay pinned to a corner of the screen. It includes positioning, animations, and a close button for easy dismissal.
 
 <img alt="CSAT5 Popup" src="docs/assets/csat5-popup.png" width="416" />
 
@@ -273,12 +277,13 @@ import 'react-feedback-surveys/index.css';
     points={5}
     scaleStyle="stars"
     question="How would you rate your satisfaction?"
+    thankYouMessage="Thanks for your feedback!"
     onScoreSubmit={({ value }) => {/* ... */}}
   />
 </Popup>
 ```
 
-#### Props
+#### Popup Props
 
 | Prop         | Type                                                       | Required | Default         | Description                                                        |
 |--------------|------------------------------------------------------------|----------|-----------------|--------------------------------------------------------------------|
@@ -291,7 +296,7 @@ import 'react-feedback-surveys/index.css';
 | `closeLabel` | `string`                                                    | -        | `'Close survey'` | Close button label, used for both its `aria-label` and `title`.   |
 | `onClose`    | `() => void`                                               | -        | -               | Callback fired when the close button is clicked.                   |
 
-For more examples, check out the Storybook stories under `widgets/Survey` (grouped by CSAT/NPS/CES in the sidebar).
+For more examples, check out the Storybook stories under `widgets/Survey` (one group per format), and `Style Catalog` and `Styling Cases` for customization.
 
 > **Note**
 > If the survey inside uses `dir="rtl"` on a page that's otherwise LTR (or vice versa), pass the same `dir` to `Popup` too — the close button's position resolves against the document direction, while the survey head's reserved offset resolves against the survey's own `dir`. Passing both keeps them aligned.
@@ -317,12 +322,13 @@ import 'react-feedback-surveys/index.css';
     points={5}
     scaleStyle="stars"
     question="How would you rate your satisfaction?"
+    thankYouMessage="Thanks for your feedback!"
     onScoreSubmit={({ value }) => {/* ... */}}
   />
 </Surface>
 ```
 
-#### Props
+#### Surface Props
 
 | Prop        | Type              | Required | Default | Description                                        |
 |-------------|-------------------|----------|---------|----------------------------------------------------|
@@ -340,7 +346,7 @@ Most props are shared across every survey format. `type` (and `points`, for CSAT
 
 | Prop               | Type                          | Required | Description                                                                  |
 |--------------------|-------------------------------|----------|------------------------------------------------------------------------------|
-| `classNames`       | `SurveyClassNames` (see below)| -        | Optional class names to target internal parts.                               |
+| `classNames`       | `SurveyClassNames`            | -        | Class names for internal parts, one flat key per part. See [Custom Classes](#custom-classes). |
 | `theme`            | `'light' \| 'dark' \| 'auto'` | -       | Built-in color theme. Default `'light'`. Set it on the outermost component (`Popup` or `Surface`) — see [Themes](#themes-dark-mode). |
 | `dir`              | `'ltr' \| 'rtl' \| 'auto'`    | -        | Text direction for RTL/LTR language support.                                 |
 | `strings`          | `SurveyStrings` (see below)   | -        | Overrides for the library's own aria-labels and other screen-reader-only text. See [Accessibility Labels](#accessibility-labels). |
@@ -399,67 +405,25 @@ Pass a `strings` object with only the keys you want to change — each one merge
 | `getScoreLabel` | `(score: number) => string` | `(score) => \`Score ${score}\`` |
 | `getStarsLabel` | `(score: number) => string` | `(score) => \`${score} ${score > 1 ? 'stars' : 'star'}\`` |
 
-`getScoreLabel` applies to the `numbers` scale style (CSAT5, CES, NPS); `getStarsLabel` applies to CSAT5's `stars` style. Both are callbacks rather than templates so you can apply correct pluralization for your target language. `Popup`'s close button label lives on `Popup` itself, not in `strings` — see its own `closeLabel` prop in [Popup Props](#props).
-
-#### SurveyClassNames Type
-
-One flat object, one key per part. See [Custom Classes](#custom-classes) for what each key styles.
-
-```typescript
-interface SurveyClassNames {
-  root?: string;        // Survey wrapper
-  head?: string;        // Row with the title
-  title?: string;       // Question, step question or thank-you text
-  body?: string;        // Content under the head
-  rating?: string;      // Added to root on the rating step
-  feedback?: string;    // Added to root on the feedback step
-  contact?: string;     // Added to root on the email step
-  success?: string;     // Added to root on the success step
-  successIcon?: string; // Icon on the success step
-  scale?: string;       // Rating scale: the points and the legend
-  points?: string;      // Row of rating points
-  point?: string;       // Single rating point (button)
-  pointIcon?: string;   // Emoji, star or thumb inside a point
-  pointIconFilled?: string; // Added to pointIcon while the star is filled
-  pointScore?: string;  // Number inside a point
-  legend?: string;      // Min and max captions under the scale
-  form?: string;        // Form on the feedback and email steps
-  subtext?: string;     // Text above the email field
-  choices?: string;     // List of predefined choices
-  choice?: string;      // Single choice (the clickable label)
-  checkbox?: string;    // Visible checkbox square of a choice
-  field?: string;       // Every text field: feedback textarea, "Other" input, email input
-  attach?: string;      // Screenshot capture button
-  attachment?: string;  // Attached screenshot row
-  remove?: string;      // Button that removes an attachment
-  error?: string;       // Capture error row
-  dismiss?: string;     // Button that hides the capture error
-  actions?: string;     // Wrapper for the submit and skip buttons
-  submit?: string;      // Submit button
-  skip?: string;        // Skip button
-  choiceChecked?: string;   // Added to choice while it is checked
-  checkboxChecked?: string; // Added to checkbox while its choice is checked
-  fieldInvalid?: string;    // Added to field while it shows a validation error
-  attachBusy?: string;      // Added to attach while a screenshot is captured
-}
-```
+`getScoreLabel` applies to the `numbers` scale style (CSAT5, CES, NPS); `getStarsLabel` applies to CSAT5's `stars` style. Both are callbacks rather than templates so you can apply correct pluralization for your target language. `Popup`'s close button label lives on `Popup` itself, not in `strings` — see its own `closeLabel` prop in [Popup Props](#popup-props).
 
 ### Shared Events
 
 | Prop               | Type                                              | Required | Description                                                                                                 |
 |--------------------|---------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------|
-| `onScoreSubmit`    | `(payload: ScorePayload) => void \| Promise<void>`       | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
-| `onFeedbackSubmit` | `(payload: FeedbackPayload) => void \| Promise<void>` | -        | Fires when feedback is submitted. Includes the selected score and the user's text(s). |
-| `onContactSubmit`  | `(payload: ContactPayload) => void \| Promise<void>` | -        | Fires when the respondent submits an email on the optional email collection screen. Not called when the step is skipped or not shown. |
+| `onScoreSubmit`    | `(payload: SurveySubmitPayload) => void \| Promise<void>` | -        | Fires immediately when a score is selected, before any follow-up feedback screen. Captures the raw rating.  |
+| `onFeedbackSubmit` | `(payload: SurveySubmitPayload) => void \| Promise<void>` | -        | Fires when feedback is submitted. Includes the selected score and the user's text(s). |
+| `onContactSubmit`  | `(payload: ContactSubmitPayload) => void \| Promise<void>` | -        | Fires when the respondent submits an email on the optional email collection screen. Not called when the step is skipped or not shown. |
 
-**Event Payload Types:**
+**Event Payload Types** (exported from the package):
 
 ```typescript
-type ScorePayload = { value: number };
-type FeedbackPayload = { value?: number; text?: string | string[]; attachments?: Attachment[] };
-type ContactPayload = { value?: number; text?: string | string[]; email: string };
-type Attachment = { kind: 'screenshot'; data: string | Blob; name?: string; mimeType?: string; size?: number };
+interface SurveySubmitPayload { value?: number; text?: string | string[]; attachments?: SurveyAttachment[] }
+interface ContactSubmitPayload { value?: number; text?: string | string[]; email: string }
+interface SurveyAttachment { kind: 'screenshot'; data: string | Blob; name?: string; mimeType?: string; size?: number }
 ```
+
+`onScoreSubmit` always receives `value`; `text` and `attachments` come with `onFeedbackSubmit`.
 
 > See [Attachments](#attachments).
 
@@ -481,14 +445,14 @@ The actual `value` returned depends on the survey type:
 Invoked when the user completes the follow-up step and submits their feedback (only applies when `responseType` is `text` or `choices`).  
 This callback provides both the original score and the user's input.
 
-For surveys with a rating step, the feedback step is optional: respondents can submit feedback or skip it via the `textButtonSkipLabel` button (or by submitting with empty input), and either action advances to the next screen. For `type="general"`, the feedback step **is** the survey, so there's no Skip button — Submit stays disabled until there's something to send. `onFeedbackSubmit` only fires when feedback text or choices are actually submitted; it is **not** called when a rating-survey's step is skipped.
+For surveys with a rating step, the feedback step is optional: respondents can submit feedback or skip it via the `textButtonSkipLabel` button, and either action advances to the next screen. Submit stays disabled until there's text, a choice, or an attachment to send. For `type="general"`, the feedback step **is** the survey, so there's no Skip button — Submit stays disabled until there's something to send. `onFeedbackSubmit` only fires when feedback text or choices are actually submitted; it is **not** called when a rating-survey's step is skipped.
 
 **Arguments:**
 - `value?: number` — the same score previously passed to `onScoreSubmit`; `undefined` for `type="general"`, which has no rating step
-- `text: string | string[]` — depends on `responseType`:
+- `text?: string | string[]` — depends on `responseType`; `undefined` when only an attachment was submitted:
     - `text`: a single text feedback string
     - `choices`: an array of selected options (may include free-text feedback if enabled)
-- `attachments?: Attachment[]` — present when the respondent confirmed a screenshot; see [Attachments](#attachments)
+- `attachments?: SurveyAttachment[]` — present when the respondent confirmed a screenshot; see [Attachments](#attachments)
 
 > **Important**  
 You should listen to **both** `onScoreSubmit` and `onFeedbackSubmit`.  
@@ -530,9 +494,11 @@ When `collectContact` is `true` and no `userId` is provided, an optional email c
 
 ### Attachments
 
-Respondents can attach a screenshot to their feedback, surfaced on submit as `attachments?: Attachment[]` (see the event payload types above). Each attachment renders as a thumbnail in the feedback step, with a caption and size underneath, click to open it in a new tab, click the "x" to remove it. Submit is disabled for the brief moment a capture is still in flight, so it can't be confirmed before the attachment actually lands in the list.
+Respondents can attach a screenshot to their feedback, surfaced on submit as `attachments?: SurveyAttachment[]` (see the event payload types above). Each attachment renders as a thumbnail in the feedback step, with a caption and size underneath, click to open it in a new tab, click the "x" to remove it. Submit is disabled for the brief moment a capture is still in flight, so it can't be confirmed before the attachment actually lands in the list.
 
 Once an attachment is confirmed, the Skip button is disabled — an attached screenshot is never silently discarded. Remove the attachment to re-enable Skip, or submit to keep it. After a rating, an attachment on its own is enough to submit: `onFeedbackSubmit` receives it with `text: undefined`. A `general` survey has no rating, so there it is not: for `responseType="text"`, submitting with an attachment but no text flags the textarea instead of sending; for `responseType="choices"`, Submit stays disabled until a choice is picked or text is entered.
+
+Pass `onCaptureScreenshot` to add a screenshot control (labeled `screenshotButtonLabel`, default `'Capture screenshot'`) to the feedback step. Clicking it calls your function and attaches the result immediately. The control is off by default: it doesn't render at all unless `onCaptureScreenshot` is provided.
 
 By default a respondent can confirm a single attachment: once one is attached, the add control hides. Pass `maxAttachments` to raise (or lower) that cap. The add control stays visible (below the existing thumbnails) until the cap is reached:
 
@@ -543,8 +509,6 @@ By default a respondent can confirm a single attachment: once one is attached, t
   maxAttachments={3}
 />
 ```
-
-Pass `onCaptureScreenshot` to add an "Capture screenshot" control to the feedback step. Clicking it calls your function and attaches the result immediately. The control is off by default: it doesn't render at all unless `onCaptureScreenshot` is provided.
 
 While the capture is pending, the control shows a spinner. If your function throws or rejects, nothing is attached and the respondent sees `screenshotErrorMessage` — never the error's own text — with a button to dismiss it; the next capture attempt clears it too. The library doesn't time out a pending capture, so put a time limit inside your function if it can hang.
 
@@ -606,13 +570,17 @@ The package ships with minimal default styles. To use them:
 import 'react-feedback-surveys/index.css';
 ```
 
+The defaults are only a starting point. Your CSS changes colors, radius, shadows, font, sizes, spacing, and the look of every part and state, so one widget can look like a chat bubble, a sticky note, a blueprint, or a retro OS window. The markup, the step flow, and the icons stay the same.
+
+To see how far it goes, open the [style catalog](https://feedback.tools/react-feedback-surveys/storybook/?path=/story/style-catalog--catalog) in Storybook: ready-made styles from minimal to a hand-drawn sketch, each paired with a use case and with its CSS to copy.
+
 ### How Styles Combine
 
 Three rules define every override:
 
 1. **Library styles are defaults.** All of them live in one CSS cascade layer, `@layer react-feedback-surveys`. Any CSS of yours outside a layer wins over them, whatever its specificity and load order. A plain `.my-button` beats the library's `.button:hover:not(:disabled)`.
 2. **Values flow through variables.** Colors, radius, shadows, and font come from CSS variables. From weakest to strongest: library defaults → the `theme` prop → your `--ft-*` variables. `--ft-*` set on any ancestor reach the widget, also across a shadow DOM boundary.
-3. **Rules come from classes.** `className` and `classNames` attach your classes to specific parts. A class that sets a color itself owns that color in every theme — the built-in theme does not adjust it.
+3. **Rules come from classes.** `className` and `classNames` attach your classes to specific parts; inside a shadow root `::part()` does the same. A rule that sets a color itself owns that color in every theme — the built-in theme does not adjust it.
 
 If your own CSS uses cascade layers, layer order decides instead of rule 1:
 
@@ -635,7 +603,7 @@ Inside a shadow root page styles don't reach the widget, so only the CSS you put
 
 ### Themes (Dark Mode)
 
-The `theme` prop switches the built-in color palette. No CSS is needed on your side.
+The `theme` prop switches the built-in color palette: light, a ready dark theme, or auto. No CSS is needed on your side.
 
 | Value     | Result                                                                  |
 |-----------|-------------------------------------------------------------------------|
@@ -656,14 +624,14 @@ The `theme` prop switches the built-in color palette. No CSS is needed on your s
 
 To toggle the theme from your own switcher, pass its state to the prop: `<Popup theme={isDark ? 'dark' : 'light'}>`.
 
-#### Custom Themes
+### Custom Styles
 
-A custom theme is a class that sets `--ft-*` variables, plus optional classes for single parts:
+A custom style is a class that sets `--ft-*` variables, plus optional classes for single parts. It works on top of any built-in theme:
 
 ```css
-.brand-theme {
-  --ft-color-text: 250 60% 20%;
-  --ft-color-bg: 250 100% 98%;
+.brand-style {
+  --ft-color-text: hsl(250 60% 20%);
+  --ft-color-bg: hsl(250 100% 98%);
   --ft-surface-radius: 0;
 }
 
@@ -673,7 +641,7 @@ A custom theme is a class that sets `--ft-*` variables, plus optional classes fo
 ```
 
 ```tsx
-<Surface className="brand-theme">
+<Surface className="brand-style">
   <Survey
     classNames={{ submit: 'brand-submit' }}
     /* ... */
@@ -681,40 +649,40 @@ A custom theme is a class that sets `--ft-*` variables, plus optional classes fo
 </Surface>
 ```
 
-Storybook's `Themes` section shows the built-in themes and a catalog of custom ones (`src/stories/themes`), each paired with a use case. Catalog themes are written for a widget inside a shadow root, see [Shadow DOM Parts](#shadow-dom-parts). The `Styling` section demonstrates how the rules above combine.
+Storybook's `Style Catalog` section shows the built-in themes and a [catalog of ready-made custom styles](https://feedback.tools/react-feedback-surveys/storybook/?path=/story/style-catalog--catalog) (`src/stories/styles`), each paired with a use case. Catalog styles are written for a widget inside a shadow root and target its host by name, `.ftools-survey.<name>`, so several of them work on one page. The Feedback Tools SDK adds that name to the host from `className` in `init()`. See [Shadow DOM Parts](#shadow-dom-parts). The `Styling Cases` section demonstrates how the rules above combine.
 
 ### CSS Variables
 
-You can override colors and fonts via CSS variables:
+You can override colors and fonts via CSS variables. Color variables take any CSS color: `#6d4aff`, `rgb()`, `hsl()`, `oklch()`, a color name, or `transparent`.
 
 ```css
 :root {
   /* Main text color for headings and body text */
-  --ft-color-text: 30 8% 14%;
+  --ft-color-text: hsl(30 8% 14%);
 
   /* Background color for survey widgets */
-  --ft-color-bg: 0 0% 100%;
+  --ft-color-bg: hsl(0 0% 100%);
 
   /* Muted text color for labels and secondary content */
-  --ft-color-muted: 222 11% 46%;
+  --ft-color-muted: hsl(222 11% 46%);
 
   /* Error color for validation messages */
-  --ft-color-error: 32 95% 44%;
+  --ft-color-error: hsl(32 95% 44%);
 
   /* Error text color (attachment capture errors) — darker than --ft-color-error, tuned for text contrast rather than borders/outlines */
-  --ft-color-error-text: 32 95% 32%;
+  --ft-color-error-text: hsl(32 95% 32%);
 
   /* Border color for inputs and containers */
-  --ft-color-border: 214 14% 83%;
+  --ft-color-border: hsl(214 14% 83%);
 
   /* Outline color for focused interactive elements */
-  --ft-color-outline: 218 14% 65%;
+  --ft-color-outline: hsl(218 14% 65%);
 
   /* Shadow color for the default --ft-surface-shadow and --ft-popup-shadow */
-  --ft-color-shadow: 0 0% 0%;
+  --ft-color-shadow: hsl(0 0% 0%);
 
   /* Background color for input controls and buttons */
-  --ft-color-control: 214 20% 96%;
+  --ft-color-control: hsl(214 20% 96%);
 
   /* Z-index for popup overlay positioning */
   --ft-popup-z-index: 49;
@@ -730,7 +698,7 @@ You can override colors and fonts via CSS variables:
   /* Padding for Surface component container (desktop) */
   --ft-surface-padding: 20px;
 
-  /* Padding for Surface component container on mobile devices (max-width: 400px) */
+  /* Padding for Surface component container on screens narrower than 400px */
   --ft-surface-padding-mobile: 20px;
 
   /* Border radius for Surface container, inputs, and submit button */
@@ -745,23 +713,18 @@ You can override colors and fonts via CSS variables:
   /* Font of all survey text, inputs, and buttons */
   --ft-font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
 
-  /* Primary action: the submit button and a checked checkbox. Defaults to --ft-color-text */
-  --ft-color-accent: 30 8% 14%;
+  /* Primary action: the submit button and a checked checkbox. Unset, it follows --ft-color-text */
+  /* --ft-color-accent: #6d4aff; */
 
-  /* Text and check mark on top of the accent. Defaults to --ft-color-bg */
-  --ft-color-accent-text: 0 0% 100%;
+  /* Text and check mark on top of the accent. Unset, it follows --ft-color-bg */
+  /* --ft-color-accent-text: #fff; */
 
   /* Fill of a highlighted star in the stars scale */
-  --ft-color-star: 42 99% 64.5%;
+  --ft-color-star: hsl(42 99% 64.5%);
 
   /* Size of a choice checkbox; the box stays centered on the first text line at any size */
   --ft-checkbox-size: 20px;
 }
-
-/* Use with hsl() function: */
-/* color: hsl(var(--ft-color-text)); */
-/* background: hsl(var(--ft-color-bg)); */
-/* box-shadow: 0 2px 4px hsl(var(--ft-color-shadow) / 4%); */
 ```
 
 ### Custom Classes
@@ -833,6 +796,7 @@ import 'react-feedback-surveys/index.css';
   question="How would you rate your satisfaction with our product?"
   minLabel="Very unsatisfied"
   maxLabel="Very satisfied"
+  thankYouMessage="Thanks for your feedback!"
   onScoreSubmit={({ value }) => {/* ... */}}
   onFeedbackSubmit={({ value, text }) => {/* ... */}}
 />
@@ -850,7 +814,7 @@ When the widget renders inside a shadow root (as the Feedback Tools SDK does), p
 
 ```css
 .my-host {
-  --ft-color-bg: 250 70% 97%;
+  --ft-color-bg: #f7f5ff;
   --ft-surface-radius: 18px;
 }
 
@@ -882,6 +846,7 @@ Pseudo-classes and pseudo-elements of the part itself work: `:hover`, `:focus-vi
 ## Demo
 
 - Live demo: [View Storybook](https://feedback.tools/react-feedback-surveys/storybook/)
+- Style catalog: [ready-made looks with CSS to copy](https://feedback.tools/react-feedback-surveys/storybook/?path=/story/style-catalog--catalog)
 - Run locally: `npm run storybook`
 
 ## Contributing
@@ -907,6 +872,15 @@ This builds the package to `dist/` and watches for changes.
 
 ```bash
 npm run build
+```
+
+### Checks
+
+```bash
+npm run setup-tests   # once: installs the Chromium used by the Storybook tests
+npm test              # unit tests and every Storybook story, with accessibility checks
+npm run lint
+npm run typecheck
 ```
 
 ## Roadmap

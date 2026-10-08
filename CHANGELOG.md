@@ -9,38 +9,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Built-in themes** - New `theme` prop (`'light' | 'dark' | 'auto'`) on `Survey`, `Surface`, and `Popup`. `dark` gives a ready dark palette with no CSS on your side; `auto` follows the visitor's system color scheme and switches when it changes. Default stays `'light'`. Custom `--ft-*` variables still override every built-in theme. See [Themes (Dark Mode)](README.md#themes-dark-mode).
-- **Class names for every part** - `classNames` now reaches the feedback and email steps (`form`, `subtext`, `choices`, `choice`, `checkbox`, `field`, `attach`, `attachment`, `remove`, `error`, `dismiss`, `actions`, `submit`, `skip`) and the success icon (`successIcon`). State keys `choiceChecked`, `checkboxChecked`, `fieldInvalid`, `attachBusy`, and `pointIconFilled` add a class to exactly one part while it is in that state, so no attribute selectors are needed and utility classes work. See [Custom Classes](README.md#custom-classes).
-- **New exported types** - `SurveyTheme`, `SurveyClassNames`.
-- **`--ft-color-accent` and `--ft-color-accent-text` CSS variables** - Color the primary action, the submit button and a checked checkbox, in your brand color with one variable. By default the accent follows `--ft-color-text` and its text follows `--ft-color-bg`, so nothing changes until you set them.
-- **`--ft-color-star` CSS variable** - Sets the fill of a highlighted star in the stars scale. It was a fixed yellow before; the default stays the same.
-- **`--ft-checkbox-size` CSS variable** - Sets the size of a choice checkbox. The box stays centered on the first line of its label at any size and line height.
-- **Shadow DOM parts** - Every part of the widget carries a `part` attribute named after its `classNames` key in kebab case (`submit`, `field`, `point-icon`, ...), with states as a second name (`checked`, `invalid`, `busy`, `filled`, current step). Page CSS styles a widget inside a shadow root through `::part()`. See [Shadow DOM Parts](README.md#shadow-dom-parts).
+- **Built-in themes** - `theme` prop (`'light' | 'dark' | 'auto'`) on `Survey`, `Surface`, and `Popup`. `auto` follows the system color scheme. Default is `'light'`, and `--ft-*` variables override every theme. See [Themes (Dark Mode)](README.md#themes-dark-mode).
+- **Class names for every part** - `classNames` now covers the feedback and email steps and the success icon. State keys `choiceChecked`, `checkboxChecked`, `fieldInvalid`, `attachBusy`, and `pointIconFilled` add a class while the part is in that state. See [Custom Classes](README.md#custom-classes).
+- **Shadow DOM parts** - Every part has a `part` attribute named after its `classNames` key in kebab case, with states as a second name, so page CSS can style it through `::part()`. See [Shadow DOM Parts](README.md#shadow-dom-parts).
+- **CSS variables** - `--ft-color-accent` and `--ft-color-accent-text` for the submit button and a checked checkbox (default: text and background colors), `--ft-color-star`, `--ft-checkbox-size`, `--ft-surface-shadow`, and `--ft-popup-shadow`. See [CSS Variables](README.md#css-variables).
+- **Exported types** - `SurveyTheme`, `SurveyClassNames`.
 
 ### Changed
 
-- **BREAKING: `classNames` is one flat object** - The `base`, `scale`, and `form` groups are gone: every key sits at the top level and some were renamed to short, consistent names. Rename your keys:
+- **BREAKING: color variables take any CSS color** - `--ft-color-*` took bare HSL channels and now take any color. Wrap old values in `hsl()`: `220 13% 13%` → `hsl(220 13% 13%)`. Minimum browsers: Chrome 111, Safari 16.4, Firefox 120.
+- **BREAKING: `classNames` is one flat object** - The `base`, `scale`, and `form` groups are gone. `SurveyClassNames` replaces `RootClassNames` and `ScaleClassNames`:
 
   | Before | After |
   |---|---|
   | `base.base` | `root` |
   | `base.head`, `base.title`, `base.body`, `base.rating`, `base.feedback`, `base.contact`, `base.success` | same name, top level |
-  | `base.close` | removed — it was never applied; use `Popup`'s `classNames.close` |
+  | `base.close` | removed (never applied), use `Popup`'s `classNames.close` |
   | `scale.base` | `scale` |
   | `scale.list` | `points` |
   | `scale.button` | `point` |
   | `scale.icon` | `pointIcon` |
   | `scale.score` | `pointScore` |
   | `scale.labels` | `legend` |
+- **BREAKING: `Popup` `classNames`** - `content` is renamed to `surface`. `base` is removed, use `className`.
+- **Styles in a cascade layer** - All styles live in `@layer react-feedback-surveys`, so any unlayered CSS wins over them, global resets included. With Tailwind CSS v4, import them into the `components` layer. See [How Styles Combine](README.md#how-styles-combine).
+- **No global styles** - The library no longer sets `font-family` on `:root`/`:host` or `font: inherit` on page inputs. It styles only its own elements.
+- **Screenshot without text** - After a rating, an attachment alone is enough to submit, and `onFeedbackSubmit` gets `text: undefined`. A `general` survey still needs text or a choice. See [Attachments](README.md#attachments).
+- **Keyboard highlight** - A rating point focused from the keyboard gets the hover highlight. Hover applies only on devices with a real pointer. Icons don't animate with reduced motion.
+- **Look** - Softer surface shadow and a raised popup, grey fields and checkboxes with a clearer focus, equal button and field heights, more contrast for the close button and the email subtext, deeper thumbs colors.
 
-  The `RootClassNames` and `ScaleClassNames` types are replaced by `SurveyClassNames`.
-- **BREAKING: `Popup` `classNames`** - `content` is renamed to `surface`, and `base` is removed — use `className` for the popup itself.
-- **Scale highlight follows the keyboard** - A rating point focused from the keyboard now gets the same highlight as on hover: icons grow, numbers darken and get a ring. Hover effects apply only on devices with a real pointer, so a tapped point on a phone no longer stays highlighted. Icons don't animate when the visitor prefers reduced motion.
-- **Library styles moved into a cascade layer** - All styles now live in `@layer react-feedback-surveys`, so your CSS outside layers always wins over them, regardless of specificity or load order. Global page styles outside layers (resets like normalize or Bootstrap Reboot) now win too — inside a shadow root nothing changes. With Tailwind CSS v4, import the styles into the `components` layer. See [How Styles Combine](README.md#how-styles-combine).
+### Fixed
+
+- **`--ft-*` on any element** - Variables set on any ancestor of the widget now apply. Before, only `:root` worked.
+- **`--ft-font-family`** - The survey ignored it.
+- **Empty stars** - They take `--ft-color-outline` instead of a fixed grey, so they fit the dark theme.
+- **Text color and font in `Surface`** - `Surface` sets the widget's text color and font, so content next to the survey inside it no longer takes the page's color and font.
 
 ### Removed
 
-- **BREAKING: `--ft-popup-head-offset` CSS variable** - Inside `Popup` the head always reserved 32px for the close button regardless of this variable, so it only affected inline surveys, which have no close button. To change the head padding, use `classNames.head`.
+- **BREAKING: `--ft-popup-head-offset`** - It only affected inline surveys. Use `classNames.head` to change the head padding.
 
 ## [1.10.0] - 2026-09-30
 

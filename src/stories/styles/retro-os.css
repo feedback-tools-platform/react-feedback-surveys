@@ -1,0 +1,157 @@
+.ftools-survey.retro-os {
+  --ft-color-text: hsl(0deg 0% 0%);
+  --ft-color-bg: hsl(0deg 0% 75%);
+  --ft-color-muted: hsl(0deg 0% 20%);
+  --ft-color-border: hsl(0deg 0% 50%);
+  --ft-color-outline: hsl(0deg 0% 0%);
+  --ft-color-control: hsl(0deg 0% 100%);
+  --ft-surface-radius: 0;
+  --ft-surface-padding: 3px;
+  --ft-surface-padding-mobile: 3px;
+  --ft-surface-shadow: none;
+  --ft-popup-shadow: none;
+  --ft-font-family: tahoma, 'Microsoft Sans Serif', 'Segoe UI', sans-serif;
+  --ft-checkbox-size: 14px;
+}
+
+.ftools-survey.retro-os::part(surface) {
+  font-size: 13px;
+}
+
+/* the bevel lies over the content, so the title bar can run under it to the window edges */
+.ftools-survey.retro-os::part(surface)::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
+  pointer-events: none;
+}
+
+.ftools-survey.retro-os::part(head) {
+  margin: 0;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 24px;
+  padding: 3px 4px 3px 6px;
+  color: #fff;
+  background-color: #000080;
+
+  /* the bar spills sideways past a narrower, centered survey; the window clips it at its edges */
+  border-image: linear-gradient(#000080, #000080) 0 fill / 0 / 0 100vw;
+}
+
+/* in a popup the title bar keeps room for the close button on its right */
+.ftools-survey.retro-os.ftools-popup::part(head) {
+  padding-inline-end: 34px;
+}
+
+.ftools-survey.retro-os::part(title) {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.ftools-survey.retro-os::part(body) {
+  padding: 14px 12px 12px;
+}
+
+.ftools-survey.retro-os::part(close),
+.ftools-survey.retro-os::part(point),
+.ftools-survey.retro-os::part(attach),
+.ftools-survey.retro-os::part(remove),
+.ftools-survey.retro-os::part(dismiss),
+.ftools-survey.retro-os::part(submit),
+.ftools-survey.retro-os::part(skip),
+.ftools-survey.retro-os::part(close):hover,
+.ftools-survey.retro-os::part(point):hover,
+.ftools-survey.retro-os::part(attach):hover,
+.ftools-survey.retro-os::part(remove):hover,
+.ftools-survey.retro-os::part(dismiss):hover,
+.ftools-survey.retro-os::part(submit):hover,
+.ftools-survey.retro-os::part(skip):hover {
+  color: #000;
+  background-color: #c0c0c0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+}
+
+.ftools-survey.retro-os::part(close):active:not(:disabled),
+.ftools-survey.retro-os::part(point):active:not(:disabled),
+.ftools-survey.retro-os::part(attach):active:not(:disabled),
+.ftools-survey.retro-os::part(remove):active:not(:disabled),
+.ftools-survey.retro-os::part(dismiss):active:not(:disabled),
+.ftools-survey.retro-os::part(submit):active:not(:disabled),
+.ftools-survey.retro-os::part(skip):active:not(:disabled) {
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+}
+
+.ftools-survey.retro-os::part(close):focus-visible,
+.ftools-survey.retro-os::part(point):focus-visible,
+.ftools-survey.retro-os::part(attach):focus-visible,
+.ftools-survey.retro-os::part(remove):focus-visible,
+.ftools-survey.retro-os::part(dismiss):focus-visible,
+.ftools-survey.retro-os::part(submit):focus-visible,
+.ftools-survey.retro-os::part(skip):focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -5px;
+}
+
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey.retro-os::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.ftools-survey.retro-os::part(close) {
+  top: 5px;
+  width: 22px;
+  height: 20px;
+  inset-inline-end: 6px;
+}
+
+.ftools-survey.retro-os::part(legend) {
+  font-size: 12px;
+}
+
+.ftools-survey.retro-os::part(checkbox) {
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+}
+
+.ftools-survey.retro-os::part(checkbox checked) {
+  background-color: #fff;
+}
+
+.ftools-survey.retro-os::part(checkbox checked)::after {
+  width: 5px;
+  height: 2px;
+  border-color: transparent transparent #000 #000;
+}
+
+.ftools-survey.retro-os::part(field) {
+  font-size: 14px;
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+}
+
+.ftools-survey.retro-os::part(field):focus {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.ftools-survey.retro-os::part(submit),
+.ftools-survey.retro-os::part(skip) {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.ftools-survey.retro-os::part(submit):hover:not(:disabled),
+.ftools-survey.retro-os::part(skip):hover:not(:disabled) {
+  opacity: 1;
+}

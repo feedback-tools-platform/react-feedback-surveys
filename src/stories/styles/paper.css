@@ -1,0 +1,180 @@
+.ftools-survey.paper {
+  --ft-color-text: hsl(222deg 30% 18%);
+  --ft-color-bg: hsl(40deg 33% 98%);
+  --ft-color-muted: hsl(222deg 12% 36%);
+  --ft-color-border: hsl(222deg 30% 18%);
+  --ft-color-outline: hsl(222deg 30% 18%);
+  --ft-color-control: hsl(40deg 33% 98%);
+  --ft-color-accent: hsl(222deg 30% 18%);
+  --ft-color-accent-text: hsl(40deg 33% 98%);
+  --ft-color-star: hsl(45deg 100% 55%);
+  --ft-surface-radius: 0;
+  --ft-surface-shadow: 4px 5px 0 hsl(222deg 30% 18% / 90%);
+  --ft-popup-shadow: 5px 6px 0 hsl(222deg 30% 18% / 90%);
+  --ft-font-family: 'Bradley Hand', 'Segoe Print', 'Ink Free', 'Comic Sans MS', cursive;
+
+  /* a yellow highlighter stroke, a little ragged at the ends */
+  --paper-marker: linear-gradient(100deg, transparent 2%, hsl(52deg 100% 62% / 85%) 4% 96%, transparent 98%);
+}
+
+/* every box is drawn by hand: wobbly corners, a pen line, a flat offset shadow */
+.ftools-survey.paper::part(surface) {
+  border: 2px solid var(--ft-color-text);
+  border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+}
+
+.ftools-survey.paper::part(title) {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ftools-survey.paper::part(close) {
+  color: var(--ft-color-text);
+}
+
+.ftools-survey.paper::part(point) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-bg);
+  border: 2px solid var(--ft-color-text);
+  border-radius: 58% 42% 52% 48% / 46% 56% 44% 54%;
+  box-shadow: 2px 2px 0 var(--ft-color-text);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.ftools-survey.paper::part(point):hover,
+.ftools-survey.paper::part(point):focus-visible {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-bg);
+  background-image: var(--paper-marker);
+  box-shadow: 1px 1px 0 var(--ft-color-text);
+  transform: rotate(-4deg);
+}
+
+.ftools-survey.paper::part(point):focus-visible {
+  outline: 2px dashed var(--ft-color-text);
+  outline-offset: 3px;
+}
+
+/* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
+.ftools-survey.paper::part(point-icon) {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+/* empty stars take the ink color; keep them faint so they don't read as filled */
+.ftools-survey.paper::part(point-icon) {
+  color: color-mix(in srgb, currentcolor 30%, transparent);
+}
+
+/* a filled star keeps the star color; the rule above would turn it pale too */
+.ftools-survey.paper::part(point-icon filled) {
+  color: var(--ft-color-star);
+}
+
+.ftools-survey.paper::part(point-score) {
+  font-size: 19px;
+}
+
+.ftools-survey.paper::part(legend) {
+  font-size: 15px;
+}
+
+.ftools-survey.paper::part(field) {
+  font-size: 17px;
+  background-color: var(--ft-color-bg);
+  border: 2px solid var(--ft-color-text);
+  border-radius: 12px 225px 10px 255px / 255px 12px 225px 10px;
+}
+
+.ftools-survey.paper::part(field):focus {
+  border-color: var(--ft-color-text);
+  box-shadow: 3px 3px 0 var(--ft-color-text);
+  outline: none;
+}
+
+.ftools-survey.paper::part(field invalid) {
+  border-color: hsl(356deg 72% 44%);
+  box-shadow: 3px 3px 0 hsl(356deg 72% 44%);
+}
+
+.ftools-survey.paper::part(field)::placeholder {
+  opacity: 1;
+  color: var(--ft-color-muted);
+}
+
+/* a checked choice is marked with a highlighter */
+.ftools-survey.paper::part(choice) {
+  font-size: 17px;
+}
+
+.ftools-survey.paper::part(choice checked) {
+  background-image: var(--paper-marker);
+  background-position: 0 60%;
+  background-size: 100% 70%;
+  background-repeat: no-repeat;
+}
+
+.ftools-survey.paper::part(checkbox) {
+  background-color: var(--ft-color-bg);
+  border: 2px solid var(--ft-color-text);
+  border-radius: 4px 7px 3px 6px;
+}
+
+.ftools-survey.paper::part(checkbox checked) {
+  background-color: var(--ft-color-accent);
+  border-color: var(--ft-color-accent);
+}
+
+.ftools-survey.paper::part(attach),
+.ftools-survey.paper::part(remove),
+.ftools-survey.paper::part(dismiss) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-bg);
+  border: 2px solid var(--ft-color-text);
+  border-radius: 8px 4px 9px 5px;
+}
+
+.ftools-survey.paper::part(submit),
+.ftools-survey.paper::part(skip) {
+  font-size: 17px;
+  font-weight: 700;
+  border: 2px solid var(--ft-color-text);
+  border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+  box-shadow: 3px 3px 0 var(--ft-color-text);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.ftools-survey.paper::part(submit) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-bg);
+  background-image: var(--paper-marker);
+}
+
+.ftools-survey.paper::part(skip) {
+  color: var(--ft-color-text);
+  background-color: var(--ft-color-bg);
+}
+
+.ftools-survey.paper::part(submit):hover:not(:disabled),
+.ftools-survey.paper::part(skip):hover:not(:disabled) {
+  opacity: 1;
+  box-shadow: 1px 1px 0 var(--ft-color-text);
+  transform: translate(2px, 2px) rotate(-1deg);
+}
+
+.ftools-survey.paper::part(submit):disabled {
+  opacity: 1;
+  color: var(--ft-color-muted);
+  background-image: none;
+  border-style: dashed;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ftools-survey.paper::part(point),
+  .ftools-survey.paper::part(submit),
+  .ftools-survey.paper::part(skip) {
+    transition: none;
+  }
+}

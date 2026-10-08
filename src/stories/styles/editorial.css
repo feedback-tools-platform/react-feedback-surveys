@@ -1,12 +1,12 @@
-.ftools-survey {
-  --ft-color-text: 30 10% 10%;
-  --ft-color-bg: 42 50% 97%;
-  --ft-color-muted: 30 6% 36%;
-  --ft-color-error: 358 76% 37%;
-  --ft-color-error-text: 358 76% 37%;
-  --ft-color-border: 30 10% 10%;
-  --ft-color-outline: 30 10% 10%;
-  --ft-color-control: 42 50% 97%;
+.ftools-survey.editorial {
+  --ft-color-text: hsl(30deg 10% 10%);
+  --ft-color-bg: hsl(42deg 50% 97%);
+  --ft-color-muted: hsl(30deg 6% 36%);
+  --ft-color-error: hsl(358deg 76% 37%);
+  --ft-color-error-text: hsl(358deg 76% 37%);
+  --ft-color-border: hsl(30deg 10% 10%);
+  --ft-color-outline: hsl(30deg 10% 10%);
+  --ft-color-control: hsl(42deg 50% 97%);
   --ft-surface-radius: 0;
   --ft-surface-padding: 24px;
   --ft-surface-shadow: 0 18px 40px -24px hsl(30deg 10% 10% / 45%);
@@ -14,18 +14,18 @@
   --ft-font-family: 'Iowan Old Style', 'Palatino Linotype', palatino, georgia, serif;
 }
 
-.ftools-survey::part(surface) {
+.ftools-survey.editorial::part(surface) {
   border-top: 4px double #1c1a17;
 }
 
-.ftools-survey::part(head) {
+.ftools-survey.editorial::part(head) {
   flex-direction: column;
   gap: 6px;
   padding-bottom: 16px;
 }
 
 /* kicker above the headline */
-.ftools-survey::part(head)::before {
+.ftools-survey.editorial::part(head)::before {
   content: 'Reader survey' / '';
   font-size: 11px;
   font-weight: 700;
@@ -34,14 +34,14 @@
   color: #a4161a;
 }
 
-.ftools-survey::part(title) {
+.ftools-survey.editorial::part(title) {
   font-size: 21px;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
-.ftools-survey::part(point) {
+.ftools-survey.editorial::part(point) {
   font-weight: 400;
   color: #1c1a17;
   background-color: transparent;
@@ -50,44 +50,44 @@
   box-shadow: none;
 }
 
-.ftools-survey::part(point):hover {
+.ftools-survey.editorial::part(point):hover {
   color: #faf6ee;
   background-color: #1c1a17;
   box-shadow: none;
 }
 
 /* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
-.ftools-survey::part(point-icon) {
+.ftools-survey.editorial::part(point-icon) {
   max-width: 75%;
   max-height: 75%;
 }
 
-.ftools-survey::part(point-icon),
-.ftools-survey::part(success-icon) {
+.ftools-survey.editorial::part(point-icon),
+.ftools-survey.editorial::part(success-icon) {
   filter: grayscale(1) contrast(1.15);
 }
 
-.ftools-survey::part(legend) {
+.ftools-survey.editorial::part(legend) {
   font-size: 13px;
   font-style: italic;
 }
 
-.ftools-survey::part(choice) {
+.ftools-survey.editorial::part(choice) {
   font-size: 17px;
 }
 
-.ftools-survey::part(checkbox) {
+.ftools-survey.editorial::part(checkbox) {
   border-color: #1c1a17;
   border-radius: 0;
 }
 
-.ftools-survey::part(checkbox checked) {
+.ftools-survey.editorial::part(checkbox checked) {
   background-color: #a4161a;
   border-color: #a4161a;
 }
 
 /* ruled writing paper: every 28px text line sits on its own rule */
-.ftools-survey::part(field) {
+.ftools-survey.editorial::part(field) {
   padding-top: 0;
   font-size: 17px;
   line-height: 28px;
@@ -100,48 +100,55 @@
   padding-inline: 0;
 }
 
-.ftools-survey::part(field):focus {
+.ftools-survey.editorial::part(field):focus {
   background-image: linear-gradient(to bottom, transparent 23px, #8a7f6a 23px 24px, transparent 24px);
   outline: none;
 }
 
-.ftools-survey::part(field invalid) {
+.ftools-survey.editorial::part(field invalid) {
   background-image: linear-gradient(to bottom, transparent 23px, #a4161a 23px 24px, transparent 24px);
 }
 
-.ftools-survey::part(attach) {
-  background-color: transparent;
+/* paper under the button, so the field's rules don't run through it */
+.ftools-survey.editorial::part(attach) {
+  background-color: var(--ft-color-bg);
   border: 1px solid #1c1a17;
   border-radius: 0;
 }
 
-.ftools-survey::part(submit),
-.ftools-survey::part(skip) {
+.ftools-survey.editorial::part(attach):hover:not(:disabled) {
+  color: #a4161a;
+  background-color: var(--ft-color-bg);
+  border-color: #a4161a;
+}
+
+.ftools-survey.editorial::part(submit),
+.ftools-survey.editorial::part(skip) {
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border-radius: 0;
 }
 
-.ftools-survey::part(submit):hover:not(:disabled) {
+.ftools-survey.editorial::part(submit):hover:not(:disabled) {
   opacity: 1;
   background-color: #a4161a;
 }
 
-.ftools-survey::part(submit):disabled {
+.ftools-survey.editorial::part(submit):disabled {
   opacity: 1;
   color: #6b6358;
   background-color: transparent;
   box-shadow: inset 0 0 0 1px #c9bfab;
 }
 
-.ftools-survey::part(skip) {
+.ftools-survey.editorial::part(skip) {
   text-decoration: underline;
   background-color: transparent;
   text-underline-offset: 4px;
 }
 
-.ftools-survey::part(skip):hover:not(:disabled) {
+.ftools-survey.editorial::part(skip):hover:not(:disabled) {
   background-color: transparent;
   text-decoration-thickness: 2px;
 }

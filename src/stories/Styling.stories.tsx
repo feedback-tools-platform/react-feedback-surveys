@@ -3,16 +3,18 @@ import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { Surface } from '../components/Surface';
 import { Survey, type SurveyProps } from '../surveys/Survey';
+import type { SurveyTheme } from '../types';
 
-import './Themes.stories.css';
+import './Styles.stories.css';
 
 // how styles combine: --ft-* against themes, the cascade layer against selectors, state keys against parts
 const meta = {
-  title: 'Styling'
+  title: 'Styling Cases'
 } satisfies Meta;
 
 export default meta;
-type Story = StoryObj<typeof meta>
+// stories read the Storybook toolbar theme, which the preview decorator hands over as `theme`
+type Story = StoryObj<{ theme?: SurveyTheme }>
 
 const backgroundOf = (element: Element) => getComputedStyle(element).backgroundColor;
 
@@ -41,9 +43,9 @@ const getCascadeSurvey = (label: string): SurveyProps => ({
 
 export const Cascade: Story = {
   render: () => (
-    <div className="themes-stage themes-stage-dark">
-      <div className="themes-grid">
-        <div style={{ '--ft-color-bg': '260 60% 20%' } as React.CSSProperties}>
+    <div className="styles-stage styles-stage-dark">
+      <div className="styles-grid">
+        <div style={{ '--ft-color-bg': 'hsl(260 60% 20%)' } as React.CSSProperties}>
           <Surface
             id="cascade-variables"
             theme="dark"
@@ -82,7 +84,7 @@ export const Cascade: Story = {
 };
 
 export const LayerOverride: Story = {
-  render: () => (
+  render: (args) => (
     <>
       <style>
         {'.layer-probe { background-color: rgb(255, 214, 10); }'}
@@ -91,6 +93,7 @@ export const LayerOverride: Story = {
       <Survey
         {...getChoicesSurvey('Layer')}
         classNames={{ checkbox: 'layer-probe' }}
+        theme={args.theme}
       />
     </>
   ),
@@ -105,9 +108,10 @@ export const LayerOverride: Story = {
 };
 
 export const StateClassNames: Story = {
-  render: () => (
+  render: (args) => (
     <Survey
       {...getChoicesSurvey('State classes')}
+      theme={args.theme}
       classNames={{
         choice: 'my-choice',
         checkbox: 'my-checkbox',
@@ -139,9 +143,12 @@ export const StateClassNames: Story = {
 };
 
 export const Accent: Story = {
-  render: () => (
-    <div style={{ '--ft-color-accent': '0 100% 30%' } as React.CSSProperties}>
-      <Survey {...getChoicesSurvey('Accent')} />
+  render: (args) => (
+    <div style={{ '--ft-color-accent': '#990000' } as React.CSSProperties}>
+      <Survey
+        {...getChoicesSurvey('Accent')}
+        theme={args.theme}
+      />
     </div>
   ),
   play: async ({ canvasElement }) => {

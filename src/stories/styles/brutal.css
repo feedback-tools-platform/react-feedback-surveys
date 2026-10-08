@@ -1,20 +1,20 @@
-.ftools-survey {
-  --ft-color-text: 0 0% 0%;
-  --ft-color-bg: 50 100% 97%;
-  --ft-color-muted: 0 0% 25%;
-  --ft-color-border: 0 0% 0%;
-  --ft-color-outline: 0 0% 0%;
-  --ft-color-control: 0 0% 100%;
+.ftools-survey.brutal {
+  --ft-color-text: hsl(0deg 0% 0%);
+  --ft-color-bg: hsl(50deg 100% 97%);
+  --ft-color-muted: hsl(0deg 0% 25%);
+  --ft-color-border: hsl(0deg 0% 0%);
+  --ft-color-outline: hsl(0deg 0% 0%);
+  --ft-color-control: hsl(0deg 0% 100%);
   --ft-surface-radius: 0;
   --ft-surface-shadow: 6px 6px 0 #000;
   --ft-popup-shadow: 6px 6px 0 #000;
 }
 
-.ftools-survey::part(surface) {
+.ftools-survey.brutal::part(surface) {
   border: 3px solid #000;
 }
 
-.ftools-survey::part(title) {
+.ftools-survey.brutal::part(title) {
   font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
   font-size: 19px;
   font-weight: 900;
@@ -23,11 +23,11 @@
   text-transform: uppercase;
 }
 
-.ftools-survey::part(close) {
+.ftools-survey.brutal::part(close) {
   color: #000;
 }
 
-.ftools-survey::part(point) {
+.ftools-survey.brutal::part(point) {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
@@ -36,66 +36,66 @@
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.ftools-survey::part(point):hover {
+.ftools-survey.brutal::part(point):hover {
   color: #000;
   box-shadow: 1px 1px 0 #000;
   transform: translate(2px, 2px);
 }
 
 /* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
-.ftools-survey::part(point-icon) {
+.ftools-survey.brutal::part(point-icon) {
   max-width: 75%;
   max-height: 75%;
 }
 
-.ftools-survey::part(legend) {
+.ftools-survey.brutal::part(legend) {
   font-weight: 700;
   color: #000;
 }
 
-.ftools-survey::part(field) {
+.ftools-survey.brutal::part(field) {
   background-color: #fff;
   border: 2px solid #000;
   border-radius: 0;
 }
 
-.ftools-survey::part(field):focus {
+.ftools-survey.brutal::part(field):focus {
   border-color: #000;
   box-shadow: 3px 3px 0 #000;
   outline: none;
 }
 
-.ftools-survey::part(field invalid) {
+.ftools-survey.brutal::part(field invalid) {
   border-color: #d00000;
   box-shadow: 3px 3px 0 #d00000;
 }
 
-.ftools-survey::part(checkbox) {
+.ftools-survey.brutal::part(checkbox) {
   background-color: #fff;
   border: 2px solid #000;
   border-radius: 0;
 }
 
-.ftools-survey::part(checkbox checked) {
+.ftools-survey.brutal::part(checkbox checked) {
   background-color: #ffd60a;
   border-color: #000;
 }
 
-.ftools-survey::part(checkbox checked)::after {
+.ftools-survey.brutal::part(checkbox checked)::after {
   border-color: transparent transparent #000 #000;
 }
 
-.ftools-survey::part(attach),
-.ftools-survey::part(remove) ,
-.ftools-survey::part(dismiss) {
+.ftools-survey.brutal::part(attach),
+.ftools-survey.brutal::part(remove) ,
+.ftools-survey.brutal::part(dismiss) {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
   border-radius: 0;
 }
 
-.ftools-survey::part(submit),
-.ftools-survey::part(skip) {
+.ftools-survey.brutal::part(submit),
+.ftools-survey.brutal::part(skip) {
   font-weight: 800;
   text-transform: uppercase;
   color: #000;
@@ -105,16 +105,16 @@
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.ftools-survey::part(submit) {
+.ftools-survey.brutal::part(submit) {
   background-color: #ffd60a;
 }
 
-.ftools-survey::part(skip) {
+.ftools-survey.brutal::part(skip) {
   background-color: #fff;
 }
 
-.ftools-survey::part(submit):hover:not(:disabled),
-.ftools-survey::part(skip):hover:not(:disabled) {
+.ftools-survey.brutal::part(submit):hover:not(:disabled),
+.ftools-survey.brutal::part(skip):hover:not(:disabled) {
   opacity: 1;
   box-shadow: 1px 1px 0 #000;
   transform: translate(2px, 2px);

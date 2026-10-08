@@ -5,7 +5,7 @@
 .subtext {
   margin: 0 0 16px;
   line-height: 1.25;
-  color: hsl(var(--_color-muted) / 100%);
+  color: var(--_color-muted);
 }
 
 .input {
@@ -15,23 +15,23 @@
   font-family: inherit;
   font-size: 16px;
   line-height: 1.5;
-  color: hsl(var(--_color-text) / 100%);
-  background-color: hsl(var(--_color-control) / 100%);
-  border: 1px solid hsl(var(--_color-border) / 100%);
+  color: var(--_color-text);
+  background-color: var(--_color-control);
+  border: 1px solid var(--_color-border);
   border-radius: var(--_surface-radius);
-  outline: 0 solid hsl(var(--_color-outline) / 14%);
+  outline: 0 solid color-mix(in srgb, var(--_color-outline) 14%, transparent);
   transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;
 
   &:focus {
-    border-color: hsl(var(--_color-text) / 100%);
-    outline: 4px solid hsl(var(--_color-outline) / 20%);
+    border-color: var(--_color-text);
+    outline: 4px solid color-mix(in srgb, var(--_color-outline) 20%, transparent);
   }
 
   &.invalid {
-    border-color: hsl(var(--_color-error) / 100%);
+    border-color: var(--_color-error);
 
     &:focus {
-      outline-color: hsl(var(--_color-error) / 14%);
+      outline-color: color-mix(in srgb, var(--_color-error) 14%, transparent);
     }
   }
 }

@@ -21,7 +21,7 @@
   width: 32px;
   height: 32px;
   object-fit: cover;
-  border: 1px solid hsl(var(--_color-border) / 100%);
+  border: 1px solid var(--_color-border);
   border-radius: 4px;
 }
 
@@ -42,12 +42,12 @@
 
 .attachmentName {
   font-size: 13px;
-  color: hsl(var(--_color-text) / 100%);
+  color: var(--_color-text);
 }
 
 .attachmentSize {
   font-size: 11px;
-  color: hsl(var(--_color-muted) / 100%);
+  color: var(--_color-muted);
 }
 
 .attachmentRemove {
@@ -58,6 +58,6 @@
   flex-shrink: 0;
   width: 24px;
   height: 24px;
-  color: hsl(var(--_color-text) / 100%);
+  color: var(--_color-text);
   border-radius: 50%;
 }

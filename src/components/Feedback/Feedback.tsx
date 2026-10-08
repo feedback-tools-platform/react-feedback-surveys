@@ -318,6 +318,7 @@ export const Feedback: React.FC<FeedbackProps> = ({
             placeholder={otherPlaceholder}
             value={text}
             onChange={onTextChange}
+            onKeyDown={onTextKeyDown}
           />
 
           {attachTriggers}

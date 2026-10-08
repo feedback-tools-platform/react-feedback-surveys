@@ -13,7 +13,7 @@
 }
 
 .filled {
-  color: hsl(var(--_color-star) / 100%);
+  color: var(--_color-star);
 }
 
 .button {
@@ -24,7 +24,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  color: hsl(var(--_color-outline) / 100%);
+  color: var(--_color-outline);
 
   @include pointActive {
     .icon {
@@ -33,6 +33,6 @@
   }
 
   &:focus-visible {
-    outline: 2px solid hsl(var(--_color-outline) / 100%);
+    outline: 2px solid var(--_color-outline);
   }
 }

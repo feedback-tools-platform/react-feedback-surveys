@@ -1,0 +1,32 @@
+.ftools-survey.soft {
+  --ft-color-border: color-mix(in srgb, hsl(252deg 100% 64.5%) 22%, transparent);
+  --ft-color-outline: hsl(252deg 80% 65%);
+  --ft-color-control: color-mix(in srgb, hsl(252deg 100% 64.5%) 5%, transparent);
+  --ft-surface-radius: 18px;
+  --ft-surface-shadow: 0 12px 32px -14px hsl(252deg 60% 40% / 25%);
+  --ft-popup-shadow: 0 16px 40px -14px hsl(252deg 60% 40% / 35%);
+  --ft-color-accent: hsl(252deg 100% 64.5%);
+  --ft-color-accent-text: #fff;
+}
+
+.ftools-survey.soft::part(checkbox) {
+  border-radius: 50%;
+}
+
+.ftools-survey.soft::part(submit) {
+  border-radius: 999px;
+}
+
+.ftools-survey.soft::part(skip) {
+  border-radius: 999px;
+}
+
+/* empty stars take the outline color, which is the brand here; keep them pale so they don't read as filled */
+.ftools-survey.soft::part(point-icon) {
+  color: color-mix(in srgb, currentcolor 35%, transparent);
+}
+
+/* a filled star keeps the star color; the rule above would turn it pale too */
+.ftools-survey.soft::part(point-icon filled) {
+  color: var(--ft-color-star, hsl(42deg 99% 64.5%));
+}

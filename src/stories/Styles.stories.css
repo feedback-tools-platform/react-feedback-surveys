@@ -1,0 +1,303 @@
+.styles-stage {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, sans-serif;
+  color: #1f2328;
+  background-color: #f4f5f7;
+}
+
+.styles-stage-dark {
+  color: #e2e5e9;
+  background-color: hsl(220deg 13% 9%);
+}
+
+.styles-stage-sticky-note {
+  background-color: #b98d5f;
+}
+
+.styles-stage-paper {
+  background-color: #ece8df;
+}
+
+.styles-stage-blueprint {
+  background-color: #e3e9f1;
+}
+
+.styles-stage-brutal {
+  background-color: #ff90e8;
+}
+
+/* styles that follow the base palette get a light and a dark backdrop of their own, so neighbours stay apart */
+.styles-stage-minimal {
+  --stage-light: #f7f8fa;
+  --stage-dark: #121418;
+
+  font-family: Georgia, serif;
+}
+
+.styles-stage-helpful {
+  --stage-light: #fbf8f1;
+  --stage-dark: #1c1a16;
+}
+
+.styles-stage-soft {
+  --stage-light: linear-gradient(135deg, #f3e8ff, #e0e7ff);
+  --stage-dark: linear-gradient(135deg, #1e1636, #131a35);
+}
+
+.styles-stage-chat {
+  --stage-light: #e3ebf7;
+  --stage-dark: #0f1830;
+}
+
+.styles-stage-enterprise {
+  --stage-light: #dcdcdc;
+  --stage-dark: #2a2a2a;
+}
+
+.styles-stage-terminal {
+  --stage-light: #e7ebe8;
+  --stage-dark: #010409;
+}
+
+.styles-tone-light,
+.styles-tone-auto {
+  color: #1f2328;
+  background: var(--stage-light);
+}
+
+.styles-tone-dark {
+  color: #e2e5e9;
+  background: var(--stage-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  .styles-tone-auto {
+    color: #e2e5e9;
+    background: var(--stage-dark);
+  }
+}
+
+.styles-stage-playful {
+  background-color: #e0f2fe;
+}
+
+.styles-stage-editorial {
+  background-color: #e9e1d0;
+}
+
+.styles-stage-receipt {
+  background-color: #d9d4ca;
+}
+
+.styles-stage-retro-os {
+  color: #fff;
+  background-color: #008080;
+}
+
+@media (prefers-color-scheme: dark) {
+  .styles-stage-auto {
+    color: #e2e5e9;
+    background-color: hsl(220deg 13% 9%);
+  }
+}
+
+.styles-content {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.styles-toolbar {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.styles-description {
+  margin: 0;
+  font-size: 15px;
+}
+
+.styles-switcher {
+  margin-bottom: 12px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  background-color: #fff;
+  border: 1px solid #d0d4da;
+  border-radius: 10px;
+}
+
+.styles-switcher button {
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: #1f2328;
+  background-color: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.styles-switcher button[aria-pressed='true'] {
+  color: #fff;
+  background-color: #1f2328;
+}
+
+.styles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.styles-catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  font-family: Inter, sans-serif;
+  color: #1f2328;
+}
+
+.styles-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-height: 420px;
+  padding: 48px 24px 32px;
+}
+
+.styles-tile-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.styles-tile-link {
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: underline;
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentcolor 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.styles-tile-link::after {
+  display: inline-block;
+  opacity: 0.85;
+  width: 0.75em;
+  height: 0.75em;
+  vertical-align: -0.05em;
+  content: '';
+  background-color: currentcolor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: opacity 0.15s, transform 0.15s;
+  margin-inline-start: 6px;
+}
+
+.styles-tile-link:hover {
+  text-decoration-color: currentcolor;
+}
+
+.styles-tile-link:hover::after {
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
+
+.styles-copy {
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: #1f2328;
+  background-color: #fff;
+  border: 1px solid #d0d4da;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.styles-copy:hover {
+  border-color: #1f2328;
+}
+
+.styles-tile-caption .styles-copy {
+  margin-top: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.styles-code {
+  margin-top: 48px;
+  overflow: hidden;
+  font-size: 14px;
+  color: #e6edf3;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+}
+
+.styles-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px 10px 16px;
+  color: #8b949e;
+  border-bottom: 1px solid #30363d;
+}
+
+.styles-code pre {
+  margin: 0;
+  max-height: 480px;
+  padding: 16px;
+  overflow: auto;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.styles-code pre:focus-visible {
+  outline: 2px solid #58a6ff;
+  outline-offset: -2px;
+}
+
+/* the visible label stays "Copy"; screen readers still hear which style it copies */
+.styles-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.styles-variants {
+  margin-top: 4px;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.styles-variant {
+  padding: 1px 8px;
+  font-size: 11px;
+  line-height: 16px;
+  border: 1px solid color-mix(in srgb, currentcolor 30%, transparent);
+  border-radius: 999px;
+}
+
+.styles-variant-light::before {
+  content: '☀' / '';
+  margin-inline-end: 4px;
+}
+
+.styles-variant-dark::before {
+  content: '☾' / '';
+  margin-inline-end: 4px;
+}

@@ -1,0 +1,163 @@
+.ftools-survey.sticky-note {
+  --ft-color-text: hsl(28deg 30% 14%);
+  --ft-color-bg: hsl(52deg 100% 74%);
+  --ft-color-muted: hsl(32deg 32% 26%);
+  --ft-color-border: hsl(32deg 32% 26% / 45%);
+  --ft-color-outline: hsl(28deg 30% 14%);
+  --ft-color-control: hsl(53deg 100% 84%);
+  --ft-color-accent: hsl(28deg 30% 14%);
+  --ft-color-accent-text: hsl(53deg 100% 84%);
+  --ft-color-star: hsl(6deg 78% 50%);
+  --ft-surface-radius: 2px;
+  --ft-surface-shadow: 0 1px 1px hsl(40deg 30% 20% / 18%), 0 22px 26px -16px hsl(40deg 45% 18% / 50%);
+  --ft-popup-shadow: 0 1px 1px hsl(40deg 30% 20% / 18%), 0 26px 30px -16px hsl(40deg 45% 18% / 55%);
+  --ft-font-family: 'Marker Felt', 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+}
+
+/* a note stuck on the page: slightly turned, a darker fold at the bottom, room above for the tape */
+.ftools-survey.sticky-note::part(surface) {
+  overflow: visible;
+  background-image: linear-gradient(to bottom, transparent 82%, hsl(50deg 95% 64%));
+  transform: rotate(-1.2deg);
+}
+
+/* in an embed it stays note-sized instead of stretching across the page */
+.ftools-survey.sticky-note.ftools-embed::part(surface) {
+  margin: 14px auto 0;
+  max-width: 380px;
+}
+
+/* a strip of tape over the top edge */
+.ftools-survey.sticky-note::part(surface)::before {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 104px;
+  height: 26px;
+  content: '';
+  background-color: hsl(48deg 30% 94% / 72%);
+  box-shadow: 0 1px 2px hsl(40deg 30% 20% / 18%);
+  transform: translateX(-50%) rotate(2.5deg);
+}
+
+.ftools-survey.sticky-note::part(title) {
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+.ftools-survey.sticky-note::part(close) {
+  color: var(--ft-color-text);
+}
+
+/* points are hand-written; hover circles one with a pen */
+.ftools-survey.sticky-note::part(point) {
+  color: var(--ft-color-text);
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 46% 54% 50% 50% / 55% 45%;
+  box-shadow: none;
+}
+
+.ftools-survey.sticky-note::part(point):hover,
+.ftools-survey.sticky-note::part(point):focus-visible {
+  color: var(--ft-color-text);
+  border-color: var(--ft-color-text);
+  box-shadow: none;
+}
+
+.ftools-survey.sticky-note::part(point):focus-visible {
+  outline: 2px dashed var(--ft-color-text);
+  outline-offset: 2px;
+}
+
+.ftools-survey.sticky-note::part(point-score) {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* empty stars are pencil-faint; a filled one is drawn in red marker */
+.ftools-survey.sticky-note::part(point-icon) {
+  color: color-mix(in srgb, currentcolor 40%, transparent);
+}
+
+.ftools-survey.sticky-note::part(point-icon filled) {
+  color: var(--ft-color-star);
+}
+
+.ftools-survey.sticky-note::part(legend) {
+  font-size: 15px;
+}
+
+/* fields are lines to write on */
+.ftools-survey.sticky-note::part(field) {
+  font-size: 17px;
+  background-color: var(--ft-color-control);
+  border: 0;
+  border-bottom: 2px dashed var(--ft-color-muted);
+  border-radius: 2px 2px 0 0;
+}
+
+.ftools-survey.sticky-note::part(field):focus {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ft-color-text);
+  outline: none;
+}
+
+.ftools-survey.sticky-note::part(field invalid) {
+  border-bottom-color: hsl(6deg 78% 42%);
+}
+
+.ftools-survey.sticky-note::part(field)::placeholder {
+  opacity: 1;
+  color: var(--ft-color-muted);
+}
+
+.ftools-survey.sticky-note::part(choice) {
+  font-size: 17px;
+}
+
+.ftools-survey.sticky-note::part(checkbox) {
+  background-color: transparent;
+  border: 2px solid var(--ft-color-text);
+  border-radius: 3px 5px 4px 6px;
+}
+
+.ftools-survey.sticky-note::part(checkbox checked) {
+  background-color: var(--ft-color-accent);
+  border-color: var(--ft-color-accent);
+}
+
+.ftools-survey.sticky-note::part(attach),
+.ftools-survey.sticky-note::part(remove),
+.ftools-survey.sticky-note::part(dismiss) {
+  color: var(--ft-color-text);
+  background-color: transparent;
+  border: 2px solid var(--ft-color-text);
+  border-radius: 6px 4px 7px 5px;
+}
+
+.ftools-survey.sticky-note::part(submit),
+.ftools-survey.sticky-note::part(skip) {
+  font-size: 17px;
+  font-weight: 400;
+  border-radius: 8px 5px 9px 6px;
+}
+
+.ftools-survey.sticky-note::part(submit) {
+  transform: rotate(-1deg);
+}
+
+.ftools-survey.sticky-note::part(skip) {
+  text-decoration: underline wavy;
+  color: var(--ft-color-text);
+  background-color: transparent;
+  text-underline-offset: 5px;
+}
+
+.ftools-survey.sticky-note::part(skip):hover:not(:disabled) {
+  background-color: transparent;
+}
+
+.ftools-survey.sticky-note::part(subtext) {
+  font-size: 16px;
+}

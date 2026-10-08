@@ -1,24 +1,25 @@
-.ftools-survey {
-  --ft-color-text: 0 0% 13%;
-  --ft-color-bg: 45 33% 98%;
-  --ft-color-muted: 0 0% 33%;
-  --ft-color-border: 0 0% 13%;
-  --ft-color-outline: 0 0% 13%;
-  --ft-color-control: 45 33% 98%;
+.ftools-survey.receipt {
+  --ft-color-text: hsl(0deg 0% 13%);
+  --ft-color-bg: hsl(45deg 33% 98%);
+  --ft-color-muted: hsl(0deg 0% 33%);
+  --ft-color-border: hsl(0deg 0% 13%);
+  --ft-color-outline: hsl(0deg 0% 13%);
+  --ft-color-control: hsl(45deg 33% 98%);
   --ft-surface-radius: 0;
   --ft-surface-shadow: none;
   --ft-popup-shadow: none;
   --ft-font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
 }
 
-.ftools-survey::part(surface) {
+.ftools-survey.receipt::part(surface) {
   padding-bottom: 28px;
   font-size: 14px;
   mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
 }
 
-/* barcode under the survey */
-.ftools-survey::part(surface)::after {
+/* barcode under the survey; stretched, since the SDK embed lays its card out as a centered flex column */
+.ftools-survey.receipt::part(surface)::after {
+  align-self: stretch;
   margin-top: 20px;
   display: block;
   height: 34px;
@@ -36,7 +37,7 @@
   );
 }
 
-.ftools-survey::part(head) {
+.ftools-survey.receipt::part(head) {
   margin-bottom: 16px;
   flex-direction: column;
   align-items: center;
@@ -45,21 +46,21 @@
   border-bottom: 1px dashed #222;
 }
 
-.ftools-survey::part(head)::before {
+.ftools-survey.receipt::part(head)::before {
   content: '*** ORDER #4821 ***' / '';
   font-size: 12px;
   letter-spacing: 0.2em;
   color: #555;
 }
 
-.ftools-survey::part(title) {
+.ftools-survey.receipt::part(title) {
   font-size: 15px;
   font-weight: 700;
   text-align: center;
   text-transform: uppercase;
 }
 
-.ftools-survey::part(point) {
+.ftools-survey.receipt::part(point) {
   font-weight: 400;
   color: #222;
   background-color: transparent;
@@ -68,59 +69,59 @@
   box-shadow: none;
 }
 
-.ftools-survey::part(point):hover {
+.ftools-survey.receipt::part(point):hover {
   color: #fbfaf5;
   background-color: #222;
   box-shadow: none;
 }
 
 /* the point draws a box, so a 40px star needs room inside it; smaller emoji stay as they are */
-.ftools-survey::part(point-icon) {
+.ftools-survey.receipt::part(point-icon) {
   max-width: 75%;
   max-height: 75%;
 }
 
-.ftools-survey::part(legend) {
+.ftools-survey.receipt::part(legend) {
   font-size: 12px;
   text-transform: uppercase;
 }
 
-.ftools-survey::part(checkbox) {
+.ftools-survey.receipt::part(checkbox) {
   border: 1px solid #222;
   border-radius: 0;
 }
 
-.ftools-survey::part(field) {
+.ftools-survey.receipt::part(field) {
   background-color: transparent;
   border: 1px dashed #222;
   border-radius: 0;
 }
 
-.ftools-survey::part(field):focus {
+.ftools-survey.receipt::part(field):focus {
   border-style: solid;
   outline: 2px solid #222;
   outline-offset: 2px;
 }
 
-.ftools-survey::part(attach) {
+.ftools-survey.receipt::part(attach) {
   background-color: transparent;
   border-radius: 0;
 }
 
-.ftools-survey::part(actions) {
+.ftools-survey.receipt::part(actions) {
   padding-top: 14px;
   border-top: 1px dashed #222;
 }
 
-.ftools-survey::part(submit),
-.ftools-survey::part(skip) {
+.ftools-survey.receipt::part(submit),
+.ftools-survey.receipt::part(skip) {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border-radius: 0;
 }
 
-.ftools-survey::part(skip) {
+.ftools-survey.receipt::part(skip) {
   background-color: transparent;
   border: 1px dashed #222;
 }

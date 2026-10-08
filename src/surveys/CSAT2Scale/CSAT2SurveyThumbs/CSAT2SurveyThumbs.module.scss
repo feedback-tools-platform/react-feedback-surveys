@@ -21,7 +21,7 @@
   justify-content: center;
   width: 56px;
   height: 56px;
-  background-color: hsl(var(--_color-control) / 100%);
+  background-color: var(--_color-control);
   border-radius: 50%;
 
   @include pointActive {
@@ -31,6 +31,6 @@
   }
 
   &:focus-visible {
-    outline: 2px solid hsl(var(--_color-outline) / 100%);
+    outline: 2px solid var(--_color-outline);
   }
 }

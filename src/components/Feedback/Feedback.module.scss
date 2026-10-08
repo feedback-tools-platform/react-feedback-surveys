@@ -37,23 +37,23 @@
   box-sizing: border-box;
   height: var(--_checkbox-size);
   min-width: var(--_checkbox-size);
-  background-color: hsl(var(--_color-control) / 100%);
-  border: 1px solid hsl(var(--_color-outline) / 100%);
+  background-color: var(--_color-control);
+  border: 1px solid var(--_color-outline);
   border-radius: 4px;
 
   .label:hover & {
-    border-color: hsl(var(--_color-text) / 100%);
+    border-color: var(--_color-text);
   }
 }
 
 .checkbox:focus-visible + .check {
-  outline: 4px solid hsl(var(--_color-outline) / 14%);
+  outline: 4px solid color-mix(in srgb, var(--_color-outline) 14%, transparent);
 }
 
 .checkbox:checked + .check {
   position: relative;
-  background-color: hsl(var(--_color-accent) / 100%);
-  border-color: hsl(var(--_color-accent) / 100%);
+  background-color: var(--_color-accent);
+  border-color: var(--_color-accent);
 
   &::after {
     position: absolute;
@@ -63,7 +63,7 @@
     height: 4px;
     content: '';
     border: 2px solid;
-    border-color: transparent transparent hsl(var(--_color-accent-text) / 100%) hsl(var(--_color-accent-text) / 100%);
+    border-color: transparent transparent var(--_color-accent-text) var(--_color-accent-text);
     transform: translate(-45%, -75%) rotate(-45deg);
     pointer-events: none;
   }
@@ -95,24 +95,24 @@
   font-family: inherit;
   font-size: 16px;
   line-height: 1.5;
-  color: hsl(var(--_color-text) / 100%);
-  background-color: hsl(var(--_color-control) / 100%);
-  border: 1px solid hsl(var(--_color-border) / 100%);
+  color: var(--_color-text);
+  background-color: var(--_color-control);
+  border: 1px solid var(--_color-border);
   border-radius: var(--_surface-radius);
-  outline: 0 solid hsl(var(--_color-outline) / 14%);
+  outline: 0 solid color-mix(in srgb, var(--_color-outline) 14%, transparent);
   resize: none;
   transition: background-color 0.15s, border-color 0.15s, outline-width 0.2s;
 
   &:focus {
-    border-color: hsl(var(--_color-text) / 100%);
-    outline: 4px solid hsl(var(--_color-outline) / 20%);
+    border-color: var(--_color-text);
+    outline: 4px solid color-mix(in srgb, var(--_color-outline) 20%, transparent);
   }
 
   &.invalid {
-    border-color: hsl(var(--_color-error) / 100%);
+    border-color: var(--_color-error);
 
     &:focus {
-      outline-color: hsl(var(--_color-error) / 14%);
+      outline-color: color-mix(in srgb, var(--_color-error) 14%, transparent);
     }
   }
 }
@@ -135,13 +135,13 @@
   box-sizing: border-box;
   width: 28px;
   height: 28px;
-  color: hsl(var(--_color-muted) / 100%);
-  background-color: hsl(var(--_color-bg) / 100%);
+  color: var(--_color-muted);
+  background-color: var(--_color-bg);
   border-radius: var(--_surface-radius);
   transition: color 0.15s, background-color 0.15s;
 
   &:hover:not(:disabled) {
-    color: hsl(var(--_color-text) / 100%);
+    color: var(--_color-text);
   }
 
   &[aria-busy='true'] {
@@ -187,7 +187,7 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: hsl(var(--_color-error-text) / 100%);
+  color: var(--_color-error-text);
 }
 
 .attachmentErrorDismiss {
@@ -198,7 +198,7 @@
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  color: hsl(var(--_color-text) / 100%);
+  color: var(--_color-text);
   border-radius: 50%;
 }
 

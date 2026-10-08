@@ -1,0 +1,221 @@
+/* no palette of its own: the light and dark themes give the colors, the terminal look comes from the rules below */
+.ftools-survey.terminal {
+  --ft-surface-radius: 10px;
+  --ft-surface-shadow: 0 0 0 1px color-mix(in srgb, currentcolor 18%, transparent), 0 24px 48px -16px hsl(0deg 0% 0% / 30%);
+  --ft-popup-shadow: 0 0 0 1px color-mix(in srgb, currentcolor 18%, transparent), 0 24px 48px -16px hsl(0deg 0% 0% / 30%);
+  --ft-font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+
+  /* prompt colors mixed with the theme's text: darker on light, lighter on dark */
+  --term-green: color-mix(in srgb, #2da44e 75%, currentcolor);
+  --term-cyan: color-mix(in srgb, #1f9fb4 75%, currentcolor);
+}
+
+/* window title bar with the three window buttons */
+.ftools-survey.terminal::part(surface) {
+  padding-top: 48px;
+}
+
+.ftools-survey.terminal::part(surface)::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 28px;
+  content: '~/feedback — fish' / '';
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+  color: color-mix(in srgb, currentcolor 55%, transparent);
+  background:
+    radial-gradient(circle at 16px 50%, #ff5f57 5px, transparent 5.5px),
+    radial-gradient(circle at 34px 50%, #febc2e 5px, transparent 5.5px),
+    radial-gradient(circle at 52px 50%, #28c840 5px, transparent 5.5px),
+    color-mix(in srgb, currentcolor 6%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, currentcolor 15%, transparent);
+}
+
+.ftools-survey.terminal::part(close) {
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  inset-inline-end: 8px;
+}
+
+/* a terminal redraws instantly: no fades, no zoom */
+.ftools-survey.terminal::part(point),
+.ftools-survey.terminal::part(point-icon),
+.ftools-survey.terminal::part(checkbox),
+.ftools-survey.terminal::part(field),
+.ftools-survey.terminal::part(attach),
+.ftools-survey.terminal::part(submit),
+.ftools-survey.terminal::part(skip) {
+  transition: none;
+}
+
+.ftools-survey.terminal::part(point-icon) {
+  transform: none;
+}
+
+.ftools-survey.terminal::part(root) {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* the phosphor glow only reads on a dark screen */
+@media (prefers-color-scheme: dark) {
+  .ftools-survey.terminal::part(root) {
+    text-shadow: 0 0 8px hsl(212deg 100% 75% / 18%);
+  }
+}
+
+
+.ftools-survey.terminal::part(title) {
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+}
+
+/* prompt in the fish shell style, inside the title so a long question wraps to the left edge */
+.ftools-survey.terminal::part(title)::before {
+  content: '~/feedback>' / '';
+  color: var(--term-cyan);
+  margin-inline-end: 1ch;
+}
+
+/* scale: [1] [2] [3], hover highlights it like a terminal selection */
+.ftools-survey.terminal::part(point) {
+  font-size: inherit;
+  font-weight: 400;
+  color: inherit;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ftools-survey.terminal::part(point):hover {
+  text-shadow: none;
+  color: inherit;
+  background-color: color-mix(in srgb, currentcolor 15%, transparent);
+  box-shadow: none;
+}
+
+.ftools-survey.terminal::part(point-score)::before {
+  content: '[' / '';
+}
+
+.ftools-survey.terminal::part(point-score)::after {
+  content: ']' / '';
+}
+
+/* every icon turns phosphor green; an empty star stays dim so it doesn't read as filled */
+.ftools-survey.terminal::part(point-icon),
+.ftools-survey.terminal::part(success-icon) {
+  filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(3);
+}
+
+.ftools-survey.terminal::part(point-icon) {
+  color: color-mix(in srgb, currentcolor 35%, transparent);
+}
+
+.ftools-survey.terminal::part(point-icon filled) {
+  color: var(--ft-color-star, hsl(42deg 99% 64.5%));
+}
+
+.ftools-survey.terminal::part(legend) {
+  font-size: inherit;
+}
+
+/* checkboxes: [ ] and [x] */
+.ftools-survey.terminal::part(checkbox) {
+  margin-top: 0;
+  height: auto;
+  min-width: auto;
+  color: color-mix(in srgb, currentcolor 60%, transparent);
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.ftools-survey.terminal::part(checkbox)::before {
+  content: '[ ]' / '';
+  white-space: pre;
+}
+
+.ftools-survey.terminal::part(checkbox checked) {
+  color: var(--term-green);
+  background-color: transparent;
+}
+
+.ftools-survey.terminal::part(checkbox checked)::before {
+  content: '[x]' / '';
+}
+
+.ftools-survey.terminal::part(checkbox checked)::after {
+  content: none;
+}
+
+/* field: no box, a line on the left and a green caret */
+.ftools-survey.terminal::part(field) {
+  font-size: inherit;
+  line-height: inherit;
+  background-color: transparent;
+  border-width: 0 0 0 2px;
+  border-color: color-mix(in srgb, currentcolor 25%, transparent);
+  border-radius: 0;
+  caret-color: var(--term-green);
+}
+
+.ftools-survey.terminal::part(field):focus {
+  border-color: var(--term-green);
+  outline: none;
+}
+
+.ftools-survey.terminal::part(field invalid) {
+  border-color: #e5534b;
+}
+
+.ftools-survey.terminal::part(attach) {
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, currentcolor 20%, transparent);
+  border-radius: 4px;
+}
+
+.ftools-survey.terminal::part(submit),
+.ftools-survey.terminal::part(skip) {
+  font-size: inherit;
+  font-weight: 400;
+  text-transform: lowercase;
+  border-radius: 4px;
+}
+
+.ftools-survey.terminal::part(submit) {
+  text-shadow: none;
+  color: #fff;
+  background-color: #1f883d;
+}
+
+.ftools-survey.terminal::part(submit)::before,
+.ftools-survey.terminal::part(skip)::before {
+  content: '[ ' / '';
+}
+
+.ftools-survey.terminal::part(submit)::after,
+.ftools-survey.terminal::part(skip)::after {
+  content: ' ]' / '';
+}
+
+.ftools-survey.terminal::part(submit):hover:not(:disabled) {
+  opacity: 1;
+  background-color: #1a7f37;
+}
+
+.ftools-survey.terminal::part(skip) {
+  color: inherit;
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, currentcolor 25%, transparent);
+}
+
+.ftools-survey.terminal::part(skip):hover:not(:disabled) {
+  text-shadow: none;
+  background-color: color-mix(in srgb, currentcolor 15%, transparent);
+}
