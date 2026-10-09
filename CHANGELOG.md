@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] - 2026-10-09
 
 ### Added
 
@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shadow DOM parts** - Every part has a `part` attribute named after its `classNames` key in kebab case, with states as a second name, so page CSS can style it through `::part()`. See [Shadow DOM Parts](README.md#shadow-dom-parts).
 - **CSS variables** - `--ft-color-accent` and `--ft-color-accent-text` for the submit button and a checked checkbox (default: text and background colors), `--ft-color-star`, `--ft-checkbox-size`, `--ft-surface-shadow`, and `--ft-popup-shadow`. See [CSS Variables](README.md#css-variables).
 - **Exported types** - `SurveyTheme`, `SurveyClassNames`.
+- **Style catalog** - Storybook shows ready-made styles, each with a use case and its CSS to copy. See [Custom Styles](README.md#custom-styles).
 
 ### Changed
 
@@ -43,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`--ft-*` on any element** - Variables set on any ancestor of the widget now apply. Before, only `:root` worked.
 - **`--ft-font-family`** - The survey ignored it.
 - **Empty stars** - They take `--ft-color-outline` instead of a fixed grey, so they fit the dark theme.
+- **Keys in the "Other" field** - Keys typed in it no longer reach the page's keyboard shortcuts, the same as in the other fields.
 - **Text color and font in `Surface`** - `Surface` sets the widget's text color and font, so content next to the survey inside it no longer takes the page's color and font.
 
 ### Removed
