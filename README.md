@@ -45,6 +45,7 @@ Check out [feedback.tools](https://feedback.tools) — built by the same team.
     * [How Styles Combine](#how-styles-combine)
     * [Themes (Dark Mode)](#themes-dark-mode)
     * [Custom Styles](#custom-styles)
+    * [Catalog Styles](#catalog-styles)
     * [CSS Variables](#css-variables)
     * [Custom Classes](#custom-classes)
     * [Shadow DOM Parts](#shadow-dom-parts)
@@ -649,7 +650,48 @@ A custom style is a class that sets `--ft-*` variables, plus optional classes fo
 </Surface>
 ```
 
-Storybook's `Style Catalog` section shows the built-in themes and a [catalog of ready-made custom styles](https://feedback.tools/react-feedback-surveys/storybook/?path=/story/style-catalog--catalog) (`src/stories/styles`), each paired with a use case. Catalog styles are written for a widget inside a shadow root and target its host by name, `.ftools-survey.<name>`, so several of them work on one page. The Feedback Tools SDK adds that name to the host from `className` in `init()`. See [Shadow DOM Parts](#shadow-dom-parts). The `Styling Cases` section demonstrates how the rules above combine.
+For a ready-made start, see [Catalog Styles](#catalog-styles). Storybook's `Styling Cases` section demonstrates how the rules above combine.
+
+### Catalog Styles
+
+The [style catalog](https://feedback.tools/react-feedback-surveys/storybook/?path=/story/style-catalog--catalog) in Storybook has ready-made styles, from minimal to a hand-drawn sketch, each paired with a use case. To use one:
+
+1. Open a style in the catalog. Its page shows it on every survey type.
+2. Click **Copy** above its CSS and paste the CSS into your stylesheet, outside any `@layer`.
+3. Wrap the widget in an element with the style's classes, and pass the theme named in the comment at the top of the CSS:
+
+   ```tsx
+   <div className="ftools-survey ftools-embed terminal">
+     <Surface theme="dark">
+       <Survey /* ... */ />
+     </Surface>
+   </div>
+   ```
+
+   For a popup, wrap `Popup` and use `ftools-popup` instead of `ftools-embed`:
+
+   ```tsx
+   <div className="ftools-survey ftools-popup terminal">
+     <Popup theme="dark">
+       <Survey /* ... */ />
+     </Popup>
+   </div>
+   ```
+
+4. Change the CSS to fit your brand, starting with the `--ft-*` variables at the top.
+
+Catalog styles are examples to copy, not part of the package: they aren't versioned or updated with the library, and the CSS you paste is yours to change.
+
+The same CSS works with and without a shadow root. `ftools-survey`, `ftools-embed`, and `ftools-popup` are the classes the [Feedback Tools SDK](https://feedback.tools/docs/sdk/styling) puts on the host of its widget, and every rule lists two selectors: `::part()` for a widget inside a shadow root, and a `[part~="..."]` attribute selector for a widget in the page's own DOM:
+
+```css
+.ftools-survey.terminal::part(choice checked),
+.ftools-survey.terminal [part~="choice"][part~="checked"] {
+  /* ... */
+}
+```
+
+Write your own stylesheet the same way when it has to work in both places.
 
 ### CSS Variables
 
@@ -842,6 +884,8 @@ States come as a second part name, because `::part()` can't look at attributes o
 | Current step                    | `::part(root rating)`, `feedback`, `contact`, `success` |
 
 Pseudo-classes and pseudo-elements of the part itself work: `:hover`, `:focus-visible`, `:disabled`, `::before`, `::after`, `::placeholder`. Selectors that look inside or around a part don't: no `:has()`, no `::part(a) .child`, no `::part(a) + ::part(b)`.
+
+Outside a shadow root `::part()` matches nothing, but the `part` attributes are still there: `.my-host [part~="choice"][part~="checked"]` styles the same part in the page's own DOM.
 
 ## Demo
 

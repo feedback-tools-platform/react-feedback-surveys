@@ -301,3 +301,196 @@
   content: '☾' / '';
   margin-inline-end: 4px;
 }
+
+.styles-collage {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 440px);
+  gap: 16px;
+  padding: 16px;
+  font-family: Inter, sans-serif;
+  color: #1f2328;
+  background-color: #fff;
+}
+
+/* one tile size, so the separate tile shots line up in a grid */
+.styles-collage-tile {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 420px;
+  padding: 40px 28px 24px;
+  border-radius: 20px;
+}
+
+.styles-collage-tile .ftools-survey {
+  margin-block: auto;
+}
+
+.styles-collage-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.styles-dom-catalog {
+  font-family: Inter, sans-serif;
+  color: #1f2328;
+}
+
+.styles-dom-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding: 32px 24px;
+}
+
+.styles-dom {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.styles-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.styles-heading h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.styles-heading .styles-variants {
+  margin-top: 0;
+}
+
+/* a white card on every stage, so the steps stay readable on teal, pink or cork */
+.styles-guide {
+  margin-top: 48px;
+  padding: 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1f2328;
+  background-color: #fff;
+  border: 1px solid #d0d4da;
+  border-radius: 12px;
+}
+
+.styles-guide h2 {
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.styles-guide h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #59636e;
+}
+
+.styles-guide p {
+  margin: 0 0 16px;
+}
+
+.styles-guide code {
+  padding: 1px 5px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background-color: #eff1f3;
+  border-radius: 4px;
+}
+
+.styles-guide-steps {
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-inline-start: 22px;
+}
+
+.styles-guide-platforms {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.styles-guide p.styles-guide-platform-note {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #59636e;
+}
+
+.styles-guide-platform-note a {
+  color: #0b57d0;
+  text-underline-offset: 3px;
+}
+
+.styles-guide .styles-snippet {
+  margin: 0;
+  padding: 12px 14px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  color: #e6edf3;
+  background-color: #0d1117;
+  border-radius: 8px;
+}
+
+.styles-guide .styles-snippet code {
+  padding: 0;
+  font-size: inherit;
+  background: none;
+}
+
+.styles-guide-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  color: #59636e;
+}
+
+.styles-guide-links a {
+  color: #0b57d0;
+  text-underline-offset: 3px;
+}
+
+.styles-guide-links,
+.styles-guide p.styles-guide-links {
+  margin: 0;
+}
+
+.styles-catalog-intro {
+  grid-column: 1 / -1;
+  padding: 32px 24px 24px;
+  background-color: #fff;
+}
+
+.styles-catalog-intro h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.styles-catalog-intro p {
+  margin: 0;
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #3d444d;
+}
+
+.styles-catalog-intro a {
+  color: #0b57d0;
+  text-underline-offset: 3px;
+}

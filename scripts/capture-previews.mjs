@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { spawn } from 'child_process';
+import { mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -17,6 +18,17 @@ const PREVIEWS = [
   {id: 'widgets-survey-nps--preview', file: 'nps10.png'},
   {id: 'widgets-survey-nps--preview-mobile', file: 'nps10-mobile.png', viewport: {width: 414, height: 896}},
   {id: 'widgets-survey-general--preview', file: 'general.png'},
+  {id: 'style-catalog--collage', file: 'styles-collage.png', viewport: {width: 1440, height: 1600}, waitForPlay: true, opaque: true},
+  // every `[data-capture]` element saved on its own as `<dir>/<data-capture>.png`
+  {
+    id: 'style-catalog--collage',
+    dir: 'styles',
+    each: '[data-capture]',
+    css: '.styles-collage-label { display: none; } .styles-collage-tile { border-radius: 0; }',
+    viewport: {width: 1440, height: 1600},
+    waitForPlay: true,
+    opaque: true
+  },
 ];
 
 async function isStorybookRunning() {
@@ -56,7 +68,7 @@ async function main() {
   const browser = await chromium.launch();
 
   try {
-    for (const {id, file, viewport} of PREVIEWS) {
+    for (const {id, file, dir, each, css = '', viewport, waitForPlay, opaque} of PREVIEWS) {
       const page = await browser.newPage({deviceScaleFactor: 2});
 
       if (viewport) {
@@ -68,12 +80,29 @@ async function main() {
       const el = page.locator('#storybook-root > *').first();
       await el.waitFor({state: 'visible'});
 
+      // the story's play function marks the root once it has opened the steps it shows
+      if (waitForPlay) {
+        await page.locator('#storybook-root[data-ready]').waitFor({state: 'attached'});
+      }
+
       // Stories use layout: 'fullscreen' + inline-flex, so element is already at (0,0).
       // Only need to neutralise browser's default body margin.
-      await page.addStyleTag({content: 'body { margin: 0; background: transparent; }'});
+      await page.addStyleTag({content: `body { margin: 0; background: ${opaque ? '#fff' : 'transparent'}; } ${css}`});
 
-      await el.screenshot({path: join(OUTPUT_DIR, file), omitBackground: true});
-      console.log(`  saved  docs/assets/${file}`);
+      if (each) {
+        mkdirSync(join(OUTPUT_DIR, dir), {recursive: true});
+
+        for (const part of await page.locator(each).all()) {
+          const name = await part.getAttribute('data-capture');
+
+          await part.screenshot({path: join(OUTPUT_DIR, dir, `${name}.png`), omitBackground: !opaque});
+          console.log(`  saved  docs/assets/${dir}/${name}.png`);
+        }
+      } else {
+        // an opaque preview paints its own background, so a fractional height must not leave a see-through last row
+        await el.screenshot({path: join(OUTPUT_DIR, file), omitBackground: !opaque});
+        console.log(`  saved  docs/assets/${file}`);
+      }
 
       await page.close();
     }

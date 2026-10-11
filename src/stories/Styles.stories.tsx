@@ -9,6 +9,7 @@ import { Survey, type CsatSurveyProps2, type SurveyProps } from '../surveys/Surv
 import type { SurveyTheme } from '../types';
 import { cn } from '../utils';
 
+import { HighlightedCode } from './HighlightedCode';
 import { ShadowHost } from './ShadowHost';
 import { withinShadow } from './withinShadow';
 import { blueprint } from './styles/blueprint';
@@ -25,6 +26,7 @@ import { retroOs } from './styles/retro-os';
 import { soft } from './styles/soft';
 import { stickyNote } from './styles/sticky-note';
 import { terminal } from './styles/terminal';
+import { toUniversalCss } from './styles/toUniversalCss';
 import type { CustomStyle } from './styles/types';
 
 import './Styles.stories.css';
@@ -162,11 +164,28 @@ const resolveTheme = (mode: Mode, toolbarTheme?: SurveyTheme) => {
   return { theme: base, stage: `styles-stage-${mode} styles-tone-${base}` };
 };
 
-const getStyleCopy = (mode: Mode): string => {
-  const { label, theme, custom } = MODES[mode];
-  const pass = followsTheme(mode) ? "theme: 'light', 'dark' or 'auto'" : `theme: '${theme}'`;
+const DOCS_URL = 'https://feedback.tools/react-feedback-surveys/docs/styling';
+const SDK_URL = 'https://feedback.tools/docs/sdk';
+const SDK_DOCS_URL = `${SDK_URL}/styling`;
 
-  return `/* ${label} style for the Feedback Tools SDK: paste into your site CSS and pass className: '${mode}' and ${pass} to ftools('init') */\n\n${custom?.css ?? ''}`;
+const getThemeNote = (mode: Mode): string => (followsTheme(mode) ? "'light', 'dark' or 'auto'" : `'${MODES[mode].theme}'`);
+
+// the copy explains itself, so it still makes sense pasted into a stylesheet, a chat or an LLM prompt
+const getStyleCopy = (mode: Mode): string => {
+  const { label, custom } = MODES[mode];
+  const header = [
+    `/* ${label} style from the react-feedback-surveys style catalog.`,
+    ' * An example to copy and change: it isn\'t versioned or updated with the library.',
+    ' *',
+    ` * Theme: ${getThemeNote(mode)}`,
+    ` * React: wrap <Surface> in <div className="ftools-survey ftools-embed ${mode}">,`,
+    ` *   or <Popup> in <div className="ftools-survey ftools-popup ${mode}">, and pass the theme to it`,
+    ` * Feedback Tools SDK (hosted feedback.tools surveys): pass className: '${mode}' and the theme to ftools('init')`,
+    ` * Guide: ${DOCS_URL}`,
+    ' */'
+  ];
+
+  return `${header.join('\n')}\n\n${toUniversalCss(custom?.css ?? '')}`;
 };
 
 const COPY_LABELS = { copied: 'Copied', failed: 'Copy failed' };
@@ -253,21 +272,193 @@ const StyleCode: React.FC<{ mode: Mode }> = ({ mode }) => {
     >
       <div className="styles-code-header">
         <span>
-          Paste into your site CSS
+          {`${label} CSS`}
         </span>
 
         <CopyCssButton mode={mode} />
       </div>
 
       <pre tabIndex={0}>
-        <code>
-          {getStyleCopy(mode)}
-        </code>
+        <HighlightedCode
+          code={getStyleCopy(mode)}
+          language="css"
+        />
       </pre>
     </section>
   );
 };
 
+const getReactSnippet = (mode: Mode, theme: SurveyTheme): string => {
+  const hostClass = MODES[mode].custom ? ` ${mode}` : '';
+
+  if (!hostClass) {
+    return `<Surface theme="${theme}">\n  <Survey /* ... */ />\n</Surface>\n\n// or as a popup\n<Popup theme="${theme}">\n  <Survey /* ... */ />\n</Popup>`;
+  }
+
+  return [
+    `<div className="ftools-survey ftools-embed${hostClass}">`,
+    `  <Surface theme="${theme}">`,
+    '    <Survey /* ... */ />',
+    '  </Surface>',
+    '</div>',
+    '',
+    '// or as a popup',
+    `<div className="ftools-survey ftools-popup${hostClass}">`,
+    `  <Popup theme="${theme}">`,
+    '    <Survey /* ... */ />',
+    '  </Popup>',
+    '</div>'
+  ].join('\n');
+};
+
+const getSdkSnippet = (mode: Mode, theme: SurveyTheme): string => [
+  'ftools(\'init\', {',
+  '  surveyId: \'SURVEY_ID\',',
+  '  publishableKey: \'PUBLISHABLE_KEY\',',
+  ...(MODES[mode].custom ? [`  className: '${mode}',`] : []),
+  `  theme: '${theme}'`,
+  '});'
+].join('\n');
+
+const GUIDE_LINKS = [
+  { label: 'Styling guide', href: DOCS_URL },
+  { label: 'CSS variables', href: `${DOCS_URL}#css-variables` },
+  { label: 'Part names', href: `${DOCS_URL}#custom-classes` },
+  { label: 'Feedback Tools SDK styling', href: SDK_DOCS_URL }
+];
+
+const PlatformSnippets: React.FC<{ mode: Mode; theme: SurveyTheme }> = ({ mode, theme }) => (
+  <div className="styles-guide-platforms">
+    <div>
+      <h3>
+        React
+      </h3>
+
+      <p className="styles-guide-platform-note">
+        This library in your React app.
+      </p>
+
+      <pre className="styles-snippet">
+        <HighlightedCode
+          code={getReactSnippet(mode, theme)}
+          language="javascript"
+        />
+      </pre>
+    </div>
+
+    <div>
+      <h3>
+        Feedback Tools SDK
+      </h3>
+
+      <p className="styles-guide-platform-note">
+        Only if you use hosted surveys from
+        {' '}
+        <a
+          href={SDK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          feedback.tools
+        </a>
+        : the same widget, added to any site with a script.
+      </p>
+
+      <pre className="styles-snippet">
+        <HighlightedCode
+          code={getSdkSnippet(mode, theme)}
+          language="javascript"
+        />
+      </pre>
+    </div>
+  </div>
+);
+
+// what a visitor needs after seeing the style: where the CSS goes, how to attach it, what to change, where to read more
+const StyleGuide: React.FC<{ mode: Mode; theme: SurveyTheme }> = ({ mode, theme }) => {
+  const { label, custom } = MODES[mode];
+
+  return (
+    <section
+      aria-labelledby="styles-guide-title"
+      className="styles-guide"
+    >
+      <h2 id="styles-guide-title">
+        {custom ? `Use the ${label} style` : `Use the ${label} theme`}
+      </h2>
+
+      {custom ? (
+        <ol className="styles-guide-steps">
+          <li>
+            <strong>
+              Copy the CSS below
+            </strong>
+            {' into your site\'s stylesheet. Keep it outside any '}
+            <code>
+              @layer
+            </code>
+            , so it wins over the widget&apos;s own styles.
+          </li>
+
+          <li>
+            <strong>
+              Attach it to the widget
+            </strong>
+            {` with the ${mode} class and the ${getThemeNote(mode)} theme.`}
+
+            <PlatformSnippets
+              mode={mode}
+              theme={theme}
+            />
+          </li>
+
+          <li>
+            <strong>
+              Make it yours.
+            </strong>
+            {' The CSS is an example, not a dependency: it isn\'t versioned or updated with the library. Change it freely, starting with the '}
+            <code>
+              --ft-*
+            </code>
+            {' variables at the top.'}
+          </li>
+        </ol>
+      ) : (
+        <>
+          <p>
+            A built-in theme needs no CSS: pass it as
+            {' '}
+            <code>
+              theme
+            </code>
+            .
+          </p>
+
+          <PlatformSnippets
+            mode={mode}
+            theme={theme}
+          />
+        </>
+      )}
+
+      <p className="styles-guide-links">
+        Learn more:
+        {GUIDE_LINKS.map(({ label: linkLabel, href }) => (
+          <a
+            key={href}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {linkLabel}
+          </a>
+        ))}
+      </p>
+    </section>
+  );
+};
+
+// the page runs the same universal CSS the Copy button hands out
 const StyleSheetTag: React.FC<{ mode: Mode }> = ({ mode }) => {
   const css = MODES[mode].custom?.css;
 
@@ -277,7 +468,7 @@ const StyleSheetTag: React.FC<{ mode: Mode }> = ({ mode }) => {
 
   return (
     <style>
-      {css}
+      {toUniversalCss(css)}
     </style>
   );
 };
@@ -410,6 +601,16 @@ const StylesShowcase: React.FC<StylesShowcaseProps> = ({
             ))}
           </div>
 
+          <div className="styles-heading">
+            <h1>
+              {MODES[mode].label}
+            </h1>
+
+            {!!MODES[mode].custom && (
+              <ThemeVariants mode={mode} />
+            )}
+          </div>
+
           <p className="styles-description">
             {MODES[mode].description}
           </p>
@@ -441,6 +642,11 @@ const StylesShowcase: React.FC<StylesShowcaseProps> = ({
             </Popup>
           </ShadowHost>
         </div>
+
+        <StyleGuide
+          mode={mode}
+          theme={theme}
+        />
 
         <StyleCode mode={mode} />
       </div>
@@ -675,6 +881,26 @@ const CATALOG: CatalogEntry[] = [
 
 const StylesCatalog: React.FC<{ theme?: SurveyTheme }> = ({ theme: toolbarTheme }) => (
   <div className="styles-catalog">
+    <header className="styles-catalog-intro">
+      <h1>
+        Style catalog
+      </h1>
+
+      <p>
+        Ready-made looks to copy and change. Open a style to see it on every survey type, with its CSS and the steps
+        to add it to your React app. Every style is plain CSS on top of the
+        {' '}
+        <a
+          href={DOCS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          styling API
+        </a>
+        .
+      </p>
+    </header>
+
     {CATALOG.map(({ mode, survey }) => {
       const { label, description } = MODES[mode];
       const { theme, stage } = resolveTheme(mode, toolbarTheme);
@@ -790,6 +1016,270 @@ export const CatalogDarkFeedbackStep: Story = {
   }
 };
 
+interface CollageTile {
+  mode: CatalogMode;
+  /** Choice to check or text to type on the feedback step; without it the tile stays on the rating step */
+  answer?: string;
+}
+
+const COLLAGE_TILES: CollageTile[] = [
+  { mode: 'terminal', answer: 'Build' },
+  { mode: 'editorial', answer: 'A section on pricing' },
+  { mode: 'retro-os' },
+  { mode: 'receipt' },
+  { mode: 'brutal', answer: 'Dark mode' },
+  { mode: 'chat' },
+  { mode: 'playful' },
+  { mode: 'paper', answer: 'More examples' },
+  { mode: 'sticky-note', answer: 'A dark mode for the dashboard' }
+];
+
+const COLLAGE = COLLAGE_TILES.map((tile) => ({
+  ...tile,
+  survey: CATALOG.find(({ mode }) => mode === tile.mode)!.survey
+}));
+
+// terminal reads best on its dark palette; every other tile stays light
+const getCollageTheme = (mode: CatalogMode): SurveyTheme => (mode === 'terminal' ? 'dark' : 'light');
+
+// user-event typing inside a shadow root never reaches React, so set the value natively and fire `input`
+const fillField = (field: HTMLTextAreaElement, text: string): void => {
+  Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.set?.call(field, text);
+  field.dispatchEvent(new Event('input', { bubbles: true }));
+};
+
+const StylesCollage: React.FC = () => (
+  <div className="styles-collage">
+    {COLLAGE.map(({ mode, survey }) => {
+      const { label } = MODES[mode];
+      const { theme, stage } = resolveTheme(mode, getCollageTheme(mode));
+
+      return (
+        <section
+          key={mode}
+          aria-label={`${label} style`}
+          className={cn('styles-collage-tile', stage)}
+          data-capture={mode}
+        >
+          <StyleSheetTag mode={mode} />
+
+          <ShadowHost className={cn('ftools-embed', getStyleClass(mode))}>
+            <Surface theme={theme}>
+              <Survey
+                {...survey}
+                strings={{ feedbackFormLabel: `${label} feedback form` }}
+                onScoreSubmit={fn()}
+                onFeedbackSubmit={fn()}
+              />
+            </Surface>
+          </ShadowHost>
+
+          <span className="styles-collage-label">
+            {label}
+          </span>
+        </section>
+      );
+    })}
+  </div>
+);
+
+// hidden from the sidebar: `npm run capture-previews` shoots it whole and tile by tile
+export const Collage: Story = {
+  tags: ['!dev'],
+  render: () => (
+    <StylesCollage />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    for (const { mode, answer, survey } of COLLAGE) {
+      if (!answer) {
+        continue;
+      }
+
+      const region = canvas.getByRole('region', { name: `${MODES[mode].label} style` });
+      const tile = await withinShadow(region.querySelector('.ftools-survey')!);
+
+      // general surveys already open on the feedback step
+      if (survey.type !== 'general') {
+        await userEvent.click(tile.getAllByRole('button')[0]);
+      }
+
+      if (survey.responseType === 'choices') {
+        const checkbox = tile.getByRole('checkbox', { name: answer });
+
+        await userEvent.click(checkbox);
+
+        // the shot shows the step at rest, without a focus ring
+        checkbox.blur();
+      } else {
+        fillField(tile.getByRole<HTMLTextAreaElement>('textbox'), answer);
+      }
+
+      await expect(tile.getByRole('button', { name: survey.textButtonSendLabel })).toBeEnabled();
+    }
+
+    // capture-previews waits for this mark before the shot
+    canvasElement.setAttribute('data-ready', '');
+  }
+};
+
+type Dom = 'shadow' | 'plain';
+
+const DOMS: Dom[] = ['shadow', 'plain'];
+
+// the SDK's shadow host, or the wrapper a React app puts around the widget: the same classes either way
+const StyleHost: React.FC<{ dom: Dom; className: string; children: React.ReactNode }> = ({ dom, className, children }) => {
+  if (dom === 'shadow') {
+    return (
+      <ShadowHost className={className}>
+        {children}
+      </ShadowHost>
+    );
+  }
+
+  return (
+    <div className={cn('ftools-survey', className)}>
+      {children}
+    </div>
+  );
+};
+
+const PlainDomCatalog: React.FC = () => (
+  <div className="styles-dom-catalog">
+    {CATALOG.map(({ mode, survey }) => {
+      const { label, custom } = MODES[mode];
+      const { theme, stage } = resolveTheme(mode, 'light');
+
+      return (
+        <section
+          key={mode}
+          aria-label={`${label} style`}
+          className={cn('styles-dom-pair', stage)}
+        >
+          <style>
+            {toUniversalCss(custom?.css ?? '')}
+          </style>
+
+          {DOMS.map((dom) => (
+            <div
+              key={dom}
+              className="styles-dom"
+              data-dom={dom}
+            >
+              <StyleHost
+                className={cn('ftools-embed', mode)}
+                dom={dom}
+              >
+                <Surface theme={theme}>
+                  <Survey
+                    {...survey}
+                    strings={{ feedbackFormLabel: `${label} ${dom} DOM feedback form` }}
+                    onScoreSubmit={fn()}
+                    onFeedbackSubmit={fn()}
+                  />
+                </Surface>
+              </StyleHost>
+
+              <StyleHost
+                className={cn('ftools-popup', mode)}
+                dom={dom}
+              >
+                <Popup
+                  animated={false}
+                  style={{ position: 'static' }}
+                  theme={theme}
+                >
+                  <Survey
+                    {...getPopupSurvey(mode)}
+                    strings={{ feedbackFormLabel: `${label} ${dom} DOM popup feedback form` }}
+                  />
+                </Popup>
+              </StyleHost>
+            </div>
+          ))}
+        </section>
+      );
+    })}
+  </div>
+);
+
+const COMPARED_PROPERTIES = [
+  'color', 'background-color', 'background-image', 'border-top-width', 'border-top-style', 'border-top-color',
+  'border-bottom-width', 'border-top-left-radius', 'box-shadow', 'outline-style', 'opacity', 'transform',
+  'font-family', 'font-size', 'font-weight', 'font-style', 'letter-spacing', 'text-transform', 'text-decoration-line',
+  'padding-top', 'padding-left', 'margin-top', 'margin-left', 'gap', 'display', 'width', 'height', 'content'
+];
+
+const describeParts = (root: ParentNode): string[] => [...root.querySelectorAll('[part]')].flatMap((element) => (
+  ['', '::before', '::after'].map((pseudo) => {
+    const style = getComputedStyle(element, pseudo || null);
+    const values = COMPARED_PROPERTIES.map((property) => `${property}: ${style.getPropertyValue(property)}`);
+
+    return `${element.getAttribute('part')}${pseudo} { ${values.join('; ')} }`;
+  })
+));
+
+// every part, with its ::before and ::after, must compute the same in a shadow root and in plain DOM
+const findDomMismatches = (canvasElement: HTMLElement): string[] => CATALOG.flatMap(({ mode }) => {
+  const [shadow, plain] = DOMS.map((dom) => {
+    const column = canvasElement.querySelector(`[aria-label="${MODES[mode].label} style"] [data-dom="${dom}"]`)!;
+    const roots = dom === 'shadow' ? [...column.querySelectorAll('.ftools-survey')].map((host) => host.shadowRoot!) : [column];
+
+    return roots.flatMap(describeParts);
+  });
+
+  return shadow.flatMap((line, index) => (line === plain[index] ? [] : [`${mode}\n  shadow: ${line}\n  plain:  ${plain[index]}`]));
+});
+
+const openEveryFeedbackStep = async (canvasElement: HTMLElement): Promise<void> => {
+  for (const host of canvasElement.querySelectorAll<HTMLElement>('[data-dom] > div')) {
+    const tile = host.shadowRoot ? await withinShadow(host) : within(host);
+    const point = tile.queryAllByRole('button').find((button) => button.getAttribute('part') === 'point');
+
+    if (point) {
+      await userEvent.click(point);
+    }
+
+    const checkbox = tile.queryAllByRole('checkbox')[0];
+
+    if (checkbox) {
+      await userEvent.click(checkbox);
+    }
+  }
+};
+
+// hidden from the sidebar: proves the copied CSS styles a widget the same with and without a shadow root
+export const CatalogPlainDom: Story = {
+  tags: ['!dev'],
+  parameters: {
+    // each survey shows twice on purpose, so its region name repeats; the real catalog stories still run this rule
+    a11y: {
+      config: {
+        rules: [{ id: 'landmark-unique', enabled: false }]
+      }
+    }
+  },
+  render: () => (
+    <PlainDomCatalog />
+  ),
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelectorAll('[data-dom="shadow"] .ftools-survey')).toHaveLength(CATALOG.length * 2));
+
+    for (const host of canvasElement.querySelectorAll('[data-dom="shadow"] .ftools-survey')) {
+      await withinShadow(host);
+    }
+
+    await expect(findDomMismatches(canvasElement)).toEqual([]);
+
+    await openEveryFeedbackStep(canvasElement);
+
+    // a state change starts transitions; compare the styles they end on
+    await Promise.all(document.getAnimations().map((animation) => animation.finished));
+    await expect(findDomMismatches(canvasElement)).toEqual([]);
+  }
+};
+
 export const Playground: Story = {};
 
 export const Dark: Story = {
@@ -886,8 +1376,13 @@ export const Terminal: Story = {
       const copy = within(canvasElement).getByRole('button', { name: 'Copy Terminal CSS' });
 
       await userEvent.click(copy);
-      await expect(writeText).toHaveBeenCalledWith(expect.stringContaining("pass className: 'terminal' and theme: 'light', 'dark' or 'auto' to ftools('init')"));
+      await expect(writeText).toHaveBeenCalledWith(expect.stringContaining("Theme: 'light', 'dark' or 'auto'"));
+      await expect(writeText).toHaveBeenCalledWith(expect.stringContaining('<div className="ftools-survey ftools-embed terminal">'));
+      await expect(writeText).toHaveBeenCalledWith(expect.stringContaining("pass className: 'terminal' and the theme to ftools('init')"));
+
+      // one stylesheet for both: `::part()` for the SDK's shadow root, part attributes for a plain DOM app
       await expect(writeText).toHaveBeenCalledWith(expect.stringContaining('.ftools-survey.terminal::part(checkbox checked)'));
+      await expect(writeText).toHaveBeenCalledWith(expect.stringContaining('.ftools-survey.terminal [part~="checkbox"][part~="checked"]'));
       await expect(copy).toHaveTextContent('Copied');
 
       // the block under the examples shows exactly what the button copies
