@@ -158,13 +158,14 @@ One `Survey` component covers every format. `type` picks the methodology, `point
 - `type` is required.
 - `points` is required for `type="csat"` and not used for other types.
 - `scaleStyle` is required for every type except `general`.
+- `type="general"` has no rating step, only the feedback step — see [General](#general-text-feedback-only).
 - `value` is the score that `onScoreSubmit` and `onFeedbackSubmit` receive.
 
 TypeScript rejects invalid combinations, such as `type="ces"` with `scaleStyle="stars"`.
 
 ## Survey Component
 
-Each format below has a screenshot and a full example.
+Each format below has a screenshot and a full example. The valid `type`/`points`/`scaleStyle` combinations are in [Survey Types](#survey-types).
 
 ### CSAT (Customer Satisfaction Score)
 
@@ -325,6 +326,12 @@ import { Popup, Survey } from 'react-feedback-surveys';
 import 'react-feedback-surveys/index.css';
 
 <Popup
+  animated
+  className="custom-popup"
+  classNames={{
+    surface: 'custom-popup-surface',
+    close: 'custom-popup-close'
+  }}
   placement="bottomRight"
   onClose={() => console.log('Closed')}
 >
@@ -427,7 +434,7 @@ The first screen with the question and the scale. `type="general"` has no rating
 | `question`            | `string`                    | required | Main survey question.                                           |
 | `minLabel`            | `string`                    | -        | Caption at the low end of the scale.                            |
 | `maxLabel`            | `string`                    | -        | Caption at the high end of the scale.                           |
-| `getScoreLabelSuffix` | `(label: string) => string` | -        | Builds the visible text after the first and last numbered buttons from `minLabel` and `maxLabel`. Default `` (label) => ` - ${label}` ``. Applies to the `numbers` scale style. |
+| `getScoreLabelSuffix` | `(label: string) => string` | -        | Builds the visible text after the first and last numbered buttons from `minLabel` and `maxLabel`. Default `` (label) => ` - ${label}` ``. Applies to `type="ces"` and `type="nps"` only. |
 
 #### Feedback Step
 
@@ -449,7 +456,7 @@ A screenshot control on the feedback step. It's shown only when `onCaptureScreen
 | Prop                     | Type                                              | Required | Description                                       |
 |--------------------------|---------------------------------------------------|----------|---------------------------------------------------|
 | `onCaptureScreenshot`    | `() => string \| Blob \| Promise<string \| Blob>` | -        | Captures the screenshot.                          |
-| `screenshotButtonLabel`  | `string`                                          | -        | Label of the screenshot control. Default `'Capture screenshot'`. |
+| `screenshotButtonLabel`  | `string`                                          | -        | Accessible name of the screenshot button, which shows only an icon. Default `'Capture screenshot'`. |
 | `screenshotErrorMessage` | `string`                                          | -        | Shown when `onCaptureScreenshot` throws or rejects. Default `'Failed to capture screenshot'`. |
 | `maxAttachments`         | `number`                                          | -        | Maximum number of attachments. Default `1`.       |
 | `attachmentCaption`      | `string`                                          | -        | Caption under a thumbnail, also its image alt text. Default `'Screenshot'`. |
@@ -617,7 +624,7 @@ Pass `onCaptureScreenshot` to add a screenshot control to the feedback step. Wit
 
 Each attachment shows as a thumbnail with a caption and its size. A click on the thumbnail opens it in a new tab. The "x" button removes it.
 
-By default a respondent can attach one screenshot, and then the control hides. `maxAttachments` changes this limit. The control stays visible under the thumbnails until the limit is reached:
+By default a respondent can attach one screenshot, and then the control hides. `maxAttachments` changes this limit. The control stays in the corner of the text field until the limit is reached:
 
 ```tsx
 <Survey
@@ -836,7 +843,7 @@ Write your own stylesheet the same way when it has to work in both places.
 
 ### Custom Styles
 
-[Common Recipes](#common-recipes) set variables on `:root` and change every survey on the page. To style one survey only, put the variables on a class of your own and add classes for single parts:
+[Common Recipes](#common-recipes) set variables on `:root` and change every survey on the page. To style one survey only, put the variables on a class of your own and add classes for single parts. A custom style works on top of any built-in theme:
 
 ```css
 .brand-style {
@@ -858,6 +865,8 @@ Write your own stylesheet the same way when it has to work in both places.
   />
 </Surface>
 ```
+
+For a ready-made start, see [Catalog Styles](#catalog-styles).
 
 The reference sections below list everything you can change: [CSS Variables](#css-variables), [Custom Classes](#custom-classes), and [Shadow DOM Parts](#shadow-dom-parts). Storybook's `Styling Cases` section shows more combinations.
 
@@ -901,7 +910,7 @@ Everything else is internal: the library's own class names (hashed, like `_submi
 
 ### CSS Variables
 
-Set these variables on `:root`, on a wrapper class, or on a shadow host. Color variables take any CSS color: `#6d4aff`, `rgb()`, `hsl()`, `oklch()`, a color name, or `transparent`. Color defaults below are for the light theme; `theme="dark"` changes them.
+Set these variables on `:root`, on a wrapper class, or on a shadow host. Color variables take any CSS color: `#6d4aff`, `rgb()`, `hsl()`, `oklch()`, a color name, or `transparent`. Color defaults below are for the light theme. `theme="dark"` changes all of them except `--ft-color-star`.
 
 **Colors**
 

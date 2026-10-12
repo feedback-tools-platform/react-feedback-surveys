@@ -33,7 +33,13 @@ const MY_VIEWPORTS = {
   desktopLarge: { name: 'Desktop Large - 1920', styles: { height: '1080px', width: '1920px' }, type: 'desktop' }
 };
 
-const TOOLBAR_THEMES: SurveyTheme[] = ['light', 'dark', 'auto'];
+const THEME_CLASSES: Record<SurveyTheme, string> = {
+  light: '',
+  dark: 'dark',
+  auto: 'auto'
+};
+
+const TOOLBAR_THEMES = Object.keys(THEME_CLASSES) as SurveyTheme[];
 const DEFAULT_THEME: SurveyTheme = 'light';
 
 // the toolbar picks the page background; this hands the same theme to the widget unless a story sets its own
@@ -55,6 +61,11 @@ const preview: Preview = {
   // addon-themes starts the global as '', so stories would fall back to their own theme until the first toolbar pick
   initialGlobals: {
     theme: DEFAULT_THEME
+  },
+
+  // addon-themes never removes its class from <html> on unmount; without this a page with no stories keeps the last story's theme
+  beforeEach: () => () => {
+    document.documentElement.classList.remove(...Object.values(THEME_CLASSES).filter(Boolean));
   },
 
   parameters: {
@@ -87,11 +98,7 @@ const preview: Preview = {
   decorators: [
     withSurveyTheme,
     withThemeByClassName({
-      themes: {
-        light: '',
-        dark: 'dark',
-        auto: 'auto'
-      },
+      themes: THEME_CLASSES,
       defaultTheme: DEFAULT_THEME,
       parentSelector: 'html',
     }),

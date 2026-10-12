@@ -233,7 +233,9 @@ export const CustomFont: Story = {
   },
 };
 
+// kept off the docs page: its dark global would put the `dark` class on the page every story there shares
 export const ToolbarTheme: Story = {
+  tags: ['!autodocs'],
   args: {
     ...commonProps
   },
