@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-10-12
+
+The package code is the same as in 2.0.0. This release updates the docs and Storybook.
+
+### Added
+
+- **README** - Quick Start, [Requirements](README.md#requirements), [Next.js and Server Rendering](README.md#nextjs-and-server-rendering), a [Survey Types](README.md#survey-types) table, props grouped by step, and async handlers.
+- **Catalog styles in the README** - A collage and a preview of each ready-made style, with how to apply it. See [Catalog Styles](README.md#catalog-styles).
+- **Catalog CSS for any page** - The CSS copied from Storybook works with and without a shadow root. Each style shows its usage with highlighted code.
+
+### Fixed
+
+- **Sticky note style with NPS** - The surface was too narrow for the 11-point scale.
+- **Storybook theme** - Light is the default. A docs page no longer keeps the theme of the last story.
+
 ## [2.0.0] - 2026-10-09
 
 ### Added
