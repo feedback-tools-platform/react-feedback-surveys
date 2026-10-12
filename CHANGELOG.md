@@ -230,7 +230,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **RTL/LTR bidirectional support** - Full right-to-left text support for Arabic, Hebrew, and other RTL languages. Entire layout flips automatically when `dir="rtl"` is set, including icons and button positioning.
-- **Dark theme example** - A documented dark palette for the `--ft-*` CSS variables. The library had no built-in dark mode until the `theme` prop (see Unreleased).
+- **Dark theme example** - A documented dark palette for the `--ft-*` CSS variables. The library had no built-in dark mode until the `theme` prop (see 2.0.0).
 
 ### Changed
 

@@ -34,10 +34,11 @@ const MY_VIEWPORTS = {
 };
 
 const TOOLBAR_THEMES: SurveyTheme[] = ['light', 'dark', 'auto'];
+const DEFAULT_THEME: SurveyTheme = 'light';
 
 // the toolbar picks the page background; this hands the same theme to the widget unless a story sets its own
 const withSurveyTheme: Decorator = (Story, context) => {
-  const theme = context.globals.theme;
+  const theme = context.globals.theme || DEFAULT_THEME;
 
   if (context.args.theme !== undefined || !TOOLBAR_THEMES.includes(theme)) {
     return (
@@ -51,6 +52,11 @@ const withSurveyTheme: Decorator = (Story, context) => {
 };
 
 const preview: Preview = {
+  // addon-themes starts the global as '', so stories would fall back to their own theme until the first toolbar pick
+  initialGlobals: {
+    theme: DEFAULT_THEME
+  },
+
   parameters: {
     backgrounds: {
       grid: {
@@ -86,7 +92,7 @@ const preview: Preview = {
         dark: 'dark',
         auto: 'auto'
       },
-      defaultTheme: 'light',
+      defaultTheme: DEFAULT_THEME,
       parentSelector: 'html',
     }),
   ],

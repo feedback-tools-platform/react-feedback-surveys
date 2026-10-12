@@ -21,10 +21,12 @@
   transform: rotate(-1.2deg);
 }
 
-/* in an embed it stays note-sized instead of stretching across the page */
+/* in an embed it hugs the survey instead of stretching across the page; the NPS scale needs more room */
 .ftools-survey.sticky-note.ftools-embed::part(surface) {
   margin: 14px auto 0;
-  max-width: 380px;
+  width: fit-content;
+  min-width: min(380px, 100%);
+  max-width: 100%;
 }
 
 /* a strip of tape over the top edge */
